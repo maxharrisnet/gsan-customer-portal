@@ -1,5 +1,5 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-export default function App() {
+export default function Root() {
 	return (
 		<html>
 			<head>
