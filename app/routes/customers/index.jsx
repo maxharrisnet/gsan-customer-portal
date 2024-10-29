@@ -3,11 +3,12 @@ import { useLoaderData } from '@remix-run/react';
 export const loader = () => {
 	// If GSAN admin Get all customers
 	// Else get customers according to logged in provider
+
 	return {};
 };
 
 function CustomerList() {
-	const { customers } = useLoaderData();
+	// const { customers } = useLoaderData();
 
 	return (
 		<div>

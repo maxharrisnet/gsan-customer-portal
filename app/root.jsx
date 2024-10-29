@@ -1,16 +1,5 @@
-import { Links, Link, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 export default function App() {
-	return (
-		<Document>
-			<Layout>
-				<Outlet />
-			</Layout>
-		</Document>
-	);
-}
-
-function Document({ children, title }) {
 	return (
 		<html>
 			<head>
@@ -31,34 +20,10 @@ function Document({ children, title }) {
 				<Links />
 			</head>
 			<body>
-				{children}
+				<Outlet />
 				<ScrollRestoration />
 				<Scripts />
-				{process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
 			</body>
 		</html>
-	);
-}
-
-function Layout({ children }) {
-	return (
-		<>
-			<nav className='navbar'>
-				<Link to='/'>Status</Link>
-				<div className='container'>{children}</div>
-			</nav>
-		</>
-	);
-}
-
-export function ErrorBoundary({ error }) {
-	console.log(error);
-	return (
-		<Document>
-			<Layout>
-				<h1>Error</h1>
-				<p>{error.message}</p>
-			</Layout>
-		</Document>
 	);
 }
