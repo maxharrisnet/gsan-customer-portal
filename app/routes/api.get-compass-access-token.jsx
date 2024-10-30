@@ -8,26 +8,28 @@ dotenv.config();
 const username = process.env.COMPASS_API_USERNAME;
 const password = process.env.COMPASS_API_PASSWORD;
 const apiEndpoint = 'https://api-compass.speedcast.com/v2.0';
-console.log(process.env);
 
-let accessToken = null;
+export async function getCompassAccessToken() {
+	try {
+		const response = await axios.post(`${apiEndpoint}/auth`, {
+			username,
+			password,
+		});
 
-axios
-	.post(`${apiEndpoint}/auth`, {
-		username,
-		password,
-	})
-	.then((response) => {
 		const accessToken = response.data.access_token;
 		console.log('Access token retrieved:', accessToken);
-	})
-	.catch((error) => {
+		return accessToken;
+	} catch (error) {
 		console.error('Error retrieving access token:', error);
-	});
+		throw new Error('Error retrieving access token');
+	}
+}
 
 export const loader = async () => {
-	if (!accessToken) {
-		return json({ message: 'Access token not available' }, { status: 500 });
+	try {
+		const accessToken = await getCompassAccessToken();
+		return json({ accessToken });
+	} catch (error) {
+		return json({ message: error.message }, { status: 500 });
 	}
-	return json({ accessToken });
 };
