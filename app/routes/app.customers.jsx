@@ -1,23 +1,29 @@
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
-import axios from 'axios';
+import { authenticate } from '../shopify.server';
 
-export const loader = async () => {
-	const accessToken = process.env.SHOPIFY_ACCESS_TOKEN;
-	const shop = process.env.SHOPIFY_SHOP;
+export const loader = async ({ request }) => {
+	const { admin } = await authenticate.admin(request);
 
-	if (!accessToken || !shop) {
-		throw new Response('Missing Shopify credentials', { status: 401 });
-	}
+	const query = `
+    query {
+      customers(first: 10) {
+        edges {
+          node {
+            id
+            firstName
+            lastName
+            email
+          }
+        }
+      }
+    }
+  `;
 
 	try {
-		const response = await axios.get(`https://${shop}.myshopify.com/admin/api/2021-04/customers.json`, {
-			headers: {
-				'X-Shopify-Access-Token': accessToken,
-			},
-		});
+		const response = await admin.graphql(query);
 
-		return json({ customers: response.data.customers });
+		return json({ customers: response.data.customers.edges.map((edge) => edge.node) });
 	} catch (error) {
 		console.error('Error fetching customers:', error);
 		throw new Response('Internal Server Error', { status: 500 });
@@ -34,7 +40,7 @@ export default function CustomerList() {
 				{customers.map((customer) => (
 					<li key={customer.id}>
 						<a href={`/customers/${customer.id}`}>
-							{customer.first_name} {customer.last_name}
+							{customer.firstName} {customer.lastName}
 						</a>
 					</li>
 				))}

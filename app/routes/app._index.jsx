@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { json } from '@remix-run/node';
 import { useFetcher } from '@remix-run/react';
-import { Page, Layout, Text, Card, Button, BlockStack, Box, List, Link, InlineStack } from '@shopify/polaris';
+import { Page, Layout, Text, Card, Button, BlockStack, Box, Link, InlineStack } from '@shopify/polaris';
 import { TitleBar, useAppBridge } from '@shopify/app-bridge-react';
 import { authenticate } from '../shopify.server';
 
@@ -67,6 +67,7 @@ export const action = async ({ request }) => {
 		}
 	);
 	const variantResponseJson = await variantResponse.json();
+	console.log(`Response data: ${responseJson}`);
 
 	return json({
 		product: responseJson.data.productCreate.product,

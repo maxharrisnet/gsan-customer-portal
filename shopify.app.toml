@@ -3,7 +3,7 @@
 client_id = "a603628c31a9a54199671521ca22c387"
 name = "gsan-customer-portal"
 handle = "gsan-customer-portal"
-application_url = "https://example.com/"
+application_url = "https://16b9-142-231-7-19.ngrok-free.app/"
 embedded = true
 
 [build]
@@ -16,7 +16,11 @@ include_config_on_deploy = true
 scopes = "read_all_orders,read_customers,read_orders,read_users"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ 
+  "https://16b9-142-231-7-19.ngrok-free.app/auth/callback",
+  "https://16b9-142-231-7-19.ngrok-free.app/auth/shopify/callback",
+  "https://16b9-142-231-7-19.ngrok-free.app/api/auth/callback" 
+]
 
 [webhooks]
 api_version = "2024-10"
