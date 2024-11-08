@@ -5,29 +5,27 @@ import { authenticate } from '../shopify.server';
 export const loader = async ({ request }) => {
 	const { admin } = await authenticate.admin(request);
 
-	const query = `
-    query {
-      customers(first: 10) {
-        edges {
-          node {
-            id
-            firstName
-            lastName
-            email
-          }
+	const response = await admin.graphql(
+		`#graphql
+  query getCustomers {
+    customers (first: 10) {
+      edges {
+        node {
+          id
+					firstName
+					lastName
+          email
         }
       }
     }
-  `;
+  }`
+	);
 
-	try {
-		const response = await admin.graphql(query);
+	const data = await response.json();
+	console.log('👾👾👾 Data:', data);
+	return json({ customers: data.data.customers.edges.map((edge) => edge.node) });
 
-		return json({ customers: response.data.customers.edges.map((edge) => edge.node) });
-	} catch (error) {
-		console.error('Error fetching customers:', error);
-		throw new Response('Internal Server Error', { status: 500 });
-	}
+	// TODO: handle errors
 };
 
 export default function CustomerList() {

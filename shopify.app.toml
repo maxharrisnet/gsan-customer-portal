@@ -3,7 +3,7 @@
 client_id = "a603628c31a9a54199671521ca22c387"
 name = "gsan-customer-portal"
 handle = "gsan-customer-portal"
-application_url = "https://16b9-142-231-7-19.ngrok-free.app/"
+application_url = "https://51ad-2604-3d08-4e82-a500-10fe-e193-96db-d12f.ngrok-free.app/"
 embedded = true
 
 [build]
@@ -13,13 +13,13 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_customers,read_all_orders,read_orders,read_online_store_navigation"
+scopes = "customer_read_own_subscription_contracts,read_customers,read_online_store_navigation,read_orders"
 
 [auth]
-redirect_urls = [ 
-  "https://16b9-142-231-7-19.ngrok-free.app/auth/callback",
-  "https://16b9-142-231-7-19.ngrok-free.app/auth/shopify/callback",
-  "https://16b9-142-231-7-19.ngrok-free.app/api/auth/callback" 
+redirect_urls = [
+  "https://51ad-2604-3d08-4e82-a500-10fe-e193-96db-d12f.ngrok-free.app/auth/callback",
+  "https://51ad-2604-3d08-4e82-a500-10fe-e193-96db-d12f.ngrok-free.app/auth/shopify/callback",
+  "https://51ad-2604-3d08-4e82-a500-10fe-e193-96db-d12f.ngrok-free.app/api/auth/callback"
 ]
 
 [webhooks]
