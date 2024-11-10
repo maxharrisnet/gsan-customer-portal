@@ -57,7 +57,6 @@ export default function Performance() {
 		<div>
 			<h1>Performance Data</h1>
 			{services.length > 0 ? (
-				(console.log('Bingo!'),
 				services.map((service) => (
 					<div key={service.id}>
 						<h2>{service.name}</h2>
@@ -82,7 +81,8 @@ export default function Performance() {
 														<h3 className='card-title fs-6'>{modem.name}</h3>
 														<h4 className='card-subtitle h6 font-weight-bolder text-secondary'>{service.name}</h4>
 													</div>
-													{modem.details.data.latency.data && modem.details.data.latency.data.length > 0 ? (
+													{console.log('$$$$modem details daaatas:', modem.details.data)}
+													{modem.details.data.latency && modem.details.data.latency.data.length > 0 ? (
 														<div
 															className='latency-bar-24h d-flex rounded'
 															style={{ width: '70%', height: '50px' }}
@@ -113,7 +113,7 @@ export default function Performance() {
 							<p>No modems available for service: {service.name}</p>
 						)}
 					</div>
-				)))
+				))
 			) : (
 				<div className='bg-light'>
 					<div className='container-sm'>

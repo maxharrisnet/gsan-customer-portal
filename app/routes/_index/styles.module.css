@@ -7,6 +7,107 @@ body {
 	background-color: #f0f0f0;
 }
 
+:root {
+	/* Original colors */
+	--wifi-green: #83c341;
+	--monitor-blue: #5baed9;
+	--phone-orange: #f16737;
+	--text-black: #333333;
+	--background-white: #ffffff;
+
+	/* Lighter colors */
+	--wifi-green-light: #a9d870;
+	--monitor-blue-light: #8bcff0;
+	--phone-orange-light: #f69263;
+	--text-black-light: #666666;
+
+	/* Darker colors */
+	--wifi-green-dark: #618c2e;
+	--monitor-blue-dark: #3986a8;
+	--phone-orange-dark: #c5522b;
+	--text-black-dark: #111111;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 700;
+}
+
+.row {
+	width: 90%;
+	margin: auto;
+}
+
+.status {
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.latency-bar {
+	height: 20px;
+	background-color: #f0f0f0;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.latency-fill {
+	height: 100%;
+	border-radius: 10px;
+}
+
+.latency-green {
+	background-color: var(--wifi-green);
+}
+
+.latency-orange {
+	background-color: var(--phone-orange);
+}
+
+.latency-red {
+	background-color: var(--phone-orange-dark);
+}
+
+/* Loading animation styles */
+.loading-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	display: none; /* Initially hidden */
+}
+
+.spinner {
+	border: 8px solid #f3f3f3;
+	border-top: 8px solid var(--monitor-blue-dark);
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* Styles for the index page */
+
 .index {
 	align-items: center;
 	display: flex;
