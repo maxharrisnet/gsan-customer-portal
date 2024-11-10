@@ -15,19 +15,18 @@ export const loader = async () => {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		});
 
-		const allServices = servicesResponse.data;
-		console.log('allServices:', allServices);
+		const allServices = await servicesResponse.data;
 
 		const servicesWithModemDetails = await Promise.all(
 			allServices.map(async (service) => {
 				if (service.modems && service.modems.length > 0) {
 					const modemsWithDetails = await Promise.all(
 						service.modems.map(async (modem) => {
-							const detailsResponse = await axios.get(modemDetailsUrl(modem.type, modem.id), {
-							
-							
+							const url = modemDetailsUrl(modem.id);
+							const detailsResponse = await axios.get(url, {
 								headers: { Authorization: `Bearer ${accessToken}` },
 							});
+							console.log('detailsResponse:', detailsResponse.data);
 							return { ...modem, details: detailsResponse.data };
 						})
 					);
@@ -44,6 +43,13 @@ export const loader = async () => {
 	}
 };
 
+export function getLatencyClass(latency) {
+	// Returns the class based on latency value
+	if (latency < 50) return 'latency-green';
+	else if (latency < 150) return 'latency-orange';
+	else return 'latency-red';
+}
+
 export default function Performance() {
 	const { services } = useLoaderData();
 
@@ -51,6 +57,7 @@ export default function Performance() {
 		<div>
 			<h1>Performance Data</h1>
 			{services.length > 0 ? (
+				(console.log('Bingo!'),
 				services.map((service) => (
 					<div key={service.id}>
 						<h2>{service.name}</h2>
@@ -106,7 +113,7 @@ export default function Performance() {
 							<p>No modems available for service: {service.name}</p>
 						)}
 					</div>
-				))
+				)))
 			) : (
 				<div className='bg-light'>
 					<div className='container-sm'>

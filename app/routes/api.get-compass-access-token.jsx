@@ -17,7 +17,6 @@ export async function getCompassAccessToken() {
 		});
 
 		const accessToken = response.data.access_token;
-		console.log('Access token retrieved:', accessToken);
 		return accessToken;
 	} catch (error) {
 		console.error('Error retrieving access token:', error);

@@ -45,7 +45,6 @@ export const loader = async ({ request }) => {
 		});
 
 		const sonarCustomers = sonarResponse.data.data;
-		// console.log('$$$$ Sonar customers:', sonarCustomers);
 
 		return json({ shopifyCustomers, sonarCustomers });
 	} catch (error) {
