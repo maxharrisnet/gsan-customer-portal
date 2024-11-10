@@ -6,7 +6,7 @@ import { authenticate } from '../shopify.server';
 export const loader = async ({ request }) => {
 	const { admin } = await authenticate.admin(request);
 
-	const response = await admin.graphql(
+	const shopifyResponse = await admin.graphql(
 		`#graphql
 		query getShopifyCustomers {
 			customers (first: 10) {
@@ -22,19 +22,19 @@ export const loader = async ({ request }) => {
 		}`
 	);
 
-	const shopifyCustomers = await response.json();
+	const shopifyCustomersData = await shopifyResponse.json();
+	const shopifyCustomers = shopifyCustomersData.data.customers.edges;
+
+	console.log('$$$ Shopify customers:', shopifyCustomers);
 	// TODO: handle errors
 
 	// Fetch Sonar customers
 	const sonarUsername = process.env.SONAR_USERNAME;
 	const sonarPassword = process.env.SONAR_PASSWORD;
-	console.log('Sonar Username:', sonarUsername); // Log the Sonar username
 	const sonarAuth = Buffer.from(`${sonarUsername}:${sonarPassword}`).toString('base64');
 
-	console.log('Sonar Auth Header:', `Basic ${sonarAuth}`); // Log the authentication header
-
 	try {
-		const sonarResponse = await axios.get('https://switch.sonar.software/api/v1/users', {
+		const sonarResponse = await axios.get('https://switch.sonar.software/api/v1/accounts', {
 			headers: {
 				Authorization: `Basic ${sonarAuth}`,
 			},
@@ -44,12 +44,13 @@ export const loader = async ({ request }) => {
 			},
 		});
 
-		const sonarCustomers = sonarResponse.data;
+		const sonarCustomers = sonarResponse.data.data;
+		console.log('$$$$ Sonar customers:', sonarCustomers);
 
 		return json({ shopifyCustomers, sonarCustomers });
 	} catch (error) {
 		console.error('Error fetching Sonar customers:', error);
-		throw new Response('Internal Server Error 🛸', { status: 500 });
+		throw new Response('Internal Server Error! 🛸', { status: 500 });
 	}
 };
 
@@ -64,9 +65,9 @@ export default function CustomerList() {
 					<h2>Shopify Customers</h2>
 					<ul>
 						{shopifyCustomers.map((customer) => (
-							<li key={customer.id}>
+							<li key={customer.node.id}>
 								<a href={`/customers/${customer.id}`}>
-									{customer.firstName} {customer.lastName} ({customer.email})
+									{customer.node.firstName} {customer.node.lastName} ({customer.node.email})
 								</a>
 							</li>
 						))}
@@ -78,7 +79,7 @@ export default function CustomerList() {
 						{sonarCustomers.map((customer) => (
 							<li key={customer.id}>
 								<a href={`/sonar-customers/${customer.id}`}>
-									{customer.name} ({customer.email})
+									{customer.name} ({customer.email_address})
 								</a>
 							</li>
 						))}
