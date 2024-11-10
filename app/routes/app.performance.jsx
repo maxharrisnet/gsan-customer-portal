@@ -24,6 +24,8 @@ export const loader = async () => {
 					const modemsWithDetails = await Promise.all(
 						service.modems.map(async (modem) => {
 							const detailsResponse = await axios.get(modemDetailsUrl(modem.type, modem.id), {
+							
+							
 								headers: { Authorization: `Bearer ${accessToken}` },
 							});
 							return { ...modem, details: detailsResponse.data };
