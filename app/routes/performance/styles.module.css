@@ -1,0 +1,33 @@
+.row {
+	width: 90%;
+	margin: auto;
+}
+
+.status {
+	padding: 10px;
+	margin-bottom: 5px;
+}
+
+.latency-bar {
+	height: 20px;
+	background-color: #f0f0f0;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.latency-fill {
+	height: 100%;
+	border-radius: 10px;
+}
+
+.latency-green {
+	background-color: var(--wifi-green);
+}
+
+.latency-orange {
+	background-color: var(--phone-orange);
+}
+
+.latency-red {
+	background-color: var(--phone-orange-dark);
+}

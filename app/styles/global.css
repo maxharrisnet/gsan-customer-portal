@@ -1,0 +1,126 @@
+:root {
+	--font-family-base: 'Helvetica Neue', Arial, sans-serif;
+	--font-size-base: 16px;
+	--font-size-large: 20px;
+	--font-size-small: 14px;
+	--color-primary: #5c6ac4;
+	--color-secondary: #006fbb;
+	--color-background: #f4f6f8;
+	--color-text: #212b36;
+	--color-text-light: #637381;
+	--color-border: #dfe3e8;
+	--spacing-base: 16px;
+	--spacing-large: 24px;
+	--spacing-small: 8px;
+}
+
+body {
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+	color: var(--color-text);
+	background-color: var(--color-background);
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--color-text);
+	margin-top: 0;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.75rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+}
+
+h4 {
+	font-size: 1.25rem;
+}
+
+h5 {
+	font-size: 1rem;
+}
+
+h6 {
+	font-size: 0.875rem;
+}
+
+p {
+	margin: 0 0 var(--spacing-base);
+}
+
+a {
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+	color: #fff;
+	background-color: var(--color-primary);
+	border: none;
+	padding: var(--spacing-small) var(--spacing-base);
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: var(--color-secondary);
+}
+
+input,
+textarea,
+select {
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+	color: var(--color-text);
+	border: 1px solid var(--color-border);
+	padding: var(--spacing-small);
+	margin-bottom: var(--spacing-base);
+	width: 100%;
+	box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	border-color: var(--color-primary);
+	outline: none;
+}
+
+.container {
+	padding: var(--spacing-base);
+}
+
+.card {
+	background-color: #fff;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	padding: var(--spacing-base);
+	margin-bottom: var(--spacing-large);
+}
+
+.card-header {
+	font-size: var(--font-size-large);
+	margin-bottom: var(--spacing-small);
+}
+
+.card-body {
+	font-size: var(--font-size-base);
+}
