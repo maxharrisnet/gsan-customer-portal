@@ -39,6 +39,8 @@ async function fetchGPS(provider, ids, accessToken) {
 			},
 		});
 
+		console.log('@@@ GPS Response:', response.data);
+
 		if (response.status === 200) {
 			fs.writeFileSync(cacheFile, JSON.stringify(response.data)); // Save to cache
 			return response.data;

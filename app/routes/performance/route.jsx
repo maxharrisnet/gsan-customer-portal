@@ -24,7 +24,7 @@ export const loader = async () => {
 				if (service.modems && service.modems.length > 0) {
 					const modemsWithDetails = await Promise.all(
 						service.modems.map(async (modem) => {
-							const url = modemDetailsUrl(modem.id);
+							const url = modemDetailsUrl(modem.type, modem.id);
 							const detailsResponse = await axios.get(url, {
 								headers: { Authorization: `Bearer ${accessToken}` },
 							});
