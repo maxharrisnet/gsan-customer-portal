@@ -61,10 +61,12 @@ export default function Performance() {
 			<Page title='Performance Data'>
 				<Layout>
 					<Layout.Section>
-						<BlockStack>
+						<BlockStack inlineAlign='center'>
 							{services.length > 0 ? (
 								services.map((service) => (
 									<BlockStack
+										gap='200'
+										inlineAlign='center'
 										roundedAbove='sm'
 										key={service.id}
 									>
@@ -79,19 +81,16 @@ export default function Performance() {
 												<BlockStack
 													key={modem.id}
 													className='row p-2'
+													inlineAlign='center'
 												>
 													<Link
 														to={`http://localhost/switch/modem_status_details.php?provider=${modem.type.toLowerCase()}&modemid=${modem.id}`}
 														className='text-black text-decoration-none fw-bold'
 													>
-														<Card
-															className='card modem-card shadow-sm mb-0'
-															onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#f8f9fa')}
-															onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '')}
-														>
-															<div className='card-body'>
+														<Card background='bg-surface'>
+															<div className={styles.cardBody}>
 																<div className='d-flex justify-content-between align-items-center'>
-																	<div className='w-25'>
+																	<div className={styles.w25}>
 																		<Text
 																			as='h3'
 																			className='card-title fs-6'
