@@ -1,6 +1,9 @@
 import { useParams, useLoaderData } from '@remix-run/react';
 import { loader } from './api.modem';
-import { LayoutComponent } from '../components/layout/LayoutComponent';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+// import { LayoutComponent } from '../components/layout/LayoutComponent';
 import MapComponent from '../components/charts/MapComponent';
 import ChartComponent from '../components/charts/ChartComponent';
 
@@ -24,89 +27,76 @@ export default function ModemDetails() {
 	const uptimeValues = uptimeData.map((entry) => Math.ceil((entry[1] / 86400) * 10) / 10);
 
 	return (
-		<LayoutComponent>
-			<div>
-				<h1>Modem Details</h1>
-				<p>Provider: {provider}</p>
-				<p>Modem ID: {modemId}</p>
-				<MapComponent gpsData={gpsData} />
-				<ChartComponent
-					chartId='latencyChart'
-					chartType='line'
-					chartData={{
-						labels: latencyTimestamps,
-						datasets: [{ label: 'Latency (ms)', data: latencyValues }],
-					}}
-					chartOptions={{
-						scales: {
-							y: {
-								ticks: { callback: (value) => `${value}ms`, stepSize: 20 },
-								beginAtZero: true,
-							},
+		// <LayoutComponent>
+		<div>
+			<h1>Modem Details</h1>
+			<p>Provider: {provider}</p>
+			<p>Modem ID: {modemId}</p>
+			<MapComponent gpsData={gpsData} />
+			<Line
+				chartId='latencyChart'
+				data={{
+					labels: latencyTimestamps,
+					datasets: [{ label: 'Latency (ms)', data: latencyValues }],
+				}}
+				options={{
+					scales: {
+						y: {
+							ticks: { callback: (value) => `${value}ms`, stepSize: 20 },
+							beginAtZero: true,
 						},
-					}}
-				/>
-				<ChartComponent
-					chartId='throughputChart'
-					chartType='line'
-					chartData={{
-						labels: throughputTimestamps,
-						datasets: [
-							{ label: 'Download Throughput (Mbps)', data: throughputDownload },
-							{ label: 'Upload Throughput (Mbps)', data: throughputUpload },
-						],
-					}}
-					chartOptions={{
-						scales: {
-							x: {
-								type: 'time',
-								time: { unit: 'hour', stepSize: 2, displayFormats: { hour: 'HH:mm' } },
-								title: { display: true, text: 'Time (Every 2 Hours)' },
-								tooltipFormat: 'MMM d, HH:mm',
-							},
-							y: {
-								ticks: { callback: (value) => `${value}Mbps`, stepSize: 5 },
-								beginAtZero: true,
-							},
+					},
+				}}
+			/>
+			<Line
+				chartId='throughputChart'
+				data={{
+					labels: throughputTimestamps,
+					datasets: [
+						{ label: 'Download (Mbps)', data: throughputDownload },
+						{ label: 'Upload (Mbps)', data: throughputUpload },
+					],
+				}}
+				options={{
+					scales: {
+						y: {
+							ticks: { callback: (value) => `${value}Mbps`, stepSize: 20 },
+							beginAtZero: true,
 						},
-						plugins: { legend: { display: true, position: 'bottom' } },
-					}}
-				/>
-				<ChartComponent
-					chartId='obstructionChart'
-					chartType='line'
-					chartData={{
-						labels: obstructionLabels,
-						datasets: [{ label: 'Obstruction (%)', data: obstructionValues }],
-					}}
-					chartOptions={{
-						scales: {
-							y: {
-								ticks: { callback: (value) => `${value}%`, stepSize: 50 },
-								max: 100,
-								beginAtZero: true,
-							},
+					},
+				}}
+			/>
+			<Line
+				chartId='obstructionChart'
+				data={{
+					labels: obstructionLabels,
+					datasets: [{ label: 'Obstruction (%)', data: obstructionValues }],
+				}}
+				options={{
+					scales: {
+						y: {
+							ticks: { callback: (value) => `${value}%`, stepSize: 20 },
+							beginAtZero: true,
 						},
-					}}
-				/>
-				<ChartComponent
-					chartId='uptimeChart'
-					chartType='line'
-					chartData={{
-						labels: uptimeLabels,
-						datasets: [{ label: 'Uptime', data: uptimeValues, stepped: true }],
-					}}
-					chartOptions={{
-						scales: {
-							y: {
-								min: 0,
-								beginAtZero: true,
-								ticks: { stepSize: 0.5 },
-							},
+					},
+				}}
+			/>
+			<Line
+				chartId='uptimeChart'
+				data={{
+					labels: uptimeLabels,
+					datasets: [{ label: 'Uptime (%)', data: uptimeValues }],
+				}}
+				options={{
+					scales: {
+						y: {
+							ticks: { callback: (value) => `${value}%`, stepSize: 20 },
+							beginAtZero: true,
 						},
-					}}
-				/>
-			</div>
-		</LayoutComponent>
+					},
+				}}
+			/>
+		</div>
+		// </LayoutComponent>
 	);
 }

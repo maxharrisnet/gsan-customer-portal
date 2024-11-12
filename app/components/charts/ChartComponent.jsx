@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Chart } from 'chart.js';
+import './chartConfig';
+import { Line, Chart } from 'react-chartjs-2';
 
 const ChartComponent = ({ chartId, chartType, chartData, chartOptions }) => {
 	const chartRef = useRef(null);
