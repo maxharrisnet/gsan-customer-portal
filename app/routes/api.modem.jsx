@@ -24,9 +24,8 @@ export default async function fetchModemDetails(url, accessToken) {
 		});
 
 		const modem = modemResponse.data;
-		console.log('### modem:', modem);
-		// const gpsData = await fetchGPS(modem.type, [modem.id], accessToken);
-		const gpsData = [];
+		// console.log('### modem:', modem);
+		const gpsData = await fetchGPS(modem.type, [modem.id], accessToken);
 		const latencyData = modem.data.latency.data || [];
 		const throughputData = modem.data.throughput.data || [];
 		const signalQualityData = modem.data.signal.data || [];
