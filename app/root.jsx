@@ -1,4 +1,4 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from '@remix-run/react';
 import globalStyles from './styles/global.css';
 
 export const links = () => [{ rel: 'stylesheet', href: globalStyles }];
@@ -31,3 +31,21 @@ export default function Root() {
 		</html>
 	);
 }
+
+// export function ErrorBoundary() {
+// 	const error = useRouteError();
+// 	console.error(error);
+// 	return (
+// 		<html>
+// 			<head>
+// 				<title>Oh no!</title>
+// 				<Meta />
+// 				<Links />
+// 			</head>
+// 			<body>
+// 				<p>Something went wrong: {error}</p>
+// 				<Scripts />
+// 			</body>
+// 		</html>
+// 	);
+// }

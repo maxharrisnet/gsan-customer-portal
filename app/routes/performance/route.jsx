@@ -10,8 +10,7 @@ export const loader = async () => {
 	const accessToken = await getCompassAccessToken();
 	const companyId = process.env.COMPASS_COMPANY_ID;
 	const servicesUrl = `https://api-compass.speedcast.com/v2.0/company/${companyId}`;
-	// const modemDetailsUrl = `https://api-compass.speedcast.com/v2.0/provider/${modemId}`;
-	const modemDetailsURL = (provider, modemId) => `https://api-compass.speedcast.com/v2.0/${provider}/${modemId}`;
+	const modemDetailsUrl = (provider, modemId) => `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${modemId}`;
 
 	try {
 		const servicesResponse = await axios.get(servicesUrl, {
@@ -41,7 +40,7 @@ export const loader = async () => {
 		return json({ services: servicesWithModemDetails, polarisTranslations });
 	} catch (error) {
 		console.error('Error fetching performance data:', error);
-		throw new Response('Internal Server Error :::', { status: 500 });
+		throw new Response('Internal Server Error 🤷', { status: 500 });
 	}
 };
 
