@@ -11,7 +11,7 @@ export const loader = async ({ params }) => {
 	const modemDetails = await fetchModemDetails(modemDetailsURL, accessToken);
 
 	if (!modemDetails) {
-		throw new Response('No data available for modem', { status: 404 });
+		throw new Response('No data available for modem 🦤', { status: 404 });
 	}
 
 	return json(modemDetails);
@@ -24,8 +24,8 @@ export default async function fetchModemDetails(url, accessToken) {
 		});
 
 		const modem = modemResponse.data;
-		// console.log('### modem:', modem);
 		const gpsData = await fetchGPS(modem.type, [modem.id], accessToken);
+		console.log('🌍 gpsData:', gpsData);
 		const latencyData = modem.data.latency.data || [];
 		const throughputData = modem.data.throughput.data || [];
 		const signalQualityData = modem.data.signal.data || [];
