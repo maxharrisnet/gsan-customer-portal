@@ -2,8 +2,9 @@ import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import axios from 'axios';
 import { getCompassAccessToken } from '../api.get-compass-access-token';
-import { AppProvider as PolarisAppProvider, Page, Layout, Text, Card, Button, BlockStack, Box, Link, InlineStack } from '@shopify/polaris';
+import { AppProvider as PolarisAppProvider, Page, Text, Card, Button, BlockStack, Box, Link, InlineStack } from '@shopify/polaris';
 import polarisTranslations from '@shopify/polaris/locales/en.json';
+import { LayoutComponent } from '../../components/layout/LayoutComponent';
 import styles from './styles.module.css';
 
 export const loader = async () => {
@@ -56,98 +57,82 @@ export default function Performance() {
 	const loaderData = useLoaderData();
 
 	return (
-		<PolarisAppProvider i18n={loaderData.polarisTranslations}>
-			<Page title='Performance Data'>
-				<Layout>
-					<Layout.Section>
-						<BlockStack inlineAlign='center'>
-							{services.length > 0 ? (
-								services.map((service) => (
-									<BlockStack
-										gap='200'
+		<LayoutComponent>
+			<div>
+				{services.length > 0 ? (
+					services.map((service) => (
+						<div key={service.id}>
+							<h2>{service.name}</h2>
+							{service.modems && service.modems.length > 0 ? (
+								service.modems.map((modem) => (
+									<div
+										key={modem.id}
+										className='row p-2'
 										inlineAlign='center'
-										roundedAbove='sm'
-										key={service.id}
 									>
-										<Text
-											as='h2'
-											variant='bodyMd'
+										<Link
+											to={`http://localhost/switch/modem_status_details.php?provider=${modem.type.toLowerCase()}&modemid=${modem.id}`}
+											className='text-black text-decoration-none fw-bold'
 										>
-											{service.name}
-										</Text>
-										{service.modems && service.modems.length > 0 ? (
-											service.modems.map((modem) => (
-												<BlockStack
-													key={modem.id}
-													className='row p-2'
-													inlineAlign='center'
-												>
-													<Link
-														to={`http://localhost/switch/modem_status_details.php?provider=${modem.type.toLowerCase()}&modemid=${modem.id}`}
-														className='text-black text-decoration-none fw-bold'
-													>
-														<Card background='bg-surface'>
-															<div className={styles.cardBody}>
-																<div className='d-flex justify-content-between align-items-center'>
-																	<div className={styles.w25}>
-																		<Text
-																			as='h3'
-																			className='card-title fs-6'
-																		>
-																			{modem.name}
-																		</Text>
-																		<Text
-																			as='h4'
-																			className='card-subtitle h6 font-weight-bolder text-secondary'
-																		>
-																			{service.name}
-																		</Text>
-																	</div>
-																	{modem.details.data.latency && modem.details.data.latency.data.length > 0 ? (
+											<Card background='bg-surface'>
+												<div className={styles.cardBody}>
+													<div className='d-flex justify-content-between align-items-center'>
+														<div className={styles.w25}>
+															<Text
+																as='h3'
+																className='card-title fs-6'
+															>
+																{modem.name}
+															</Text>
+															<Text
+																as='h4'
+																className='card-subtitle h6 font-weight-bolder text-secondary'
+															>
+																{service.name}
+															</Text>
+														</div>
+														{modem.details.data.latency && modem.details.data.latency.data.length > 0 ? (
+															<div
+																className='latency-bar-24h d-flex rounded'
+																style={{ width: '70%', height: '50px' }}
+															>
+																{modem.details.data.latency.data.map((latencyPoint, index) => {
+																	const latencyValue = latencyPoint[1];
+																	const latencyClass = getLatencyClass(latencyValue);
+																	const segmentWidth = (10 / 1440) * 100; // 10 minutes out of 1440 minutes in 24 hours
+																	return (
 																		<div
-																			className='latency-bar-24h d-flex rounded'
-																			style={{ width: '70%', height: '50px' }}
-																		>
-																			{modem.details.data.latency.data.map((latencyPoint, index) => {
-																				const latencyValue = latencyPoint[1];
-																				const latencyClass = getLatencyClass(latencyValue);
-																				const segmentWidth = (10 / 1440) * 100; // 10 minutes out of 1440 minutes in 24 hours
-																				return (
-																					<div
-																						key={index}
-																						className={`latency-segment ${latencyClass}`}
-																						style={{ width: `${segmentWidth}%` }}
-																					></div>
-																				);
-																			})}
-																		</div>
-																	) : (
-																		<p className='mb-0'>No data available</p>
-																	)}
-																</div>
+																			key={index}
+																			className={`latency-segment ${latencyClass}`}
+																			style={{ width: `${segmentWidth}%` }}
+																		></div>
+																	);
+																})}
 															</div>
-														</Card>
-													</Link>
-												</BlockStack>
-											))
-										) : (
-											<p>No modems available for service: {service.name}</p>
-										)}
-									</BlockStack>
+														) : (
+															<p className='mb-0'>No data available</p>
+														)}
+													</div>
+												</div>
+											</Card>
+										</Link>
+									</div>
 								))
 							) : (
-								<div className='bg-light'>
-									<div className='container-sm'>
-										<div className='row text-center'>
-											<p>No services available.</p>
-										</div>
-									</div>
-								</div>
+								<p>No modems available for service: {service.name}</p>
 							)}
-						</BlockStack>
-					</Layout.Section>
-				</Layout>
-			</Page>
-		</PolarisAppProvider>
+						</div>
+					))
+				) : (
+					<div className='bg-light'>
+						<div className='container-sm'>
+							<div className='row text-center'>
+								<p>No services available.</p>
+							</div>
+						</div>
+					</div>
+				)}
+			</div>
+		</LayoutComponent>
 	);
 }

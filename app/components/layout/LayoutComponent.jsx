@@ -2,12 +2,12 @@ import React from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import './Layout.css';
+// import './layout.css';
 
-const Layout = ({ children }) => {
+const LayoutComponent = ({ children }) => {
 	return (
 		<div>
-			<Header />
+			<Headeer />
 			<div>
 				<Sidebar />
 				<main>{children}</main>
@@ -17,4 +17,4 @@ const Layout = ({ children }) => {
 	);
 };
 
-export default Layout;
+export default LayoutComponent;
