@@ -10,7 +10,7 @@ export const loader = async () => {
 	const accessToken = await getCompassAccessToken();
 	const companyId = process.env.COMPASS_COMPANY_ID;
 	const servicesUrl = `https://api-compass.speedcast.com/v2.0/company/${companyId}`;
-	const modemDetailsUrl = (provider, sysId) => `https://api-compass.speedcast.com/v2.0/${provider}/${sysId}`;
+	const modemDetailsUrl = (provider, sysId) => `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${sysId}`;
 
 	try {
 		const servicesResponse = await axios.get(servicesUrl, {

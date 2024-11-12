@@ -28,7 +28,7 @@ async function fetchGPS(provider, ids, accessToken) {
 	}
 
 	// Proceed with API call
-	const url = getGPSURL(provider);
+	const url = getGPSURL(provider.toLowerCase());
 	const postData = { ids };
 
 	try {

@@ -7,7 +7,7 @@ export const loader = async ({ params }) => {
 	const { provider, modemId } = params;
 	const accessToken = await getCompassAccessToken();
 
-	const modemDetailsURL = `https://api-compass.speedcast.com/v2.0/${provider}/${modemId}`;
+	const modemDetailsURL = `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${modemId}`;
 	const modemDetails = await fetchModemDetails(modemDetailsURL, accessToken);
 
 	if (!modemDetails) {

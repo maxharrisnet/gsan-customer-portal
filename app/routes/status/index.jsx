@@ -38,7 +38,7 @@ async function fetchAllServices(accessToken) {
 }
 
 async function fetchModemDetails($modemId, accessToken) {
-	const url = `https://api-compass.speedcast.com/v2.0/starlink/${modemId}`;
+	const url = `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${modemId}`;
 
 	const response = await axios.get(url, {
 		headers: { Authorization: `Bearer ${accessToken}` },

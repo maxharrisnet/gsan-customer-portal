@@ -13,12 +13,12 @@ export const loader = async ({ params }) => {
 	const { provider, modemId } = params;
 	const accessToken = await getCompassAccessToken();
 
-	const modemDetailsURL = `https://api-compass.speedcast.com/v2.0/${provider}/${modemId}`;
+	const modemDetailsURL = `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${modemId}`;
+	console.log('$$$ modemDetailsURL:', modemDetailsURL);
 	const modem = await fetchModemDetails(modemDetailsURL, accessToken);
-	console.log('$$$ modem !!!:', modem);
 
 	if (!modem) {
-		throw new Response('No data available for modem $$$', { status: 404 });
+		throw new Response('No data available for modem', { status: 404 });
 	}
 
 	const gpsData = await fetchGPS(provider, [modemId], accessToken);
