@@ -14,17 +14,19 @@ export const loader = async ({ params }) => {
 		});
 
 		const modem = modemResponse.data;
-		const gpsData = await fetchGPS(modem.type, [modem.id], accessToken);
+		// const gpsData = await fetchGPS(modem.type, [modem.id], accessToken);
 		const latencyData = modem.data.latency.data || [];
 		const throughputData = modem.data.throughput.data || [];
 		const signalQualityData = modem.data.signal.data || [];
 		const obstructionData = modem.data.obstruction.data || [];
 		const usageData = modem.usage || [];
 		const uptimeData = modem.data.uptime.data || [];
+		const mapsAPIKey = process.env.GOOGLE_MAPS_API_KEY;
 
 		const modemDetails = {
 			modem,
-			gpsData,
+			mapsAPIKey,
+			// gpsData,
 			latencyData,
 			throughputData,
 			signalQualityData,
@@ -40,6 +42,6 @@ export const loader = async ({ params }) => {
 		return json(modemDetails);
 	} catch (error) {
 		console.error('Error fetching modem details: ', error);
-		throw new Response('Internal Server Error', { status: 500 });
+		throw new Response('Internal Server Error 🦧', { status: 500 });
 	}
 };

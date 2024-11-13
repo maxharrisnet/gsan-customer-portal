@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
-// import './Header.css';
-import logo from '../../../public/assets/images/GSAN-logo.png';
 
 const Header = () => {
 	return (
@@ -9,7 +7,7 @@ const Header = () => {
 			<div className='header-container'>
 				<div className='logo'>
 					<img
-						src={logo}
+						src='/assets/images/GSAN-logo.png'
 						alt='GSAN Logo'
 					/>
 				</div>

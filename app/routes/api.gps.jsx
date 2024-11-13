@@ -1,8 +1,9 @@
+import { json } from '@remix-run/node';
 import axios from 'axios';
 
 export function getGPSURL(provider) {
 	const baseUrl = 'https://api-compass.speedcast.com/v2.0';
-	switch (provider.toLowerCase) {
+	switch (provider.toLowerCase()) {
 		case 'starlink':
 			return `${baseUrl}/starlinkgps`;
 		case 'idirect':
@@ -15,10 +16,13 @@ export function getGPSURL(provider) {
 			return null;
 	}
 }
-async function fetchGPS(provider, ids, accessToken) {
-	// Proceed with API call
+
+export const loader = async ({ params }) => {
+	const { provider, ids } = params;
+	const accessToken = process.env.COMPASS_ACCESS_TOKEN; // Ensure this is set in your environment
+
 	const url = getGPSURL(provider.toLowerCase());
-	const postData = { ids };
+	const postData = { ids: ids.split(',') }; // Assuming ids are passed as a comma-separated string
 
 	try {
 		const response = await axios.post(url, postData, {
@@ -31,17 +35,15 @@ async function fetchGPS(provider, ids, accessToken) {
 		console.log('📣 GPS Response:', response);
 
 		if (response.status === 200) {
-			return response.data;
+			return json(response.data);
 		} else if (response.status === 429) {
 			console.error('Error 429: Rate limit exceeded.');
-			return null;
+			return json({ error: 'Rate limit exceeded' }, { status: 429 });
 		} else {
-			return `Error: HTTP code ${response.status}.`;
+			return json({ error: `HTTP code ${response.status}` }, { status: response.status });
 		}
 	} catch (error) {
 		console.error('Network Error:', error.message);
-		return null;
+		return json({ error: 'Network Error' }, { status: 500 });
 	}
-}
-
-export default fetchGPS;
+};

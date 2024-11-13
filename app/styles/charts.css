@@ -1,0 +1,4 @@
+.chart-wrapper {
+	padding: var(--spacing-large * 4);
+	text-align: center;
+}

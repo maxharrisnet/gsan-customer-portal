@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+// import { APIProvider, Map } from '@vis.gl/react-google-maps';
 
 const MapComponent = ({ gpsData }) => {
 	useEffect(() => {

@@ -3,7 +3,7 @@ import { json } from '@remix-run/node';
 import axios from 'axios';
 import { getCompassAccessToken } from '../api.get-compass-access-token';
 import Layout from '../../components/layout/Layout';
-import * as WebDataRocksReact from '@webdatarocks/react-webdatarocks';
+// import * as WebDataRocksReact from '@webdatarocks/react-webdatarocks';
 
 export const loader = async () => {
 	const accessToken = await getCompassAccessToken();
@@ -75,11 +75,11 @@ const Reports = () => {
 	return (
 		<Layout>
 			<div>
-				<WebDataRocksReact.Pivot
+				{/* <WebDataRocksReact.Pivot
 					toolbar={true}
 					report={yourReportObject}
 					reportcomplete={this.onReportComplete}
-				/>
+				/> */}
 			</div>
 		</Layout>
 	);

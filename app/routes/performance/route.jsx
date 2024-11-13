@@ -5,7 +5,7 @@ import { getCompassAccessToken } from '../api.get-compass-access-token';
 import { AppProvider as PolarisAppProvider, Page, Text, Card, Button, BlockStack, Box, Link, InlineStack } from '@shopify/polaris';
 import polarisTranslations from '@shopify/polaris/locales/en.json';
 import Layout from '../../components/layout/Layout';
-import performanceStyles from './performance.css';
+import performanceStyles from './performance.css?url';
 
 export const links = () => [{ rel: 'stylesheet', href: performanceStyles }];
 
@@ -43,7 +43,7 @@ export const loader = async () => {
 		return json({ services: servicesWithModemDetails, polarisTranslations });
 	} catch (error) {
 		console.error('Error fetching performance data:', error);
-		throw new Response('Internal Server Error', { status: 500 });
+		throw new Response('Internal Server Error 🤔', { status: 500 });
 	}
 };
 
@@ -68,17 +68,16 @@ export default function Performance() {
 								service.modems.map((modem) => (
 									<div
 										key={modem.id}
-										className='row p-2'
-										inlineAlign='center'
+										className=''
 									>
 										<a
 											href={`/modem/${modem.type.toLowerCase()}/${modem.id}`}
 											className='text-black text-decoration-none fw-bold'
 										>
-											<div class='card'>
+											<div class='section'>
 												<div className='card-body'>
 													<div className='flex-row'>
-														<div className='w25'>
+														<div>
 															<h3 className='card-title fs-6'>{modem.name}</h3>
 															<Text
 																as='h4'
@@ -89,7 +88,7 @@ export default function Performance() {
 														</div>
 														{modem.details.data.latency && modem.details.data.latency.data.length > 0 ? (
 															<div
-																className='latency-bar-24h d-flex rounded'
+																className='latency-bar d-flex rounded'
 																style={{ width: '70%', height: '50px' }}
 															>
 																{modem.details.data.latency.data.map((latencyPoint, index) => {
@@ -106,11 +105,11 @@ export default function Performance() {
 																})}
 															</div>
 														) : (
-															<p className='mb-0'>No data available</p>
+															<span>No data available</span>
 														)}
 													</div>
 												</div>
-											</Card>
+											</div>
 										</a>
 									</div>
 								))
@@ -122,7 +121,7 @@ export default function Performance() {
 				) : (
 					<div className='bg-light'>
 						<div className='container-sm'>
-							<div className='row text-center'>
+							<div className='text-center'>
 								<p>No services available.</p>
 							</div>
 						</div>
