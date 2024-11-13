@@ -3,8 +3,9 @@
 	margin: auto;
 }
 
-w25 {
-	width: 25%;
+.flex-row {
+	display: flex;
+	flex-flow: row;
 }
 
 .card {

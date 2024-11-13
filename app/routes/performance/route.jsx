@@ -75,9 +75,9 @@ export default function Performance() {
 											href={`/modem/${modem.type.toLowerCase()}/${modem.id}`}
 											className='text-black text-decoration-none fw-bold'
 										>
-											<Card background='bg-surface'>
+											<div class='card'>
 												<div className='card-body'>
-													<div className='d-flex justify-content-between align-items-center'>
+													<div className='flex-row'>
 														<div className='w25'>
 															<h3 className='card-title fs-6'>{modem.name}</h3>
 															<Text
