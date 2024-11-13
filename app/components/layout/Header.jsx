@@ -1,25 +1,28 @@
 import React from 'react';
 import { Link } from '@remix-run/react';
 // import './Header.css';
+import logo from '../../../public/assets/images/GSAN-logo.png';
 
 const Header = () => {
 	return (
 		<header className='header'>
 			<div className='header-container'>
-				<div className='logo'>MyApp</div>
+				<div className='logo'>
+					<img
+						src={logo}
+						alt='GSAN Logo'
+					/>
+				</div>
 				<nav className='nav'>
 					<ul className='nav-list'>
 						<li className='nav-item'>
-							<Link to='/'>Home</Link>
+							<Link to='/'>Map View</Link>
 						</li>
 						<li className='nav-item'>
-							<Link to='/about'>About</Link>
+							<Link to='/performance'>Performance</Link>
 						</li>
 						<li className='nav-item'>
-							<Link to='/services'>Services</Link>
-						</li>
-						<li className='nav-item'>
-							<Link to='/contact'>Contact</Link>
+							<Link to='/reports'>Reports</Link>
 						</li>
 					</ul>
 				</nav>
