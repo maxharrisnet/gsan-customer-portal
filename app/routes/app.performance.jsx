@@ -26,7 +26,6 @@ export const loader = async () => {
 							const detailsResponse = await axios.get(url, {
 								headers: { Authorization: `Bearer ${accessToken}` },
 							});
-							console.log('detailsResponse:', detailsResponse.data);
 							return { ...modem, details: detailsResponse.data };
 						})
 					);
@@ -81,7 +80,6 @@ export default function Performance() {
 														<h3 className='card-title fs-6'>{modem.name}</h3>
 														<h4 className='card-subtitle h6 font-weight-bolder text-secondary'>{service.name}</h4>
 													</div>
-													{console.log('$$$$modem details daaatas:', modem.details.data)}
 													{modem.details.data.latency && modem.details.data.latency.data.length > 0 ? (
 														<div
 															className='latency-bar-24h d-flex rounded'

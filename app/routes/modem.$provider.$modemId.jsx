@@ -12,7 +12,7 @@ export { loader };
 
 export default function ModemDetails() {
 	const { provider, modemId } = useParams();
-	const { modem, gpsData, latencyData, throughputData, signalQualityData, obstructionData, usageData, uptimeData } = useLoaderData();
+	const { gpsData, latencyData, throughputData, signalQualityData, obstructionData, usageData, uptimeData } = useLoaderData();
 
 	const latencyTimestamps = latencyData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const latencyValues = latencyData.map((entry) => entry[1]);

@@ -1,31 +1,46 @@
+/* Layout styles */
 .layout {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	background-color: #f0f0f0; /* Light grey background */
+	font-family: 'Inter', sans-serif; /* Inter font */
+	color: #000; /* Black text */
 }
 
+/* Wrapper styles */
 .wrapper {
 	display: flex;
 	flex: 1;
+	gap: 1rem; /* Space between sidebar and main content */
 }
 
+/* Container styles */
 .container {
 	padding: var(--spacing-base);
-	max-width: 1200px;
+	margin: 1rem auto; /* Center the container and add some margin */
+	background-color: #fff; /* White background */
+	border-radius: 8px; /* Rounded corners */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Drop shadow */
+	border: 1px solid #e0e0e0; /* Light grey border */
 }
 
+/* Header styles */
 .header {
-	background-color: #333;
-	color: #fff;
+	background-color: #fff; /* White background */
+	color: #000; /* Black text */
 	padding: 1rem;
+	border-bottom: 1px solid #e0e0e0; /* Light grey border */
 }
 
+/* Header container styles */
 .header-container {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
+/* Navigation styles */
 .nav {
 	display: flex;
 }
@@ -42,44 +57,31 @@
 }
 
 .nav-item a {
-	color: #fff;
+	color: #000; /* Black text */
 	text-decoration: none;
+	padding: 0.5rem 1rem;
+	border-radius: 4px; /* Rounded corners */
+	transition: background-color 0.3s;
 }
 
-.layout-content {
-	display: flex;
-	flex: 1;
+.nav-item a:hover {
+	background-color: #e0e0e0; /* Light grey background on hover */
 }
 
+/* Sidebar styles */
 .sidebar {
 	width: 200px;
-	background-color: #f4f4f4;
+	background-color: #fff; /* White background */
 	padding: 1rem;
-}
-
-.sidebar-list {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.sidebar-item {
-	margin-bottom: 1rem;
-}
-
-.sidebar-item a {
-	text-decoration: none;
-	color: #333;
-}
-
-.main-content {
-	flex: 1;
-	padding: 1rem;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Drop shadow */
+	border: 1px solid #e0e0e0; /* Light grey border */
+	margin-right: 1rem; /* Space between sidebar and main content */
 }
 
 .footer {
-	background-color: #333;
-	color: #fff;
-	text-align: center;
+	background-color: #fff; /* White background */
+	color: #000; /* Black text */
 	padding: 1rem;
+	border-top: 1px solid #e0e0e0; /* Light grey border */
+	text-align: center;
 }

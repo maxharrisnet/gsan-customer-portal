@@ -1,7 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from '@remix-run/react';
-import globalStylesUrl from './styles/global.css?url';
+import globalStyles from './styles/global.css';
 
-export const links = () => [{ rel: 'stylesheet', href: globalStylesUrl }];
+export const links = () => [{ rel: 'stylesheet', href: globalStyles }];
 
 export default function Root() {
 	return (

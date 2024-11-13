@@ -5,7 +5,9 @@ import { getCompassAccessToken } from '../api.get-compass-access-token';
 import { AppProvider as PolarisAppProvider, Page, Text, Card, Button, BlockStack, Box, Link, InlineStack } from '@shopify/polaris';
 import polarisTranslations from '@shopify/polaris/locales/en.json';
 import Layout from '../../components/layout/Layout';
-import styles from './styles.module.css';
+import performanceStyles from './performance.css';
+
+export const links = () => [{ rel: 'stylesheet', href: performanceStyles }];
 
 export const loader = async () => {
 	const accessToken = await getCompassAccessToken();
@@ -41,7 +43,7 @@ export const loader = async () => {
 		return json({ services: servicesWithModemDetails, polarisTranslations });
 	} catch (error) {
 		console.error('Error fetching performance data:', error);
-		throw new Response('Internal Server Error 🤷', { status: 500 });
+		throw new Response('Internal Server Error', { status: 500 });
 	}
 };
 
@@ -62,7 +64,6 @@ export default function Performance() {
 				{services.length > 0 ? (
 					services.map((service) => (
 						<div key={service.id}>
-							<h2>{service.name}</h2>
 							{service.modems && service.modems.length > 0 ? (
 								service.modems.map((modem) => (
 									<div
@@ -75,15 +76,10 @@ export default function Performance() {
 											className='text-black text-decoration-none fw-bold'
 										>
 											<Card background='bg-surface'>
-												<div className={styles.cardBody}>
+												<div className='card-body'>
 													<div className='d-flex justify-content-between align-items-center'>
-														<div className={styles.w25}>
-															<Text
-																as='h3'
-																className='card-title fs-6'
-															>
-																{modem.name}
-															</Text>
+														<div className='w25'>
+															<h3 className='card-title fs-6'>{modem.name}</h3>
 															<Text
 																as='h4'
 																className='card-subtitle h6 font-weight-bolder text-secondary'
