@@ -58,7 +58,7 @@ export default function Performance() {
 
 	return (
 		<Layout>
-			<div>
+			<div className='container'>
 				{services.length > 0 ? (
 					services.map((service) => (
 						<div key={service.id}>
@@ -70,8 +70,8 @@ export default function Performance() {
 										className='row p-2'
 										inlineAlign='center'
 									>
-										<Link
-											to={`/modem/${modem.type.toLowerCase()}/${modem.id}`}
+										<a
+											href={`/modem/${modem.type.toLowerCase()}/${modem.id}`}
 											className='text-black text-decoration-none fw-bold'
 										>
 											<Card background='bg-surface'>
@@ -115,7 +115,7 @@ export default function Performance() {
 													</div>
 												</div>
 											</Card>
-										</Link>
+										</a>
 									</div>
 								))
 							) : (

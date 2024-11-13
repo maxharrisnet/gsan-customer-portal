@@ -1,10 +1,12 @@
 import { useParams, useLoaderData } from '@remix-run/react';
 import { loader } from './api.modem';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Line, Bar } from 'react-chartjs-2';
-
 import Layout from '../components/layout/Layout';
 import MapComponent from '../components/charts/MapComponent';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Line, Bar } from 'react-chartjs-2';
+import { useEffect, useRef } from 'react';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend);
 
 export { loader };
 
@@ -32,9 +34,46 @@ export default function ModemDetails() {
 	const uptimeLabels = uptimeData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const uptimeValues = uptimeData.map((entry) => Math.ceil((entry[1] / 86400) * 10) / 10);
 
+	const usageChartRef = useRef(null);
+	const signalQualityChartRef = useRef(null);
+	const throughputChartRef = useRef(null);
+	const latencyChartRef = useRef(null);
+	const obstructionChartRef = useRef(null);
+	const uptimeChartRef = useRef(null);
+
+	useEffect(() => {
+		return () => {
+			// Clean up chart instances on component unmount to prevent reuse issues
+			if (usageChartRef.current) {
+				usageChartRef.current.destroy();
+				usageChartRef.current = null;
+			}
+			if (signalQualityChartRef.current) {
+				signalQualityChartRef.current.destroy();
+				signalQualityChartRef.current = null;
+			}
+			if (throughputChartRef.current) {
+				throughputChartRef.current.destroy();
+				throughputChartRef.current = null;
+			}
+			if (latencyChartRef.current) {
+				latencyChartRef.current.destroy();
+				latencyChartRef.current = null;
+			}
+			if (obstructionChartRef.current) {
+				obstructionChartRef.current.destroy();
+				obstructionChartRef.current = null;
+			}
+			if (uptimeChartRef.current) {
+				uptimeChartRef.current.destroy();
+				uptimeChartRef.current = null;
+			}
+		};
+	}, []);
+
 	return (
 		<Layout>
-			<div>
+			<div className='container'>
 				<h1>Modem Details</h1>
 				<p>Provider: {provider}</p>
 				<p>Modem ID: {modemId}</p>

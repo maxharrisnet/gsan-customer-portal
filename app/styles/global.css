@@ -103,7 +103,3 @@ select:focus {
 	border-color: var(--color-primary);
 	outline: none;
 }
-
-.container {
-	padding: var(--spacing-base);
-}
