@@ -16,7 +16,6 @@ export { loader };
 export default function ModemDetails() {
 	const { provider, modemId } = useParams();
 	const { modem, gpsData, mapsAPIKey, latencyData, throughputData, signalQualityData, obstructionData, usageData, uptimeData } = useLoaderData();
-	console.log('🌎🌎🌎 Maps API Key: ', mapsAPIKey);
 
 	const latencyTimestamps = latencyData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const latencyValues = latencyData.map((entry) => entry[1]);

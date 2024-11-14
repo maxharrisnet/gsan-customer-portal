@@ -16,6 +16,11 @@
 	margin-bottom: var(--spacing-large);
 }
 
+.card-title {
+	font-size: var(--font-size-lg);
+	margin-bottom: var(--spacing-base);
+}
+
 .cardBody {
 	font-size: var(--font-size-base);
 }

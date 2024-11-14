@@ -2,3 +2,15 @@
 	padding: var(--spacing-large * 4);
 	text-align: center;
 }
+
+.chart-wrapper canvas {
+	max-width: 100%;
+}
+
+.map-wrapper {
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	margin: var(--spacing-large) * 2;
+	border-radius: var(--border-radius-large);
+}

@@ -17,12 +17,9 @@ export function getGPSURL(provider) {
 	}
 }
 
-export const loader = async ({ params }) => {
-	const { provider, ids } = params;
-	const accessToken = process.env.COMPASS_ACCESS_TOKEN; // Ensure this is set in your environment
-
+export const fetchGPS = async (provider, ids, accessToken) => {
 	const url = getGPSURL(provider.toLowerCase());
-	const postData = { ids: ids.split(',') }; // Assuming ids are passed as a comma-separated string
+	const postData = { ids };
 
 	try {
 		const response = await axios.post(url, postData, {
@@ -32,10 +29,10 @@ export const loader = async ({ params }) => {
 			},
 		});
 
-		console.log('📣 GPS Response:', response);
+		console.log('🌍 GPS Response: ', response.data);
 
 		if (response.status === 200) {
-			return json(response.data);
+			return response.data;
 		} else if (response.status === 429) {
 			console.error('Error 429: Rate limit exceeded.');
 			return json({ error: 'Rate limit exceeded' }, { status: 429 });
@@ -47,3 +44,5 @@ export const loader = async ({ params }) => {
 		return json({ error: 'Network Error' }, { status: 500 });
 	}
 };
+
+export default fetchGPS;
