@@ -2,9 +2,10 @@ import { useEffect, useRef } from 'react';
 import { useParams, useLoaderData } from '@remix-run/react';
 import { loader } from './api.modem';
 import Layout from '../components/layout/Layout';
+import Sidebar from '../components/layout/Sidebar';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import chartStyles from '../styles/charts.css?url';
 
 export const links = () => [{ rel: 'stylesheet', href: chartStyles }];
@@ -76,7 +77,12 @@ export default function ModemDetails() {
 
 	return (
 		<Layout>
-			<div className='container'>
+			<Sidebar>
+				<h2>{modem.name}</h2>
+				<p>{modem.type}</p>
+				<p>{modem.id}</p>
+			</Sidebar>
+			<main className='content'>
 				<section className='map-wrapper'>
 					<APIProvider apiKey={mapsAPIKey}>
 						<Map
@@ -88,7 +94,6 @@ export default function ModemDetails() {
 						/>
 					</APIProvider>
 				</section>
-
 				<section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar
@@ -197,7 +202,7 @@ export default function ModemDetails() {
 						}}
 					/>
 				</section>
-			</div>
+			</main>
 		</Layout>
 	);
 }

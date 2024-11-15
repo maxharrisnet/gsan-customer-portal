@@ -40,29 +40,28 @@ export default function Performance() {
 															<h3 className='card-title fs-6'>{modem.name}</h3>
 															<h4 className='card-subtitle'> {service.name} </h4>
 														</div>
-														{showLatency(modem) ? (
-															<div
-																className='latency-bar'
-																style={{ width: '60%', height: '50px' }}
-															>
-																{modem.details.data.latency.data.map((latencyPoint, index) => {
-																	const latencyValue = latencyPoint[1];
-																	const latencyClass = getLatencyClass(latencyValue);
-																	const segmentWidth = (10 / 1440) * 100; // 10 minutes out of 1440 minutes in 24 hours
-																	return (
-																		<div
-																			key={index}
-																			className={`latency-segment ${latencyClass}`}
-																			style={{ width: `${segmentWidth}%` }}
-																		></div>
-																	);
-																})}
-															</div>
-														) : (
-															<div className='empty-data-bar'>
-																<span>No data available</span>
-															</div>
-														)}
+														<div className='data-wrapper'>
+															{showLatency(modem) ? (
+																<div className='latency-bar'>
+																	{modem.details.data.latency.data.map((latencyPoint, index) => {
+																		const latencyValue = latencyPoint[1];
+																		const latencyClass = getLatencyClass(latencyValue);
+																		const segmentWidth = (10 / 1440) * 100; // 10 minutes out of 1440 minutes in 24 hours
+																		return (
+																			<div
+																				key={index}
+																				className={`latency-segment ${latencyClass}`}
+																				style={{ width: `${segmentWidth}%` }}
+																			></div>
+																		);
+																	})}
+																</div>
+															) : (
+																<div className='empty-data'>
+																	<span>No data available</span>
+																</div>
+															)}
+														</div>
 													</div>
 												</div>
 											</div>

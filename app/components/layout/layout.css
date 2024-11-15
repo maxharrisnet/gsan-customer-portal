@@ -12,12 +12,39 @@
 .wrapper {
 	display: flex;
 	flex: 1;
+	max-width: 100vw;
+	overflow: hidden;
+	background-color: var(--color-background);
+	min-height: 80vh; /* TODO: Hack for login page - fix */
+}
+
+.container {
+	padding: var(--spacing-base);
+	width: 1200px;
+	max-width: 100%;
+	margin: 0 auto;
+	display: flex;
+	flex-flow: column;
+	gap: var(--spacing-base);
 }
 
 /* Container styles */
-.container {
-	padding: var(--spacing-base);
-	margin: var(--spacing-base);
+.content {
+	padding: var(--spacing-large);
+	width: 100%;
+	flex: 1;
+	display: flex;
+	gap: var(--spacing-large);
+	flex-flow: column;
+}
+
+.centered-content {
+	display: grid;
+	place-items: center;
+	max-width: 600px;
+	width: 100%;
+	margin: var(--spacing-large) auto;
+	padding: var(--spacing-large) * 2;
 }
 
 .section {
@@ -26,11 +53,7 @@
 	border-radius: 8px; /* Rounded corners */
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Drop shadow */
 	border: 1px solid #e0e0e0; /* Light grey border */
-	margin: 40px; /* Space between sidebar and main content */
-}
-
-.main-content {
-	flex: 1;
+	width: 100%;
 }
 
 /* Header styles */
@@ -86,7 +109,10 @@
 
 /* Sidebar styles */
 .sidebar {
-	width: 200px;
+	position: sticky;
+	top: 0;
+	flex-shrink: 0;
+	width: 300px;
 	background-color: #fff; /* White background */
 	padding: 1rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Drop shadow */

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useLoaderData } from '@remix-run/react';
 import { loader } from './api.services';
 import Layout from './../components/layout/Layout';
+import Sidebar from './../components/layout/Sidebar';
 
 export { loader };
 
@@ -10,17 +11,42 @@ const Reports = () => {
 	console.log('📊 📊 📊 Data: ', services[0].modems[0].details.usage);
 	const [WebDataRocks, setWebDataRocks] = useState(null);
 
-	const flattenedData = services.flatMap((service) =>
-		service.modems.flatMap((modem) => {
-			const usage = Array.isArray(modem.details.usage) ? modem.details.usage : [modem.details.usage]; // Ensure usage is an array
+	// Helper function to calculate averages
+	const calculateAverage = (arr) => (arr.length > 0 ? arr.reduce((sum, val) => sum + val, 0) / arr.length : 0);
 
-			return usage.map((entry) => ({
-				serviceName: service.name,
-				serviceId: service.id,
-				modemId: modem.id,
-				date: entry.date,
-				priority: entry.priority,
-			}));
+	// Flatten and compute the necessary fields
+	const flattenedData = services.flatMap((service) =>
+		service.modems.map((modem) => {
+			// Extract data safely
+			const latencyData = modem.data?.latency?.data || [];
+			const throughputData = modem.data?.throughput?.data || {};
+			const signalQualityData = modem.data?.signal?.data || [];
+			const uptimeData = modem.data?.uptime?.data || [];
+			const usageData = modem.usage || [];
+
+			// Calculate averages and totals
+			const avgLatency = calculateAverage(latencyData).toFixed(2);
+			const avgDownload = calculateAverage(throughputData.download || []).toFixed(2);
+			const avgUpload = calculateAverage(throughputData.upload || []).toFixed(2);
+			const avgSignal = calculateAverage(signalQualityData).toFixed(2);
+			const avgUptime = calculateAverage(uptimeData).toFixed(2);
+
+			const totalPriority = usageData.reduce((sum, u) => sum + (u.priority || 0), 0).toFixed(2);
+			const totalStandard = usageData.reduce((sum, u) => sum + (u.standard || 0), 0).toFixed(2);
+
+			return {
+				Service: service.name,
+				Status: modem.status === 'online' ? 'Online' : 'Offline',
+				Kit: service.id,
+				PriorityData: totalPriority, // in GB
+				StandardData: totalStandard, // in GB
+				UsageLimit: modem.details.meta.usageLimit || 'N/A', // in GB, or fallback
+				AvgLatency: avgLatency, // in ms
+				AvgDownloadThroughput: avgDownload, // in Mbps
+				AvgUploadThroughput: avgUpload, // in Mbps
+				AvgSignalQuality: avgSignal, // in %
+				AvgUptime: avgUptime, // in %
+			};
 		})
 	);
 
@@ -40,29 +66,39 @@ const Reports = () => {
 
 	return (
 		<Layout>
-			<div>
+			<Sidebar>
+				<ul>
+					<li>Reports</li>
+				</ul>
+			</Sidebar>
+			<main className='content'>
 				<h1>Reports</h1>
 				<section className='section'>
 					<WebDataRocks
 						toolbar={true}
+						width='100%'
+						height='300px'
 						report={{
 							dataSource: {
 								data: flattenedData,
 							},
 							slice: {
-								rows: [{ uniqueName: 'serviceName' }, { uniqueName: 'modemId' }, { uniqueName: 'date' }],
+								rows: [{ uniqueName: 'Service' }, { uniqueName: 'Kit' }],
 								columns: [{ uniqueName: 'Measures' }],
 								measures: [
-									{
-										uniqueName: 'priority',
-										aggregation: 'average',
-									},
+									{ uniqueName: 'PriorityData', aggregation: 'sum' },
+									{ uniqueName: 'StandardData', aggregation: 'sum' },
+									{ uniqueName: 'UsageLimit', aggregation: 'sum' },
+									{ uniqueName: 'AvgLatency', aggregation: 'average' },
+									{ uniqueName: 'AvgDownloadThroughput', aggregation: 'average' },
+									{ uniqueName: 'AvgUploadThroughput', aggregation: 'average' },
+									{ uniqueName: 'AvgSignalQuality', aggregation: 'average' },
 								],
 							},
 						}}
 					/>
 				</section>
-			</div>
+			</main>
 		</Layout>
 	);
 };

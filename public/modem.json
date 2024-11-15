@@ -1,0 +1,96 @@
+Modem: {
+   name: 'Starlink Flat HP Kit - Land (Mobility)-KITP00283410',
+   type: 'Starlink',
+   id: 'KITP00283410',
+   sys_id: 'e8622a741b80d690dfe58449d34bcb55',
+   details: {
+     type: 'starlink',
+     meta: {
+       dishSerialNumber: 'HPUNE00000066102',
+       kitSerialNumber: 'KITP00283410',
+       serviceLineNumber: 'SL-1700763-96877-86',
+       userTerminalId: '01000000-00000000-00ba2eae',
+       usageLimit: 6000,
+       kit1: 'KITP00283410'
+    },
+     id: 'KITP00283410',
+     data: {
+       latency: [Object
+      ],
+       throughput: [Object
+      ],
+       obstruction: [Object
+      ],
+       signal: [Object
+      ],
+       uptime: [Object
+      ]
+    },
+     usage: [
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+      [Object
+      ],
+    }
+  }
+}

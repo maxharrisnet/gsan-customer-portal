@@ -1,21 +1,44 @@
 @import '@webdatarocks/webdatarocks/webdatarocks.css';
 
 :root {
-	--font-family-base: 'Helvetica Neue', Arial, sans-serif;
+	--font-family-base: 'Inter, Helvetica Neue', Arial, sans-serif;
 	--font-size-base: 16px;
 	--font-size-large: 20px;
 	--font-size-small: 14px;
+
+	--container-width: 1200px;
+	--spacing-base: 16px;
+	--spacing-large: 24px;
+	--spacing-small: 8px;
+	--border-radius: 4px;
+	--border-radius-large: 8px;
+
+	/* Colors */
 	--color-primary: #5c6ac4;
 	--color-secondary: #006fbb;
 	--color-background: #f4f6f8;
 	--color-text: #212b36;
 	--color-text-light: #637381;
 	--color-border: #dfe3e8;
-	--spacing-base: 16px;
-	--spacing-large: 24px;
-	--spacing-small: 8px;
-	--border-radius: 4px;
-	--border-radius-large: 8px;
+
+	/* Original colors */
+	--wifi-green: #83c341;
+	--monitor-blue: #5baed9;
+	--phone-orange: #f16737;
+	--text-black: #333333;
+	--background-white: #ffffff;
+
+	/* Lighter colors */
+	--wifi-green-light: #a9d870;
+	--monitor-blue-light: #8bcff0;
+	--phone-orange-light: #f69263;
+	--text-black-light: #666666;
+
+	/* Darker colors */
+	--wifi-green-dark: #618c2e;
+	--monitor-blue-dark: #3986a8;
+	--phone-orange-dark: #c5522b;
+	--text-black-dark: #111111;
 }
 
 body {
@@ -44,6 +67,7 @@ h6 {
 
 h1 {
 	font-size: 2rem;
+	margin: var(--spacing-large) 0;
 }
 
 h2 {
@@ -111,10 +135,4 @@ textarea:focus,
 select:focus {
 	border-color: var(--color-primary);
 	outline: none;
-}
-
-.container {
-	padding: var(--spacing-base);
-	max-width: 1200px;
-	margin: 0 auto;
 }
