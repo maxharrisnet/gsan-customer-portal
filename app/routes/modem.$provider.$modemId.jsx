@@ -45,6 +45,26 @@ export default function ModemDetails() {
 	const obstructionChartRef = useRef(null);
 	const uptimeChartRef = useRef(null);
 
+	// Set global defaults for Chart.js
+	ChartJS.defaults.plugins.legend.display = false;
+	ChartJS.defaults.plugins.legend.position = 'bottom';
+	ChartJS.defaults.elements.point.radius = 0;
+	ChartJS.defaults.elements.point.hoverRadius = 5;
+	ChartJS.defaults.elements.point.hoverBorderWidth = 1;
+	ChartJS.defaults.elements.point.backgroundColor = '#3986a8';
+	ChartJS.defaults.elements.point.borderColor = '#3986a8';
+
+	// Bar Chart Defaults
+	ChartJS.defaults.elements.bar.backgroundColor = '#3986a8';
+	ChartJS.defaults.elements.bar.borderWidth = 1;
+
+	// Line Chart Defaults
+	ChartJS.defaults.elements.line.hitRadius = 15;
+	ChartJS.defaults.elements.line.borderCapStyle = 'round';
+	ChartJS.defaults.elements.line.borderColor = '#3986a8';
+	ChartJS.defaults.elements.line.borderWidth = 1;
+	ChartJS.defaults.elements.line.fill = true;
+
 	useEffect(() => {
 		return () => {
 			// Clean up chart instances on component unmount to prevent reuse issues

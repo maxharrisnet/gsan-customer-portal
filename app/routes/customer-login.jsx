@@ -7,12 +7,12 @@ import Layout from '../components/layout/Layout';
 
 const SONAR_API_URL = 'https://switch.sonar.software/api/v1';
 
-async function authenticateSonarUser(email, password) {
+async function authenticateSonarUser(username, password) {
 	try {
 		const response = await axios.post(
-			`${SONAR_API_URL}/users/authenticate`,
+			`${SONAR_API_URL}/customer_portal/auth`,
 			{
-				email,
+				username,
 				password,
 			},
 			{
@@ -24,7 +24,7 @@ async function authenticateSonarUser(email, password) {
 		);
 
 		if (response.data && response.data.data && response.data.data.token) {
-			return { success: true, token: response.data.data.token, email };
+			return { success: true, token: response.data.data.token, username };
 		} else {
 			return { success: false, error: 'Authentication failed' };
 		}
@@ -80,10 +80,13 @@ async function getShopifyCustomerByEmail(request, email) {
 
 export async function action({ request }) {
 	const formData = await request.formData();
-	const email = formData.get('email');
+	const username = formData.get('username');
 	const password = formData.get('password');
+	const email = 'test@test.com';
 
-	const sonarAuth = await authenticateSonarUser(email, password);
+	const sonarAuth = await authenticateSonarUser(username, password);
+
+	console.log(sonarAuth);
 
 	if (sonarAuth.success) {
 		const shopifyCustomer = await getShopifyCustomerByEmail(request, email);
@@ -112,8 +115,8 @@ export default function CustomerLogin() {
 						<h2>Login with Sonar</h2>
 						<Form method='post'>
 							<input
-								type='email'
-								name='email'
+								type='text'
+								name='username'
 								required
 							/>
 							<input

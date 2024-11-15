@@ -8,7 +8,6 @@ export { loader };
 
 const Reports = () => {
 	const { services } = useLoaderData();
-	console.log('📊 📊 📊 Data: ', services[0].modems[0].details.usage);
 	const [WebDataRocks, setWebDataRocks] = useState(null);
 
 	// Helper function to calculate averages
