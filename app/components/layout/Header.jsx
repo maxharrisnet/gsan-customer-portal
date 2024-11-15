@@ -14,13 +14,15 @@ const Header = () => {
 				<nav className='nav'>
 					<ul className='nav-list'>
 						<li className='nav-item'>
+							{/* TODO: Make this a thing */}
 							<Link to='/'>Map View</Link>
 						</li>
 						<li className='nav-item'>
 							<Link to='/performance'>Performance</Link>
 						</li>
 						<li className='nav-item'>
-							<Link to='/reports'>Reports</Link>
+							{/* TODO: Make provider dynamic */}
+							<Link to='/reports/starlink/usage'>Reports</Link>
 						</li>
 					</ul>
 				</nav>

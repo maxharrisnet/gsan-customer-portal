@@ -1,9 +1,7 @@
-import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import axios from 'axios';
+import { useLoaderData } from '@remix-run/react';
 import { getCompassAccessToken } from '../api.get-compass-access-token';
-import { AppProvider as PolarisAppProvider, Page, Text, Card, Button, BlockStack, Box, Link, InlineStack } from '@shopify/polaris';
-import polarisTranslations from '@shopify/polaris/locales/en.json';
 import Layout from '../../components/layout/Layout';
 import performanceStyles from './performance.css?url';
 
@@ -13,7 +11,7 @@ export const loader = async () => {
 	const accessToken = await getCompassAccessToken();
 	const companyId = process.env.COMPASS_COMPANY_ID;
 	const servicesUrl = `https://api-compass.speedcast.com/v2.0/company/${companyId}`;
-	const modemDetailsUrl = (provider, modemId) => `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${modemId}`;
+	const modemDetailsUrl = (provider, modemId) => `https://api-compass.speedcast.com/v2.0/${encodeURI(provider.toLowerCase())}/${modemId}`;
 
 	try {
 		const servicesResponse = await axios.get(servicesUrl, {
@@ -40,7 +38,7 @@ export const loader = async () => {
 			})
 		);
 
-		return json({ services: servicesWithModemDetails, polarisTranslations });
+		return json({ services: servicesWithModemDetails });
 	} catch (error) {
 		console.error('Error fetching performance data:', error);
 		throw new Response('Internal Server Error 🤔', { status: 500 });
@@ -56,7 +54,6 @@ export function getLatencyClass(latency) {
 
 export default function Performance() {
 	const { services } = useLoaderData();
-	const loaderData = useLoaderData();
 
 	return (
 		<Layout>
@@ -71,7 +68,7 @@ export default function Performance() {
 										className=''
 									>
 										<a
-											href={`/modem/${modem.type.toLowerCase()}/${modem.id}`}
+											href={`/modem/${encodeURI(modem.type.toLowerCase())}/${modem.id}`}
 											className='text-black text-decoration-none fw-bold'
 										>
 											<div class='section'>
@@ -79,12 +76,7 @@ export default function Performance() {
 													<div className='flex-row'>
 														<div>
 															<h3 className='card-title fs-6'>{modem.name}</h3>
-															<Text
-																as='h4'
-																className='card-subtitle h6 font-weight-bolder text-secondary'
-															>
-																{service.name}
-															</Text>
+															<h4 className='card-subtitle'> {service.name} </h4>
 														</div>
 														{modem.details.data.latency && modem.details.data.latency.data.length > 0 ? (
 															<div

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export function getGPSURL(provider) {
 	const baseUrl = 'https://api-compass.speedcast.com/v2.0';
-	switch (provider.toLowerCase()) {
+	switch (encodeURI(provider.toLowerCase())) {
 		case 'starlink':
 			return `${baseUrl}/starlinkgps`;
 		case 'idirect':
@@ -18,7 +18,7 @@ export function getGPSURL(provider) {
 }
 
 export const fetchGPS = async (provider, ids, accessToken) => {
-	const url = getGPSURL(provider.toLowerCase());
+	const url = getGPSURL(provider);
 	const postData = { ids };
 
 	try {

@@ -8,7 +8,7 @@ export const loader = async () => {
 	const accessToken = await getCompassAccessToken();
 	const companyId = process.env.COMPASS_COMPANY_ID;
 	const servicesUrl = `https://api-compass.speedcast.com/v2.0/company/${companyId}`;
-	const modemDetailsUrl = (sysId) => `https://api-compass.speedcast.com/v2.0/${provider.toLowerCase()}/${sysId}`;
+	const modemDetailsUrl = (sysId) => `https://api-compass.speedcast.com/v2.0/starlink/${sysId}`;
 
 	try {
 		const servicesResponse = await axios.get(servicesUrl, {
@@ -66,7 +66,7 @@ export default function Performance() {
 									className='row p-2'
 								>
 									<a
-										href={`http://localhost/switch/modem_status_details.php?provider=${modem.type.toLowerCase()}&modemid=${modem.id}`}
+										href={`http://localhost/switch/modem_status_details.php?provider=${encodeURI(modem.type.toLowerCase())}&modemid=${modem.id}`}
 										className='text-black text-decoration-none fw-bold'
 									>
 										<div
