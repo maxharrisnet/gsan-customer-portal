@@ -37,6 +37,10 @@
 	overflow: hidden;
 }
 
+.empty-data-bar {
+	width: 100%;
+}
+
 .latency-segment {
 	height: 100%;
 	border-radius: 10px;

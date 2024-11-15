@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useLoaderData } from '@remix-run/react';
 import { loader } from './api.services';
 import Layout from './../components/layout/Layout';
-// import * as WebDataRocksReact from '@webdatarocks/react-webdatarocks';
 
 export { loader };
 
@@ -12,9 +11,13 @@ const Reports = () => {
 	const [WebDataRocks, setWebDataRocks] = useState(null);
 
 	useEffect(() => {
-		import('@webdatarocks/react-webdatarocks').then((module) => {
-			setWebDataRocks(module.default);
-		});
+		import('@webdatarocks/react-webdatarocks')
+			.then((module) => {
+				setWebDataRocks(() => module.default);
+			})
+			.catch((error) => {
+				console.error('Failed to load WebDataRocks:', error);
+			});
 	}, []);
 
 	if (!WebDataRocks) {
@@ -39,7 +42,7 @@ const Reports = () => {
 							],
 						},
 					}}
-				/>{' '}
+				/>
 			</div>
 		</Layout>
 	);
