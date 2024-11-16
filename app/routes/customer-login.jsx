@@ -7,6 +7,11 @@ import Layout from '../components/layout/Layout';
 
 const SONAR_API_URL = 'https://switch.sonar.software/api/v1';
 
+// Fetch Sonar customers
+const sonarUsername = process.env.SONAR_USERNAME;
+const sonarPassword = process.env.SONAR_PASSWORD;
+const sonarAuth = Buffer.from(`${sonarUsername}:${sonarPassword}`).toString('base64');
+
 async function authenticateSonarUser(username, password) {
 	try {
 		const response = await axios.post(
@@ -19,6 +24,7 @@ async function authenticateSonarUser(username, password) {
 				headers: {
 					'Content-Type': 'application/json',
 					Accept: 'application/json',
+					Authorization: `Basic ${sonarAuth}`,
 				},
 			}
 		);
@@ -26,11 +32,12 @@ async function authenticateSonarUser(username, password) {
 		if (response.data && response.data.data && response.data.data.token) {
 			return { success: true, token: response.data.data.token, username };
 		} else {
-			return { success: false, error: 'Authentication failed' };
+			console.log('🐬 Sonar authentication failed:', response.data);
+			return { success: false, error: ' 🐬 Authentication failed' };
 		}
 	} catch (error) {
-		console.error('Sonar authentication error:', error);
-		return { success: false, error: 'Authentication failed' };
+		console.error('🏔️ Sonar authentication error:', error);
+		return { success: false, error: '🍀 Authentication failed' };
 	}
 }
 

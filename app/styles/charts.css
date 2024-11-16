@@ -11,6 +11,6 @@
 	width: 100%;
 	max-width: 100%;
 	overflow: hidden;
-	margin: var(--spacing-large) * 2;
+	margin: var(--spacing-large) 0;
 	border-radius: var(--border-radius-large);
 }

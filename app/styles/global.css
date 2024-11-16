@@ -41,6 +41,12 @@
 	--text-black-dark: #111111;
 }
 
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
 body {
 	font-family: var(--font-family-base);
 	font-size: var(--font-size-base);

@@ -25,7 +25,6 @@ export const loader = async ({ request }) => {
 	const shopifyCustomersData = await shopifyResponse.json();
 	const shopifyCustomers = shopifyCustomersData.data.customers.edges;
 
-	// console.log('$$$ Shopify customers:', shopifyCustomers);
 	// TODO: handle errors
 
 	// Fetch Sonar customers

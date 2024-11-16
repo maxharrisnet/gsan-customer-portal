@@ -106,7 +106,7 @@ export default function ModemDetails() {
 				<section className='map-wrapper'>
 					<APIProvider apiKey={mapsAPIKey}>
 						<Map
-							style={{ width: '100vw', height: '100vh' }}
+							style={{ width: '100%', height: '400px' }}
 							defaultCenter={{ lat: 22.54992, lng: 0 }}
 							defaultZoom={3}
 							gestureHandling={'greedy'}
@@ -114,7 +114,7 @@ export default function ModemDetails() {
 						/>
 					</APIProvider>
 				</section>
-				<section className='section chart-wrapper'>
+				{/* <section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar
 						data={{
@@ -133,7 +133,7 @@ export default function ModemDetails() {
 							},
 						}}
 					/>
-				</section>
+				</section> */}
 				<section className='section chart-wrapper'>
 					<h2>Signal Quality</h2>
 					<Line

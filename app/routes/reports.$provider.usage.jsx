@@ -76,7 +76,7 @@ const Reports = () => {
 					<WebDataRocks
 						toolbar={true}
 						width='100%'
-						height='300px'
+						height='600px'
 						report={{
 							dataSource: {
 								data: flattenedData,

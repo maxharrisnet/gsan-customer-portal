@@ -17,6 +17,15 @@
 	margin-bottom: var(--spacing-large);
 }
 
+a.text-black {
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+.card a:hover {
+	text-decoration: none;
+}
+
 .card-title {
 	font-size: var(--font-size-lg);
 	margin-bottom: var(--spacing-base);
