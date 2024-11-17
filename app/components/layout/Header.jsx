@@ -14,7 +14,6 @@ const Header = () => {
 				<nav className='nav'>
 					<ul className='nav-list'>
 						<li className='nav-item'>
-							{/* TODO: Make this a thing */}
 							<Link to='/login'>Login</Link>
 						</li>
 						<li className='nav-item'>
@@ -25,6 +24,15 @@ const Header = () => {
 							<Link to='/reports/starlink/usage'>Reports</Link>
 						</li>
 					</ul>
+					<div className='user-avatar'>
+						<img
+							src='/assets/images/avatar.svg'
+							alt='User Avatar'
+							height='30'
+							width='30'
+						/>
+						<button className='logout-button'>Logout</button>
+					</div>
 				</nav>
 			</div>
 		</header>

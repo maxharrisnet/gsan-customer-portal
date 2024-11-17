@@ -7,7 +7,6 @@ const SONAR_API_PASSWORD = process.env.SONAR_API_PASSWORD;
 
 const authenticateSonarUser = async function (username, password) {
 	const sonarAuth = Buffer.from(`${SONAR_API_USERNAME}:${SONAR_API_PASSWORD}`).toString('base64');
-	console.log('🍩 Authenticating Sonar auth: ', sonarAuth);
 	try {
 		const response = await axios.post(
 			`${SONAR_API_URL}/customer_portal/auth`,
@@ -24,7 +23,7 @@ const authenticateSonarUser = async function (username, password) {
 			}
 		);
 
-		console.log('🍩 Sonar authentication response: ', response);
+		console.log('🐬 Sonar authentication response: ', response);
 
 		if (response.data && response.data.data) {
 			createUserSession(response.data.data, 'sonar', '/dashboard');
@@ -33,7 +32,7 @@ const authenticateSonarUser = async function (username, password) {
 			return { success: false, error: '🐬 Authentication failed' };
 		}
 	} catch (error) {
-		return { success: false, error: '🏔️ Authentication failed' };
+		return { success: false, error: '🐬 Authentication failed' };
 	}
 };
 

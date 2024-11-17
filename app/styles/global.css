@@ -9,12 +9,14 @@
 	--container-width: 1200px;
 	--spacing-base: 16px;
 	--spacing-large: 24px;
+	--spacing-xlarge: 32px;
+	--spacing-xxlarge: 48px;
 	--spacing-small: 8px;
 	--border-radius: 4px;
 	--border-radius-large: 8px;
 
 	/* Colors */
-	--color-primary: #5c6ac4;
+	--color-primary: #000;
 	--color-secondary: #006fbb;
 	--color-background: #f4f6f8;
 	--color-text: #212b36;

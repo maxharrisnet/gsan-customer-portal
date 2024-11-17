@@ -1,6 +1,8 @@
 import { json } from '@remix-run/node';
 import axios from 'axios';
 
+const cache = new Map();
+
 export function getGPSURL(provider) {
 	const baseUrl = 'https://api-compass.speedcast.com/v2.0';
 	switch (encodeURI(provider.toLowerCase())) {
@@ -21,6 +23,13 @@ export const fetchGPS = async (provider, ids, accessToken) => {
 	const url = getGPSURL(provider);
 	const postData = { ids };
 
+	// Check if the data is already in the cache
+	const cacheKey = `${provider}-${ids.join(',')}`;
+	if (cache.has(cacheKey)) {
+		console.log('💰 Returning cached GPS data');
+		return cache.get(cacheKey);
+	}
+
 	try {
 		const response = await axios.post(url, postData, {
 			headers: {
@@ -29,19 +38,21 @@ export const fetchGPS = async (provider, ids, accessToken) => {
 			},
 		});
 
-		console.log('🌍 GPS Response: ', response.data);
-
 		if (response.status === 200) {
+			// Store the response data in the cache
+			cache.set(cacheKey, response.data);
 			return response.data;
-		} else if (response.status === 429) {
-			console.error('Error 429: Rate limit exceeded.');
-			return json({ error: 'Rate limit exceeded' }, { status: 429 });
 		} else {
 			return json({ error: `HTTP code ${response.status}` }, { status: response.status });
 		}
 	} catch (error) {
-		console.error('Network Error:', error.message);
-		return json({ error: 'Network Error' }, { status: 500 });
+		if (error.response && error.response.status === 429) {
+			console.error('⌛ Error 429: Rate limit exceeded.');
+			return json({ error: 'Rate limit exceeded' }, { status: 429 });
+		} else {
+			console.error('Network Error:', error.message);
+			return json({ error: 'Network Error' }, { status: 500 });
+		}
 	}
 };
 

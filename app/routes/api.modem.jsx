@@ -23,10 +23,10 @@ export const loader = async ({ params }) => {
 		const uptimeData = modem.data.uptime.data || [];
 
 		const mapsAPIKey = process.env.GOOGLE_MAPS_API_KEY;
-		// const gpsResponse = await fetchGPS(provider, [modemId], accessToken);
-		// console.log('🌍 🌍 🌍 GPS Response: ', gpsResponse);
-		// const gpsData = gpsResponse.data;
-		// console.log('🌍 🌍 🌍 GPS Data: ', gpsData);
+		const gpsResponse = await fetchGPS(provider, [modemId], accessToken);
+		console.log('📡 GPS Response: ', gpsResponse);
+		const gpsData = gpsResponse[0];
+		console.log('🌍 🌍 🌍 GPS Data: ', gpsData);
 
 		const modemDetails = {
 			modem,
