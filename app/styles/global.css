@@ -109,7 +109,15 @@ a:hover {
 	text-decoration: underline;
 }
 
-button {
+.button-wrapper {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--spacing-base);
+	padding: var(--spacing-base) 0;
+}
+
+button,
+.button {
 	font-family: var(--font-family-base);
 	font-size: var(--font-size-base);
 	color: #fff;
@@ -119,7 +127,8 @@ button {
 	cursor: pointer;
 }
 
-button:hover {
+button:hover,
+.button:hover {
 	background-color: var(--color-secondary);
 }
 

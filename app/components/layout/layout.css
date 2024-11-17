@@ -55,13 +55,14 @@
 	gap: var(--spacing-large);
 }
 
-.centered-content {
+.content-centered {
 	display: grid;
 	place-items: center;
 	max-width: 600px;
 	width: 100%;
 	margin: var(--spacing-large) auto;
 	padding: var(--spacing-large) * 2;
+	text-align: center;
 }
 
 .section {

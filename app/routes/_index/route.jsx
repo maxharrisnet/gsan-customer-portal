@@ -19,10 +19,10 @@ export default function App() {
 
 	return (
 		<Layout>
-			<main className='content centered-content'>
+			<main className='content content-centered'>
 				<h1 className={styles.heading}>GSAN Customer Portal</h1>
 				<section className='section '>
-					<div className='centered-content'>
+					<div className='content-centered'>
 						<h2>Login With Shopify</h2>
 						{showForm && (
 							<Form
@@ -48,7 +48,7 @@ export default function App() {
 							</Form>
 						)}
 					</div>
-					<div className='centered-content'>
+					<div className='content-centered'>
 						<h2>Login With Sonar</h2>
 						<Form
 							className={styles.form}

@@ -15,7 +15,7 @@ const Header = () => {
 					<ul className='nav-list'>
 						<li className='nav-item'>
 							{/* TODO: Make this a thing */}
-							<Link to='/'>Home</Link>
+							<Link to='/login'>Login</Link>
 						</li>
 						<li className='nav-item'>
 							<Link to='/performance'>Performance</Link>

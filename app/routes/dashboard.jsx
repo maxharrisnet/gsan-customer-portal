@@ -1,8 +1,8 @@
-import { loader } from '../api.services';
+import { loader } from './api.services';
 import { useLoaderData } from '@remix-run/react';
-import Layout from '../../components/layout/Layout';
-import performanceStyles from './performance.css?url';
-export const links = () => [{ rel: 'stylesheet', href: performanceStyles }];
+import Layout from '../components/layout/Layout';
+import dashboardStyles from '../styles/dashboard.css?url';
+export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export { loader };
 
