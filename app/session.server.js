@@ -40,8 +40,8 @@ export async function getUserSession(request) {
 
 export async function destroyUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
-	console.log('🍪 Destroying User session:', session);
-	return redirect('/', {
+	console.log('🔨 Destroying User session:', session);
+	return redirect('/login', {
 		headers: {
 			'Set-Cookie': await sessionStorage.destroySession(session),
 		},

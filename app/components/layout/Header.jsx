@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@remix-run/react';
+import { Link, Form } from '@remix-run/react';
 
 const Header = () => {
 	return (
@@ -31,7 +31,17 @@ const Header = () => {
 							height='30'
 							width='30'
 						/>
-						<button className='logout-button'>Logout</button>
+						<Form
+							method='post'
+							action='/logout'
+						>
+							<button
+								className='logout-button'
+								type='submit'
+							>
+								Logout
+							</button>
+						</Form>
 					</div>
 				</nav>
 			</div>
