@@ -27,7 +27,6 @@ const authenticateSonarUser = async function (username, password) {
 		console.log('🍩 Sonar authentication response: ', response);
 
 		if (response.data && response.data.data) {
-			console.log('Sonar authentication success 💦');
 			createUserSession(response.data.data, 'sonar', '/dashboard');
 			return { success: true, token: response.data.data.token, username };
 		} else {

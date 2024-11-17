@@ -9,13 +9,13 @@ export default function Login() {
 					<h1>Login</h1>
 					<div className='button-wrapper'>
 						<Link
-							to='/login/switch'
+							to='/switch/login'
 							className='button'
 						>
 							Login with Switch
 						</Link>
 						<Link
-							to='/login/gsan'
+							to='/gsan/login'
 							className='button'
 						>
 							Login with GSAN

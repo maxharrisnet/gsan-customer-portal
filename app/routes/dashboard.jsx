@@ -34,7 +34,7 @@ export default function Dashboard() {
 												href={`/modem/${encodeURI(modem.type.toLowerCase())}/${modem.id}`}
 												className='text-black text-decoration-none fw-bold'
 											>
-												<div class='section'>
+												<div className='section'>
 													<div className='card-body'>
 														<div className='flex-row'>
 															<div>

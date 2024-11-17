@@ -13,8 +13,14 @@ export const sessionStorage = createCookieSessionStorage({
 
 export async function createUserSession(userData, authType, redirectTo) {
 	const session = await sessionStorage.getSession();
+
+	if (session.has('user')) {
+		throw new Error('🐠 User session already exists');
+	}
+
 	session.set('user', { ...userData, authType });
-	console.log('🍪🍪🍪 Created User session:', userData, session);
+	console.log('🍪🍪🍪 Created User session:', session);
+
 	return redirect(redirectTo, {
 		headers: {
 			'Set-Cookie': await sessionStorage.commitSession(session),
@@ -25,6 +31,7 @@ export async function createUserSession(userData, authType, redirectTo) {
 export async function getUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
 	if (session.has('user')) {
+		console.log('🍪🍪🍪 Found User session:', session.get('user'));
 		return session.get('user');
 	} else {
 		return null;

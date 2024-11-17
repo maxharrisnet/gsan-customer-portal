@@ -24,13 +24,12 @@ export async function loader({ request }) {
 
 export default function SonarLogin() {
 	const actionData = useActionData();
-	console.log('👽 Switch login page');
 	return (
 		<Layout>
 			<div className='container'>
 				<div className='content-centered'>
 					<Form method='post'>
-						<h1>Sonar Switch</h1>
+						<h1>Switch Customer Login</h1>
 						<input
 							type='text'
 							name='username'

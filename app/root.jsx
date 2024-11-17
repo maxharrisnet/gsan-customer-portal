@@ -11,16 +11,21 @@ export const links = () => [
 
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
+	const path = url.pathname;
+	const user = await getUserSession(request);
 
-	if (url.pathname.startsWith('/login')) {
-		console.log('🪶 This is a login page: ', url.pathname);
-		const user = await getUserSession(request);
-		if (user) {
-			console.log('🪶 Redirecting to dashboard');
-			return redirect('/dashboard');
-		}
+	if (path.includes('/login')) {
+		// if (user) {
+		// 	console.log('🪶 Redirecting to dashboard');
+		// 	return redirect('/dashboard');
+		// }
 
 		return json({});
+	} else {
+		if (!user) {
+			console.log('🪶 Redirecting to login');
+			return redirect('/login');
+		}
 	}
 
 	return json({});
