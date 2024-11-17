@@ -12,7 +12,7 @@ export function getLatencyClass(latency) {
 	else return 'latency-red';
 }
 
-export default function Performance() {
+export default function Dashboard() {
 	const { services } = useLoaderData();
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;

@@ -130,6 +130,7 @@ button,
 button:hover,
 .button:hover {
 	background-color: var(--color-secondary);
+	text-decoration: none;
 }
 
 input,

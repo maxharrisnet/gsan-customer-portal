@@ -14,6 +14,7 @@ export const sessionStorage = createCookieSessionStorage({
 export async function createUserSession(userData, authType, redirectTo) {
 	const session = await sessionStorage.getSession();
 	session.set('user', { ...userData, authType });
+	console.log('🍪🍪🍪 Created User session:', userData, session);
 	return redirect(redirectTo, {
 		headers: {
 			'Set-Cookie': await sessionStorage.commitSession(session),
@@ -23,12 +24,16 @@ export async function createUserSession(userData, authType, redirectTo) {
 
 export async function getUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
-	console.log('🍪 User session:', session);
-	return session.get('user');
+	if (session.has('user')) {
+		return session.get('user');
+	} else {
+		return null;
+	}
 }
 
 export async function destroyUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
+	console.log('🍪 Destroying User session:', session);
 	return redirect('/', {
 		headers: {
 			'Set-Cookie': await sessionStorage.destroySession(session),

@@ -18,7 +18,7 @@ const Header = () => {
 							<Link to='/login'>Login</Link>
 						</li>
 						<li className='nav-item'>
-							<Link to='/performance'>Performance</Link>
+							<Link to='/dashboard'>Dashboard</Link>
 						</li>
 						<li className='nav-item'>
 							{/* TODO: Make provider dynamic */}

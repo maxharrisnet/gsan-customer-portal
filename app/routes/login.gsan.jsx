@@ -2,12 +2,6 @@
 import { json, redirect } from '@remix-run/node';
 import { Form, useActionData, useLoaderData } from '@remix-run/react';
 
-export async function loader({ request }) {
-	// We'll handle session checks in the loader
-	// For now, we'll just return an empty object
-	return json({});
-}
-
 export async function action({ request }) {
 	const formData = await request.formData();
 	const email = formData.get('email');

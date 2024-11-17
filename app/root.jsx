@@ -1,6 +1,6 @@
 import { json, redirect } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useRouteError } from '@remix-run/react';
-// import { authenticate } from './shopify.server';
+import { getUserSession } from './session.server';
 import globalStyles from './styles/global.css?url';
 
 export const links = () => [
@@ -12,11 +12,16 @@ export const links = () => [
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
 
-	if (url.pathname.startsWith('/gsan/login')) {
+	if (url.pathname.startsWith('/login')) {
+		console.log('🪶 This is a login page: ', url.pathname);
+		const user = await getUserSession(request);
+		if (user) {
+			console.log('🪶 Redirecting to dashboard');
+			return redirect('/dashboard');
+		}
+
 		return json({});
 	}
-
-	// await authenticate(request);
 
 	return json({});
 };

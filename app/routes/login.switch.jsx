@@ -18,15 +18,19 @@ export async function action({ request }) {
 	}
 }
 
+export async function loader({ request }) {
+	return null;
+}
+
 export default function SonarLogin() {
 	const actionData = useActionData();
-
+	console.log('👽 Switch login page');
 	return (
 		<Layout>
 			<div className='container'>
 				<div className='content-centered'>
 					<Form method='post'>
-						<h1>Sonar Login</h1>
+						<h1>Sonar Switch</h1>
 						<input
 							type='text'
 							name='username'
@@ -37,7 +41,7 @@ export default function SonarLogin() {
 							name='password'
 							required
 						/>
-						<button type='submit'>Log in with Sonar</button>
+						<button type='submit'>Log in with Switch</button>
 						{actionData?.error && <p>{actionData.error}</p>}
 					</Form>
 				</div>
