@@ -1,6 +1,7 @@
 import { json, redirect } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useRouteError } from '@remix-run/react';
 import { getUserSession } from './session.server';
+import { UserProvider } from './context/UserContext';
 import globalStyles from './styles/global.css?url';
 
 export const links = () => [
@@ -43,7 +44,9 @@ export default function Root() {
 				<Links />
 			</head>
 			<body>
-				<Outlet />
+				<UserProvider>
+					<Outlet />
+				</UserProvider>
 				<ScrollRestoration />
 				<Scripts />
 				<LiveReload />

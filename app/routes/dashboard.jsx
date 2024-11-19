@@ -1,10 +1,22 @@
-import { loader } from './api.services';
+import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { fetchServicesAndModemData } from '../compass.server';
+import { getUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
+
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
-export { loader };
+export const loader = async ({ request }) => {
+	const user = await getUserSession(request);
+	if (!user) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
+	}
+	const services = await fetchServicesAndModemData();
+	console.log('💡 Dashboard Services:', services);
+
+	return services;
+};
 
 export function getLatencyClass(latency) {
 	if (latency < 50) return 'latency-green';

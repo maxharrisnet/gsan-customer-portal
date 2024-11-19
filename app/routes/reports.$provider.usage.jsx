@@ -1,10 +1,20 @@
+import { json } from '@remix-run/node';
 import { useEffect, useState } from 'react';
-import { useParams, useLoaderData } from '@remix-run/react';
-import { loader } from './api.services';
+import { useLoaderData } from '@remix-run/react';
+import { fetchServicesAndModemData } from '../compass.server';
+import { getUserSession } from '../session.server';
 import Layout from './../components/layout/Layout';
 import Sidebar from './../components/layout/Sidebar';
 
-export { loader };
+export const loader = async ({ request }) => {
+	const user = await getUserSession(request);
+	if (!user) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
+	}
+	const services = await fetchServicesAndModemData();
+	console.log('💡 Reports Services:', { services });
+	return { services };
+};
 
 const Reports = () => {
 	const { services } = useLoaderData();
