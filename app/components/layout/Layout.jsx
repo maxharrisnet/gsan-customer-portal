@@ -5,8 +5,8 @@ import './layout.css';
 
 const Layout = ({ children }) => {
 	return (
-		<div>
-			<Header  />
+		<div className='layout'>
+			<Header />
 			<div className='wrapper'>{children}</div>
 			<Footer />
 		</div>

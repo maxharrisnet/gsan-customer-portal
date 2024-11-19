@@ -1,23 +1,21 @@
-// app/routes/gsan.login.jsx
-import { json, redirect } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { authenticateShopifyUser } from '../gsan.server';
+import { createUserSession } from '../session.server';
+import Layout from '../components/layout/Layout';
 import { Form, useActionData, useLoaderData } from '@remix-run/react';
 
 export async function action({ request }) {
 	const formData = await request.formData();
-	const email = formData.get('email');
+	const username = formData.get('username');
 	const password = formData.get('password');
 
-	// In a real application, you'd want to use a server-side utility function
-	// to handle the authentication logic
 	try {
-		// This is a placeholder for your actual authentication logic
-		const result = await authenticateCustomer(email, password);
+		const shopifyAuth = await authenticateShopifyUser(username, password, request);
 
-		if (result.success) {
-			// You'd set up a session here
-			return redirect('/gsan/dashboard');
+		if (shopifyAuth.success) {
+			return createUserSession(shopifyAuth.userData, 'sonar', '/dashboard');
 		} else {
-			return json({ errors: result.errors });
+			return json({ errors: shopifyAuth.errors });
 		}
 	} catch (error) {
 		console.error('Customer login error:', error);
@@ -30,32 +28,50 @@ export default function GsanLogin() {
 	const loaderData = useLoaderData();
 
 	return (
-		<Form method='post'>
-			<input
-				type='email'
-				name='email'
-				required
-			/>
-			<input
-				type='password'
-				name='password'
-				required
-			/>
-			<button type='submit'>Log in</button>
-			{actionData?.errors && (
-				<ul>
-					{actionData.errors.map((error, index) => (
-						<li key={index}>{error.message}</li>
-					))}
-				</ul>
-			)}
-		</Form>
+		<Layout>
+			<div className='container'>
+				{' '}
+				<h1>GSAN Customer Login</h1>
+				<div className='content-centered'>
+					<img
+						src='/assets/images/GSAN-logo.png'
+						alt='GSAN Logo'
+						className='login-logo'
+					/>
+					<Form method='post'>
+						<div className='form-group'>
+							<label
+								htmlFor='shopifyUsername'
+								className='sr-only'
+							>
+								Username
+							</label>
+							<input
+								type='text'
+								name='username'
+								placeholder='Username'
+								id='shopifyUsername'
+								required
+							/>
+							<label
+								htmlFor='shopifyPassword'
+								className='sr-only'
+							>
+								Password
+							</label>
+							<input
+								type='password'
+								name='password'
+								placeholder='Password'
+								id='shopifyPassword'
+								required
+							/>
+							<button type='submit'>Log in with GSAN</button>
+							{actionData?.error && <p>{actionData.error}</p>}
+						</div>
+					</Form>
+				</div>
+			</div>
+		</Layout>
 	);
-}
-
-// This function would be implemented in a separate server-side file
-async function authenticateCustomer(email, password) {
-	// Implement your customer authentication logic here
-	// This might involve calling Shopify's API or your own auth service
-	// Return an object like { success: boolean, errors?: array }
 }

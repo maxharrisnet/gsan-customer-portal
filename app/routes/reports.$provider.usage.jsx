@@ -1,16 +1,11 @@
-import { json } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { useLoaderData } from '@remix-run/react';
 import { fetchServicesAndModemData } from '../compass.server';
-import { getUserSession } from '../session.server';
+import { useUser } from '../context/UserContext';
 import Layout from './../components/layout/Layout';
 import Sidebar from './../components/layout/Sidebar';
 
 export const loader = async ({ request }) => {
-	const user = await getUserSession(request);
-	if (!user) {
-		return json({ error: 'Unauthorized' }, { status: 401 });
-	}
 	const response = await fetchServicesAndModemData();
 	const servicesJSON = await response.json();
 	const services = servicesJSON.services;
@@ -19,6 +14,7 @@ export const loader = async ({ request }) => {
 };
 
 const Reports = () => {
+	const { currentUser } = useUser();
 	const { services } = useLoaderData();
 	const [WebDataRocks, setWebDataRocks] = useState(null);
 

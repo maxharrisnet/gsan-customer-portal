@@ -1,7 +1,7 @@
 @import '@webdatarocks/webdatarocks/webdatarocks.css';
 
 :root {
-	--font-family-base: 'Inter, Helvetica Neue', Arial, sans-serif;
+	--font-family-base: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 	--font-size-base: 16px;
 	--font-size-large: 20px;
 	--font-size-small: 14px;
@@ -49,6 +49,17 @@
 	box-sizing: border-box;
 }
 
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
 body {
 	font-family: var(--font-family-base);
 	font-size: var(--font-size-base);
@@ -75,7 +86,8 @@ h6 {
 
 h1 {
 	font-size: 2rem;
-	margin: var(--spacing-large) 0;
+	margin: 0 0 var(--spacing-large);
+	text-align: center;
 }
 
 h2 {
@@ -115,16 +127,38 @@ a:hover {
 	display: flex;
 	justify-content: space-between;
 	gap: var(--spacing-base);
-	padding: var(--spacing-base) 0;
+	padding: var(--spacing-large);
+	width: 100%;
+}
+
+.login-button-wrapper > div {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-large);
+}
+
+.login-button-wrapper img {
+	height: 50px;
+	width: auto;
+}
+
+.login-logo {
+	margin-bottom: var(--spacing-xlarge);
+	width: 280px;
+	height: auto;
 }
 
 button,
 .button {
 	font-family: var(--font-family-base);
 	font-size: var(--font-size-base);
+	font-weight: 400;
 	color: #fff;
 	background-color: var(--color-primary);
 	border: none;
+	border-radius: var(--border-radius);
 	padding: var(--spacing-small) var(--spacing-base);
 	cursor: pointer;
 }
@@ -140,6 +174,7 @@ button:hover,
 	flex-flow: column;
 	align-items: center;
 	gap: var(--spacing-base);
+	padding: 0 var(--spacing-base);
 }
 
 .form-group label {

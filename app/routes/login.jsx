@@ -5,21 +5,33 @@ export default function Login() {
 	return (
 		<Layout>
 			<div className='container'>
+				<h1>Login</h1>
 				<div className=' content-centered'>
-					<h1>Login</h1>
-					<div className='button-wrapper'>
-						<Link
-							to='/switch/login'
-							className='button'
-						>
-							Login with Switch
-						</Link>
-						<Link
-							to='/gsan/login'
-							className='button'
-						>
-							Login with GSAN
-						</Link>
+					<div className='button-wrapper login-button-wrapper'>
+						<div>
+							<img
+								src='/assets/images/switch-logo.png'
+								alt='Switch Logo'
+							/>
+							<Link
+								to='/switch/login'
+								className='button'
+							>
+								Login with Switch
+							</Link>
+						</div>
+						<div>
+							<img
+								src='/assets/images/GSAN-logo.png'
+								alt='GSAN Logo'
+							/>
+							<Link
+								to='/gsan/login'
+								className='button'
+							>
+								Login with GSAN
+							</Link>
+						</div>
 					</div>
 				</div>
 			</div>

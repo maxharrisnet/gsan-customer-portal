@@ -1,11 +1,8 @@
 import { json } from '@remix-run/node';
-import shopify from '../shopify.server';
+import shopify from './shopify.server';
 
-export async function action({ request }) {
+const authenticateShopifyUser = async function (username, password, request) {
 	const { admin } = await shopify.authenticate.admin(request);
-	const formData = await request.formData();
-	const email = formData.get('email');
-	const password = formData.get('password');
 
 	try {
 		const response = await admin.graphql(
@@ -42,4 +39,6 @@ export async function action({ request }) {
 		console.error('Error authenticating customer:', error);
 		return json({ error: 'Authentication failed' }, { status: 500 });
 	}
-}
+};
+
+export default authenticateShopifyUser;

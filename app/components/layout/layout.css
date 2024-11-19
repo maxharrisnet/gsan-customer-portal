@@ -101,6 +101,10 @@
 	align-items: center;
 }
 
+.justify-center {
+	justify-content: center;
+}
+
 /* Logo styles */
 .logo {
 	width: 100px;

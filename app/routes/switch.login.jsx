@@ -29,21 +29,38 @@ export default function SonarLogin() {
 	return (
 		<Layout>
 			<div className='container'>
+				<h1>Switch Customer Login</h1>
 				<div className='content-centered'>
+					<img
+						src='/assets/images/switch-logo.png'
+						alt='Switch Logo'
+						className='login-logo'
+					/>
 					<Form method='post'>
-						<h1>Switch Customer Login</h1>
 						<div className='form-group'>
-							<label htmlFor='sonarUsername'>Username</label>
+							<label
+								htmlFor='sonarUsername'
+								className='sr-only'
+							>
+								Username
+							</label>
 							<input
 								type='text'
 								name='username'
+								placeholder='Username'
 								id='sonarUsername'
 								required
 							/>
-							<label htmlFor='sonarPassword'>Password</label>
+							<label
+								htmlFor='sonarPassword'
+								className='sr-only'
+							>
+								Password
+							</label>
 							<input
 								type='password'
 								name='password'
+								placeholder='Password'
 								id='sonarPassword'
 								required
 							/>

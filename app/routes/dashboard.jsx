@@ -1,20 +1,13 @@
-import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { fetchServicesAndModemData } from '../compass.server';
-import { getUserSession } from '../session.server';
+import { useUser } from '../context/UserContext';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
-import { useUser } from '../context/UserContext';
 
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export const loader = async ({ request }) => {
-	const user = await getUserSession(request);
-	if (!user) {
-		return json({ error: 'Unauthorized' }, { status: 401 });
-	}
 	const services = await fetchServicesAndModemData();
-	console.log('💡 Dashboard Services:', services);
 
 	return services;
 };
@@ -40,7 +33,6 @@ export default function Dashboard() {
 					<div className='section'>
 						<div className='card-body'>
 							<h1>Welcome, {currentUser.contactName}</h1>
-							<p>Email: {currentUser.emailAddress}</p>
 						</div>
 					</div>
 				</div>

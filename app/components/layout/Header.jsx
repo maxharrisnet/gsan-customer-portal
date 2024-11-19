@@ -1,17 +1,36 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 import { Link, Form } from '@remix-run/react';
 
 const Header = () => {
+	const location = useLocation();
+	const path = location.pathname;
+	const isGsanPage = path.includes('/gsan');
+	const isSwitchPage = path.includes('/switch');
+	const { currentUser } = useUser();
+	console.log('🦩 currentUser:', currentUser);
+
 	return (
 		<header className='header'>
 			<div className='header-container'>
 				<div className='logo'>
-					<a href='/'>
-						<img
-							src='/assets/images/GSAN-logo.png'
-							alt='GSAN Logo'
-						/>
-					</a>
+					{isGsanPage && (
+						<a href='/'>
+							<img
+								src='/assets/images/GSAN-logo.png'
+								alt='GSAN Logo'
+							/>
+						</a>
+					)}
+					{isSwitchPage && (
+						<a href='/'>
+							<img
+								src='/assets/images/switch-logo.png'
+								alt='Switch Logo'
+							/>
+						</a>
+					)}
 				</div>
 				<nav className='nav'>
 					<ul className='nav-list'>
