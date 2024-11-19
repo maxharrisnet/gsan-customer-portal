@@ -1,15 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useLoaderData } from '@remix-run/react';
 
 const UserContext = createContext();
 
-export const UserProvider = ({ children }) => {
-	const { user } = useLoaderData();
-	const [currentUser, setCurrentUser] = useState(user);
+export const UserProvider = ({ children, initialUser }) => {
+	const [currentUser, setCurrentUser] = useState(initialUser);
 
 	useEffect(() => {
-		setCurrentUser(user);
-	}, [user]);
+		setCurrentUser(initialUser);
+	}, [initialUser]);
 
 	return <UserContext.Provider value={{ currentUser, setCurrentUser }}>{children}</UserContext.Provider>;
 };

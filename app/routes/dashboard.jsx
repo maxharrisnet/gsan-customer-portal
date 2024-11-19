@@ -4,6 +4,7 @@ import { fetchServicesAndModemData } from '../compass.server';
 import { getUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
+import { useUser } from '../context/UserContext';
 
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
@@ -25,18 +26,21 @@ export function getLatencyClass(latency) {
 }
 
 export default function Dashboard() {
+	const { currentUser } = useUser();
 	const { services } = useLoaderData();
+
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;
 	};
+
 	return (
 		<Layout>
 			<div>
 				<div className='container'>
 					<div className='section'>
 						<div className='card-body'>
-							<h2 className='card-title'>Dashboard</h2>
-							<h3 className='card-subtitle'>Welcome, =</h3>
+							<h1>Welcome, {currentUser.contactName}</h1>
+							<p>Email: {currentUser.emailAddress}</p>
 						</div>
 					</div>
 				</div>

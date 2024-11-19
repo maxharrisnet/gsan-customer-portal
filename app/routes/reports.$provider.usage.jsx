@@ -11,8 +11,10 @@ export const loader = async ({ request }) => {
 	if (!user) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
-	const services = await fetchServicesAndModemData();
-	console.log('💡 Reports Services:', { services });
+	const response = await fetchServicesAndModemData();
+	const servicesJSON = await response.json();
+	const services = servicesJSON.services;
+
 	return { services };
 };
 
@@ -70,7 +72,18 @@ const Reports = () => {
 	}, []);
 
 	if (!WebDataRocks) {
-		return <div>Loading...</div>;
+		return (
+			<Layout>
+				<Sidebar>
+					<h1>Reports</h1>
+				</Sidebar>
+				<main className='content'>
+					<section className='section'>
+						<div>Loading...</div>
+					</section>
+				</main>
+			</Layout>
+		);
 	}
 
 	return (

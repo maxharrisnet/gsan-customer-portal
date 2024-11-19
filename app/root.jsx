@@ -8,6 +8,8 @@ export const links = () => [
 	{ rel: 'stylesheet', href: globalStyles },
 	{ rel: 'preconnect', href: 'https://cdn.shopify.com/' },
 	{ rel: 'stylesheet', href: 'https://cdn.shopify.com/static/fonts/inter/v4/styles.css' },
+	// Inter font from Google Fonts
+	{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap' },
 ];
 
 export const loader = async ({ request }) => {
@@ -28,10 +30,11 @@ export const loader = async ({ request }) => {
 		return redirect('/login');
 	}
 
-	return json({});
+	return json({ user });
 };
 
 export default function Root() {
+	const { user } = useLoaderData();
 	return (
 		<html lang='en'>
 			<head>
@@ -44,7 +47,7 @@ export default function Root() {
 				<Links />
 			</head>
 			<body>
-				<UserProvider>
+				<UserProvider initialUser={user}>
 					<Outlet />
 				</UserProvider>
 				<ScrollRestoration />
