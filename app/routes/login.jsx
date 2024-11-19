@@ -5,7 +5,7 @@ export default function Login() {
 	return (
 		<Layout>
 			<div className='container'>
-				<h1>Login</h1>
+				<h1>Customer Portal Login</h1>
 				<div className=' content-centered'>
 					<div className='button-wrapper login-button-wrapper'>
 						<div>
@@ -31,7 +31,7 @@ export default function Login() {
 							>
 								Login with Switch
 							</Link>
-					</div>
+						</div>
 					</div>
 				</div>
 			</div>

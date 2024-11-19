@@ -16,6 +16,7 @@
 	padding: var(--spacing-xxlarge) var(--spacing-large);
 	overflow: hidden;
 	justify-content: center;
+	align-items: flex-start;
 	background-color: var(--color-background);
 	min-height: 80vh; /* TODO: Hack for login page - fix */
 }
@@ -40,12 +41,13 @@
 .sidebar {
 	flex: 0 0 300px; /* Fixed width of 300px */
 	position: sticky;
-	top: 100px;
+	top: 0;
 	flex-shrink: 0;
 	background-color: #fff; /* White background */
 	padding: 1rem;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Drop shadow */
 	border: 1px solid #e0e0e0; /* Light grey border */
+	border-radius: var(--border-radius);
 }
 
 /* Main content styles */

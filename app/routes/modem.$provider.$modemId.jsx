@@ -30,17 +30,11 @@ export default function ModemDetails() {
 	const obstructionLabels = obstructionData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const obstructionValues = obstructionData.map((entry) => entry[1] * 100);
 
-	const usageLabels = [];
-	const usagePriority = [];
-	const usageUnlimited = [];
+	const usageLabels = usageData.map((entry) => new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+	const usagePriority = usageData.map((entry) => entry.priority);
+	const usageUnlimited = usageData.map((entry) => entry.unlimited ?? 0); // Assuming there might be an 'unlimited' property
 
-	if (Array.isArray(usageData) && usageData.length > 0) {
-		usageData.forEach((entry) => {
-			usageLabels.push(new Date(entry[0] * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-			usagePriority.push(entry[1] ?? 0);
-			usageUnlimited.push(entry[2] ?? 0);
-		});
-	}
+	console.log('📊 Usage Data:', usageData);
 	console.log('👆 Upload Usage: ', usageUnlimited);
 	console.log('👇 Download Usage: ', usagePriority);
 
@@ -143,7 +137,28 @@ export default function ModemDetails() {
 	return (
 		<Layout>
 			<Sidebar>
-				<h2>{modem.name}</h2>
+				<div>
+					<h2>{modem.name}</h2>
+					<a
+						href='/service-status'
+						class='px-3'
+					>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							width='16'
+							height='16'
+							fill='black'
+							class='bi bi-arrow-left'
+							viewBox='0 0 16 16'
+							style='font-weight: bold;'
+						>
+							<path
+								fill-rule='evenodd'
+								d='M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z'
+							/>
+						</svg>
+					</a>
+				</div>
 				<p>{modem.type}</p>
 				<p>{modem.id}</p>
 			</Sidebar>

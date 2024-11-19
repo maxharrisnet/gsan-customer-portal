@@ -49,6 +49,10 @@ a.text-black {
 	flex: 1;
 }
 
+.card-body h1 {
+	margin: var(--spacing-large) 0;
+}
+
 .card-body .data-wrapper {
 	width: 60%;
 }

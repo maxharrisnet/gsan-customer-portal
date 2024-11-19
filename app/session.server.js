@@ -6,7 +6,7 @@ export const sessionStorage = createCookieSessionStorage({
 		httpOnly: true,
 		path: '/',
 		sameSite: 'lax',
-		secrets: [process.env.SESSION_SECRET], 
+		secrets: [process.env.SESSION_SECRET],
 		secure: process.env.NODE_ENV === 'production',
 	},
 });
@@ -35,7 +35,6 @@ export async function createUserSession(userData, authType, redirectTo) {
 	const headers = {
 		'Set-Cookie': await sessionStorage.commitSession(session),
 	};
-	console.log('🍪 Set-Cookie Header:', headers);
 
 	return redirect(redirectTo, { headers });
 }
