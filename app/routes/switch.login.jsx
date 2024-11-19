@@ -29,7 +29,7 @@ export default function SonarLogin() {
 	return (
 		<Layout>
 			<div className='container'>
-				<h1>Switch Customer Login</h1>
+				<h1>Switch Customer Portal</h1>
 				<div className='content-centered'>
 					<img
 						src='/assets/images/switch-logo.png'

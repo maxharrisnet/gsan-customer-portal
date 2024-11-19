@@ -1,7 +1,7 @@
 import { json } from '@remix-run/node';
 import shopify from './shopify.server';
 
-const authenticateShopifyUser = async function (username, password, request) {
+const authenticateShopifyUser = async function (email, password, request) {
 	const { admin } = await shopify.authenticate.admin(request);
 
 	try {

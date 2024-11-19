@@ -6,11 +6,11 @@ import { Form, useActionData, useLoaderData } from '@remix-run/react';
 
 export async function action({ request }) {
 	const formData = await request.formData();
-	const username = formData.get('username');
+	const email = formData.get('email');
 	const password = formData.get('password');
 
 	try {
-		const shopifyAuth = await authenticateShopifyUser(username, password, request);
+		const shopifyAuth = await authenticateShopifyUser(email, password, request);
 
 		if (shopifyAuth.success) {
 			return createUserSession(shopifyAuth.userData, 'sonar', '/dashboard');
@@ -30,8 +30,7 @@ export default function GsanLogin() {
 	return (
 		<Layout>
 			<div className='container'>
-				{' '}
-				<h1>GSAN Customer Login</h1>
+				<h1>GSAN Customer Portal</h1>
 				<div className='content-centered'>
 					<img
 						src='/assets/images/GSAN-logo.png'
@@ -41,16 +40,16 @@ export default function GsanLogin() {
 					<Form method='post'>
 						<div className='form-group'>
 							<label
-								htmlFor='shopifyUsername'
+								htmlFor='shopifyEmail'
 								className='sr-only'
 							>
-								Username
+								Email
 							</label>
 							<input
 								type='text'
-								name='username'
-								placeholder='Username'
-								id='shopifyUsername'
+								name='email'
+								placeholder='Email'
+								id='shopifyEmail'
 								required
 							/>
 							<label

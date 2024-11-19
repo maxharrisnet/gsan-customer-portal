@@ -3,7 +3,7 @@ import { useLoaderData } from '@remix-run/react';
 import { loader } from './api.modem';
 import Layout from '../components/layout/Layout';
 import Sidebar from '../components/layout/Sidebar';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
 import chartStyles from '../styles/charts.css?url';
@@ -30,9 +30,19 @@ export default function ModemDetails() {
 	const obstructionLabels = obstructionData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const obstructionValues = obstructionData.map((entry) => entry[1] * 100);
 
-	const usageLabels = usageData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
-	const usageDownload = usageData.map((entry) => entry[1]);
-	const usageUpload = usageData.map((entry) => entry[2]);
+	const usageLabels = [];
+	const usagePriority = [];
+	const usageUnlimited = [];
+
+	if (Array.isArray(usageData) && usageData.length > 0) {
+		usageData.forEach((entry) => {
+			usageLabels.push(new Date(entry[0] * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+			usagePriority.push(entry[1] ?? 0);
+			usageUnlimited.push(entry[2] ?? 0);
+		});
+	}
+	console.log('👆 Upload Usage: ', usageUnlimited);
+	console.log('👇 Download Usage: ', usagePriority);
 
 	const uptimeLabels = uptimeData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const uptimeValues = uptimeData.map((entry) => Math.ceil((entry[1] / 86400) * 10) / 10);
@@ -74,6 +84,8 @@ export default function ModemDetails() {
 				borderColor: '#3986a8',
 				borderWidth: 1,
 				fill: true,
+				fillColor: '#3986a8',
+				fillTarget: 'origin',
 			},
 		},
 	};
@@ -141,20 +153,29 @@ export default function ModemDetails() {
 						<Map
 							style={{ width: '100%', height: '400px' }}
 							defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
-							defaultZoom={3}
+							defaultZoom={8}
 							gestureHandling={'greedy'}
 							disableDefaultUI={true}
-						/>
+						>
+							<Marker
+								latitude={gpsData[0].lat}
+								longitude={gpsData[0].lon}
+								offsetLeft={-20}
+								offsetTop={-20}
+							/>
+						</Map>
 					</APIProvider>
 				</section>
 				<section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar
+						height='100'
+						width='300'
 						data={{
 							labels: usageLabels,
 							datasets: [
-								{ label: 'Download (GB)', data: usageDownload.map((value) => Math.ceil(value / 1000000)) },
-								{ label: 'Upload (GB)', data: usageUpload.map((value) => Math.ceil(value / 1000000)) },
+								{ label: 'Download (GB)', data: usagePriority.map((value) => Math.ceil(value / 1000000)) },
+								{ label: 'Upload (GB)', data: usageUnlimited.map((value) => Math.ceil(value / 1000000)) },
 							],
 						}}
 						options={{
@@ -170,6 +191,8 @@ export default function ModemDetails() {
 				<section className='section chart-wrapper'>
 					<h2>Signal Quality</h2>
 					<Line
+						height='100'
+						width='300'
 						data={{
 							labels: signalQualityLabels,
 							datasets: [{ label: 'Signal Quality (%)', data: signalQualityValues }],
@@ -187,6 +210,8 @@ export default function ModemDetails() {
 				<section className='section chart-wrapper'>
 					<h2>Throughput</h2>
 					<Line
+						height='100'
+						width='300'
 						data={{
 							labels: throughputTimestamps,
 							datasets: [
@@ -207,6 +232,8 @@ export default function ModemDetails() {
 				<section className='section chart-wrapper'>
 					<h2>Latency</h2>
 					<Line
+						height='100'
+						width='300'
 						data={{
 							labels: latencyTimestamps,
 							datasets: [{ label: 'Latency (ms)', data: latencyValues }],
@@ -224,6 +251,8 @@ export default function ModemDetails() {
 				<section className='section chart-wrapper'>
 					<h2>Obstruction</h2>
 					<Line
+						height='100'
+						width='300'
 						data={{
 							labels: obstructionLabels,
 							datasets: [{ label: 'Obstruction (%)', data: obstructionValues }],
@@ -241,6 +270,8 @@ export default function ModemDetails() {
 				<section className='section chart-wrapper'>
 					<h2>Uptime</h2>
 					<Line
+						height='100'
+						width='300'
 						data={{
 							labels: uptimeLabels,
 							datasets: [{ label: 'Uptime (%)', data: uptimeValues }],

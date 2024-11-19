@@ -161,6 +161,10 @@
 	width: auto;
 }
 
+.logout-button:hover {
+	text-decoration: underline;
+}
+
 .user-avatar:hover .logout-button {
 	display: block;
 }

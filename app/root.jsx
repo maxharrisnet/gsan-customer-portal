@@ -16,14 +16,16 @@ export const loader = async ({ request }) => {
 	const user = await getUserSession(request);
 
 	// If there is a user session and the path is /login, redirect to /dashboard
-	if (path.includes('/login') && user) {
+	if (path.endsWith('/login') && user) {
 		console.log('🪶 Redirecting to dashboard');
+
 		return redirect('/dashboard');
 	}
 
 	// If there is no user session and the path is not /login, redirect to /login
 	if (!path.endsWith('/login') && !user) {
 		console.log('🪶 Redirecting to login');
+
 		return redirect('/login');
 	}
 

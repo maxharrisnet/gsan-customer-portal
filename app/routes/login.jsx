@@ -10,18 +10,6 @@ export default function Login() {
 					<div className='button-wrapper login-button-wrapper'>
 						<div>
 							<img
-								src='/assets/images/switch-logo.png'
-								alt='Switch Logo'
-							/>
-							<Link
-								to='/switch/login'
-								className='button'
-							>
-								Login with Switch
-							</Link>
-						</div>
-						<div>
-							<img
 								src='/assets/images/GSAN-logo.png'
 								alt='GSAN Logo'
 							/>
@@ -32,6 +20,18 @@ export default function Login() {
 								Login with GSAN
 							</Link>
 						</div>
+						<div>
+							<img
+								src='/assets/images/switch-logo.png'
+								alt='Switch Logo'
+							/>
+							<Link
+								to='/switch/login'
+								className='button'
+							>
+								Login with Switch
+							</Link>
+					</div>
 					</div>
 				</div>
 			</div>

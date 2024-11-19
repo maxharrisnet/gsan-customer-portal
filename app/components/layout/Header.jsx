@@ -6,10 +6,9 @@ import { Link, Form } from '@remix-run/react';
 const Header = () => {
 	const location = useLocation();
 	const path = location.pathname;
-	const isGsanPage = path.includes('/gsan');
-	const isSwitchPage = path.includes('/switch');
 	const { currentUser } = useUser();
-	console.log('🦩 currentUser:', currentUser);
+	const isGsanPage = path.includes('/gsan') || currentUser.authType === 'shopify';
+	const isSwitchPage = path.includes('/switch') || currentUser.authType === 'sonar';
 
 	return (
 		<header className='header'>
