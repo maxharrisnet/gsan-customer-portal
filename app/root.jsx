@@ -15,13 +15,16 @@ export const loader = async ({ request }) => {
 	console.log('🟢 Getting user session from Root.jsx');
 	const user = await getUserSession(request);
 
-	if (path.includes('/login')) {
-		return json({});
-	} else {
-		if (!user) {
-			console.log('🪶 Redirecting to login');
-			return redirect('/login');
-		}
+	// If there is a user session and the path is /login, redirect to /dashboard
+	if (path.includes('/login') && user) {
+		console.log('🪶 Redirecting to dashboard');
+		return redirect('/dashboard');
+	}
+
+	// If there is no user session and the path is not /login, redirect to /login
+	if (!path.includes('/login') && !user) {
+		console.log('🪶 Redirecting to login');
+		return redirect('/login');
 	}
 
 	return json({});
