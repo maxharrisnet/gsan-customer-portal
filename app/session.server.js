@@ -12,26 +12,40 @@ export const sessionStorage = createCookieSessionStorage({
 });
 
 export async function createUserSession(userData, authType, redirectTo) {
+	console.log('🟢 Starting createUserSession', userData, authType, redirectTo);
 	const session = await sessionStorage.getSession();
 
 	if (session.has('user')) {
-		throw new Error('🐠 User session already exists');
+		throw new Error('User session already exists');
 	}
 
-	session.set('user', { ...userData, authType });
-	console.log('🍪🍪🍪 Created User session:', session);
+	if (!userData || !userData.account_id || !userData.username) {
+		console.log('Invalid user data:', userData);
+		throw new Error(`Invalid user data`);
+	}
 
-	return redirect(redirectTo, {
-		headers: {
-			'Set-Cookie': await sessionStorage.commitSession(session),
-		},
+	session.set('user', {
+		authType,
+		userId: userData.account_id,
+		username: userData.username,
+		contactName: userData.contact_name,
+		emailAddress: userData.email_address,
 	});
+	console.log('🐣 Created User session:', session.get('user'));
+
+	const headers = {
+		'Set-Cookie': await sessionStorage.commitSession(session),
+	};
+	console.log('🍪 Set-Cookie Header:', headers);
+
+	console.log('🔴 Ending createUserSession');
+	return redirect(redirectTo, { headers });
 }
 
 export async function getUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
 	if (session.has('user')) {
-		console.log('🍪🍪🍪 Found User session:', session.get('user'));
+		console.log('🐶 Found User session:', session.get('user'));
 		return session.get('user');
 	} else {
 		return null;

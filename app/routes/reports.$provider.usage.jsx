@@ -66,12 +66,9 @@ const Reports = () => {
 	return (
 		<Layout>
 			<Sidebar>
-				<ul>
-					<li>Reports</li>
-				</ul>
+				<h1>Reports</h1>
 			</Sidebar>
 			<main className='content'>
-				<h1>Reports</h1>
 				<section className='section'>
 					<WebDataRocks
 						toolbar={true}

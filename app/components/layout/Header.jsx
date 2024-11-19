@@ -6,10 +6,12 @@ const Header = () => {
 		<header className='header'>
 			<div className='header-container'>
 				<div className='logo'>
-					<img
-						src='/assets/images/GSAN-logo.png'
-						alt='GSAN Logo'
-					/>
+					<a href='/'>
+						<img
+							src='/assets/images/GSAN-logo.png'
+							alt='GSAN Logo'
+						/>
+					</a>
 				</div>
 				<nav className='nav'>
 					<ul className='nav-list'>

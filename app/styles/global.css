@@ -135,6 +135,19 @@ button:hover,
 	text-decoration: none;
 }
 
+.form-group {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	gap: var(--spacing-base);
+}
+
+.form-group label {
+	text-align: left;
+	width: 100%;
+	font-weight: bold;
+}
+
 input,
 textarea,
 select {
@@ -143,7 +156,7 @@ select {
 	color: var(--color-text);
 	border: 1px solid var(--color-border);
 	padding: var(--spacing-small);
-	margin-bottom: var(--spacing-base);
+	margin: 0 0 var(--spacing-base);
 	width: 100%;
 	box-sizing: border-box;
 }

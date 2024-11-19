@@ -12,14 +12,10 @@ export const links = () => [
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
 	const path = url.pathname;
+	console.log('🟢 Getting user session from Root.jsx');
 	const user = await getUserSession(request);
 
 	if (path.includes('/login')) {
-		// if (user) {
-		// 	console.log('🪶 Redirecting to dashboard');
-		// 	return redirect('/dashboard');
-		// }
-
 		return json({});
 	} else {
 		if (!user) {
@@ -54,7 +50,7 @@ export default function Root() {
 }
 
 export function ErrorBoundary({ error }) {
-	console.error(error);
+	console.log(error);
 	return (
 		<html>
 			<head>

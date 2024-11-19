@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { createUserSession } from './session.server';
 
 const SONAR_API_URL = 'https://switch.sonar.software/api/v1';
 const SONAR_API_USERNAME = process.env.SONAR_API_USERNAME;
@@ -23,16 +22,13 @@ const authenticateSonarUser = async function (username, password) {
 			}
 		);
 
-		console.log('🐬 Sonar authentication response: ', response);
-
 		if (response.data && response.data.data) {
-			createUserSession(response.data.data, 'sonar', '/dashboard');
-			return { success: true, token: response.data.data.token, username };
+			return { success: true, userData: response.data.data };
 		} else {
-			return { success: false, error: '🐬 Authentication failed' };
+			return { success: false, error: 'Sonar authentication failed' };
 		}
 	} catch (error) {
-		return { success: false, error: '🐬 Authentication failed' };
+		return { success: false, error: 'Sonar authentication failed' };
 	}
 };
 

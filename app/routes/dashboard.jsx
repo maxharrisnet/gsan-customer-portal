@@ -1,10 +1,21 @@
-import { loader } from './api.services';
+import { loader as serviceLoader } from './api.services';
 import { useLoaderData } from '@remix-run/react';
+import { getUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
-export { loader };
+export { serviceLoader };
+
+export const loader = async () => {
+	const user = await getUserSession();
+
+	if (!user) {
+		return { status: 401, redirect: '/login' };
+	}
+
+	return { user };
+};
 
 export function getLatencyClass(latency) {
 	if (latency < 50) return 'latency-green';
@@ -13,13 +24,21 @@ export function getLatencyClass(latency) {
 }
 
 export default function Dashboard() {
-	const { services } = useLoaderData();
+	const { services, user } = useLoaderData();
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;
 	};
 	return (
 		<Layout>
 			<div>
+				<div className='container'>
+					<div className='section'>
+						<div className='card-body'>
+							<h2 className='card-title'>Dashboard</h2>
+							<h3 className='card-subtitle'>Welcome, {user.contactName}</h3>
+						</div>
+					</div>
+				</div>
 				<div className='container'>
 					{services.length > 0 ? (
 						services.map((service) => (

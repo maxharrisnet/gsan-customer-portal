@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useParams, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { loader } from './api.modem';
 import Layout from '../components/layout/Layout';
 import Sidebar from '../components/layout/Sidebar';
@@ -15,7 +15,6 @@ export { loader };
 ChartJS.register(CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend);
 
 export default function ModemDetails() {
-	const { provider, modemId } = useParams();
 	const { modem, gpsData, mapsAPIKey, latencyData, throughputData, signalQualityData, obstructionData, usageData, uptimeData } = useLoaderData();
 
 	const latencyTimestamps = latencyData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
@@ -46,6 +45,40 @@ export default function ModemDetails() {
 	const uptimeChartRef = useRef(null);
 
 	// Set global defaults for Chart.js
+	ChartJS.defaults.global = {
+		...ChartJS.defaults.global,
+		responsive: true,
+		maintainAspectRatio: false,
+		height: 200,
+		plugins: {
+			legend: {
+				display: false,
+				position: 'bottom',
+			},
+		},
+		elements: {
+			point: {
+				radius: 0,
+				hoverRadius: 5,
+				hoverBorderWidth: 1,
+				backgroundColor: '#3986a8',
+				borderColor: '#3986a8',
+			},
+			bar: {
+				backgroundColor: '#3986a8',
+				borderWidth: 1,
+			},
+			line: {
+				hitRadius: 15,
+				borderCapStyle: 'round',
+				borderColor: '#3986a8',
+				borderWidth: 1,
+				fill: true,
+			},
+		},
+	};
+
+	ChartJS.defaults.global.height = 200;
 	ChartJS.defaults.plugins.legend.display = false;
 	ChartJS.defaults.plugins.legend.position = 'bottom';
 	ChartJS.defaults.elements.point.radius = 0;
@@ -107,14 +140,14 @@ export default function ModemDetails() {
 					<APIProvider apiKey={mapsAPIKey}>
 						<Map
 							style={{ width: '100%', height: '400px' }}
-							defaultCenter={{ lat: 22.54992, lng: 0 }}
+							defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
 							defaultZoom={3}
 							gestureHandling={'greedy'}
 							disableDefaultUI={true}
 						/>
 					</APIProvider>
 				</section>
-				{/* <section className='section chart-wrapper'>
+				<section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar
 						data={{
@@ -133,7 +166,7 @@ export default function ModemDetails() {
 							},
 						}}
 					/>
-				</section> */}
+				</section>
 				<section className='section chart-wrapper'>
 					<h2>Signal Quality</h2>
 					<Line

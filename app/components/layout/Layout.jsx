@@ -6,7 +6,7 @@ import './layout.css';
 const Layout = ({ children }) => {
 	return (
 		<div>
-			<Header />
+			<Header  />
 			<div className='wrapper'>{children}</div>
 			<Footer />
 		</div>

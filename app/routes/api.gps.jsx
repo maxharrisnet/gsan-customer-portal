@@ -41,13 +41,14 @@ export const fetchGPS = async (provider, ids, accessToken) => {
 		if (response.status === 200) {
 			// Store the response data in the cache
 			cache.set(cacheKey, response.data);
+			console.log('💾 Caching GPS data');
 			return response.data;
 		} else {
 			return json({ error: `HTTP code ${response.status}` }, { status: response.status });
 		}
 	} catch (error) {
 		if (error.response && error.response.status === 429) {
-			console.error('⌛ Error 429: Rate limit exceeded.');
+			console.error('Error 429: Rate limit exceeded.');
 			return json({ error: 'Rate limit exceeded' }, { status: 429 });
 		} else {
 			console.error('Network Error:', error.message);
