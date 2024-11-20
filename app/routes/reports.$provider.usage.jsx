@@ -14,7 +14,6 @@ export const loader = async ({ request }) => {
 };
 
 const Reports = () => {
-	const { currentUser } = useUser();
 	const { services } = useLoaderData();
 	const [WebDataRocks, setWebDataRocks] = useState(null);
 

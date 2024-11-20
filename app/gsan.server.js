@@ -10,78 +10,40 @@ export const loader = async ({ request }) => {
 
 export const authenticateShopifyUser = async function (email, password, request) {
 	try {
-		console.log('🟢 Authenticating Shopify customer:', email);
 		const { admin } = await authenticate.admin(request);
-		console.log('🐯 Adminnnnn:', admin);
-
-		// First, create a customer access token
-		const tokenResponse = await admin.graphql(
+		console.log('🐯 Admin:', admin);
+		
+		const response = await admin.graphql(
 			`
-      mutation customerAccessTokenCreate {
-        customerAccessTokenCreate(input: {email: email, password: password}) {
-          customerAccessToken {
-            accessToken
-            expiresAt
-          }
-          customerUserErrors {
-            code
-            field
-            message
+      query($email: String!) {
+        customers(first: 1, query: $email) {
+          edges {
+            node {
+              id
+              firstName
+              lastName
+              email
+            }
           }
         }
       }
     `,
-			{
-				variables: {
-					input: {
-						email: email,
-						password: password,
-					},
-				},
-			}
+			{ variables: { email } }
 		);
 
-		console.log('🔵 Token response:', tokenResponse);
-		const { customerAccessTokenCreate } = tokenResponse.json;
-
-		if (customerAccessTokenCreate.customerAccessToken) {
-			// If token creation was successful, fetch customer details
-			const customerResponse = await admin.graphql(
-				`
-        query($accessToken: String!) {
-          customer(customerAccessToken: $accessToken) {
-            id
-            firstName
-            lastName
-            email
-          }
-        }
-      `,
-				{
-					variables: {
-						accessToken: customerAccessTokenCreate.customerAccessToken.accessToken,
-					},
-				}
-			);
-
-			const customer = customerResponse.body.data.customer;
-
-			return json({
-				success: true,
-				userData: {
-					account_id: customer.id,
-					username: customer.email,
-					contact_name: `${customer.firstName} ${customer.lastName}`,
-					email_address: customer.email,
-				},
-			});
-		} else {
-			console.error('🔴 Error creating customer access token:', customerAccessTokenCreate.customerUserErrors);
-			return json({ success: false, errors: customerAccessTokenCreate.customerUserErrors });
+		const customers = response.body.data.customers.edges;
+		if (customers.length === 0) {
+			return json({ error: 'Customer not found' }, { status: 404 });
 		}
+
+		const customer = customers[0].node;
+		return json({ success: true, userData: customer });
 	} catch (error) {
-		console.error('🔴 Error authenticating customer:', error);
-		return json({ success: false, errors: [{ message: 'Authentication failed' }] });
+		if (error.response && error.response.status === 302) {
+			return json({ error: 'Authentication required', redirectUrl: error.response.headers.get('Location') }, { status: 302 });
+		}
+		console.error('Error authenticating customer:', error);
+		return json({ error: 'Authentication failed' }, { status: 500 });
 	}
 };
 

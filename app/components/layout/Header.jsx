@@ -10,6 +10,8 @@ const Header = () => {
 	const isGsanPage = path.includes('/gsan') || currentUser?.authType === 'shopify';
 	const isSwitchPage = path.includes('/switch') || currentUser?.authType === 'sonar';
 
+	const userType = isGsanPage ? 'gsan' : 'switch';
+
 	return (
 		<header className='header'>
 			<div className='header-container'>
@@ -22,7 +24,7 @@ const Header = () => {
 							/>
 						</a>
 					)}
-					{isSwitchPage && (
+					{!isGsanPage && (
 						<a href='/'>
 							<img
 								src='/assets/images/switch-logo.png'
@@ -31,7 +33,6 @@ const Header = () => {
 						</a>
 					)}
 				</div>
-				<Link to='/customers'>Customers</Link>
 				{currentUser && (
 					<nav className='nav'>
 						<ul className='nav-list'>
@@ -39,8 +40,7 @@ const Header = () => {
 								<Link to='/dashboard'>Dashboard</Link>
 							</li>
 							<li className='nav-item'>
-								{/* TODO: Make provider dynamic */}
-								<Link to='/reports/starlink/usage'>Reports</Link>
+								<Link to={`/${userType}/reports`}>Reports</Link>
 							</li>
 						</ul>
 						<div className='user-avatar'>

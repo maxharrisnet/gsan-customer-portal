@@ -1,16 +1,15 @@
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { getUserSession } from '../session.server';
 import { fetchServicesAndModemData } from '../compass.server';
 import { getSonarAccountData, getSonarAccountGroupData, getSonarAccoutUsageData, getSonarInventoryItems } from '../sonar.server';
-import { useUser } from '../context/UserContext';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
 
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export const loader = async ({ request }) => {
-	const user = await getUserSession(request);
+	// const user = await getUserSession(request);
+	const user = { accountId: 1 };
 	const services = await fetchServicesAndModemData();
 
 	const accountResponse = await getSonarAccountData(1);
@@ -56,7 +55,6 @@ export default function Dashboard() {
 							<div className='account-data'>
 								<h3>Account Data</h3>
 								<div className='account-data-wrapper'>
-			
 									<div className='account-data-item'>
 										<h4>Account Status</h4>
 										<p>{sonarAccountData.account_status_id}</p>
