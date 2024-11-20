@@ -2,7 +2,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getUserSession } from '../session.server';
 import { fetchServicesAndModemData } from '../compass.server';
-import { getSonarAccountData, getSonarAccountGroupData } from '../sonar.server';
+import { getSonarAccountData, getSonarAccountGroupData, getSonarAccoutUsageData, getSonarInventoryItems } from '../sonar.server';
 import { useUser } from '../context/UserContext';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
@@ -13,7 +13,7 @@ export const loader = async ({ request }) => {
 	const user = await getUserSession(request);
 	const services = await fetchServicesAndModemData();
 
-	const accountResponse = await getSonarAccountData(user.accountId);
+	const accountResponse = await getSonarAccountData(1);
 	const sonarAccountData = accountResponse.customers;
 
 	const sonarGroupData = await Promise.all(
@@ -22,6 +22,14 @@ export const loader = async ({ request }) => {
 			return groupResponse.data;
 		})
 	);
+
+	const accountUsageResponse = await getSonarAccoutUsageData(user.accountId);
+	const sonarAccountUsageData = accountUsageResponse.data;
+	// console.log('🍀 sonarAccountUsageData:', sonarAccountUsageData);
+
+	const inventoryItemsResponse = await getSonarInventoryItems(user.accountId);
+	const sonarInventoryItems = await inventoryItemsResponse.data;
+	console.log('🍀 sonarInventoryItems:', sonarInventoryItems);
 
 	return json({ user, services, sonarAccountData, sonarGroupData });
 };
@@ -34,7 +42,6 @@ export function getLatencyClass(latency) {
 
 export default function Dashboard() {
 	const { user, services, sonarAccountData, sonarGroupData } = useLoaderData();
-	console.log('🍀 Dashboard:', user, services, sonarAccountData, sonarGroupData);
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;
 	};
@@ -45,19 +52,11 @@ export default function Dashboard() {
 				<div className='container'>
 					<div className='section'>
 						<div className='card-body'>
-							<h1>Welcome, {user.username}</h1>
-							<h2>Account ID: {user.accountId}</h2>
+							<h1>Welcome, {sonarAccountData.name}</h1>
 							<div className='account-data'>
 								<h3>Account Data</h3>
 								<div className='account-data-wrapper'>
-									<div className='account-data-item'>
-										<h4>Account ID</h4>
-										<p>{sonarAccountData.id}</p>
-									</div>
-									<div className='account-data-item'>
-										<h4>Account Name</h4>
-										<p>{sonarAccountData.name}</p>
-									</div>
+			
 									<div className='account-data-item'>
 										<h4>Account Status</h4>
 										<p>{sonarAccountData.account_status_id}</p>
