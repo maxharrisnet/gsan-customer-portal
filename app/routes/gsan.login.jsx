@@ -1,5 +1,5 @@
 import { json } from '@remix-run/node';
-import { authenticateShopifyUser } from '../gsan.server';
+import authenticateShopifyUser from '../gsan.server';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import { Form, useActionData, useLoaderData } from '@remix-run/react';
@@ -11,21 +11,21 @@ export async function action({ request }) {
 
 	try {
 		const shopifyAuth = await authenticateShopifyUser(email, password, request);
-
+		console.log('🍀 GSAN Customer login:', shopifyAuth);
 		if (shopifyAuth.success) {
-			return createUserSession(shopifyAuth.userData, 'sonar', '/dashboard');
+			console.log('🍀 GSAN Customer login success:', shopifyAuth.userData);
+			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboard');
 		} else {
 			return json({ errors: shopifyAuth.errors });
 		}
 	} catch (error) {
-		console.error('Customer login error:', error);
+		console.error('🎳 GSAN Customer login error:', error);
 		return json({ errors: [{ message: 'An error occurred during login' }] });
 	}
 }
 
 export default function GsanLogin() {
 	const actionData = useActionData();
-	const loaderData = useLoaderData();
 
 	return (
 		<Layout>
@@ -66,9 +66,17 @@ export default function GsanLogin() {
 								required
 							/>
 							<button type='submit'>Log in with GSAN</button>
-							{actionData?.error && <p>{actionData.error}</p>}
 						</div>
 					</Form>
+					{actionData?.errors &&
+						actionData.errors.map((error, index) => (
+							<p
+								key={index}
+								style={{ color: 'red' }}
+							>
+								{error.message}
+							</p>
+						))}
 				</div>
 			</div>
 		</Layout>

@@ -5,39 +5,72 @@ const authenticateShopifyUser = async function (email, password, request) {
 	const { admin } = await shopify.authenticate.admin(request);
 
 	try {
-		const response = await admin.graphql(
+		// First, create a customer access token
+		const tokenResponse = await admin.graphql(
 			`
-      query($email: String!) {
-        customers(first: 1, query: $email) {
-          edges {
-            node {
-              id
-              firstName
-              lastName
-              email
-            }
+      mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+        customerAccessTokenCreate(input: $input) {
+          customerAccessToken {
+            accessToken
+            expiresAt
+          }
+          customerUserErrors {
+            code
+            field
+            message
           }
         }
       }
     `,
-			{ variables: { email } }
+			{
+				variables: {
+					input: {
+						email: email,
+						password: password,
+					},
+				},
+			}
 		);
 
-		const customers = response.body.data.customers.edges;
-		if (customers.length === 0) {
-			return json({ error: 'Customer not found' }, { status: 404 });
+		const { customerAccessTokenCreate } = tokenResponse.body.data;
+
+		if (customerAccessTokenCreate.customerAccessToken) {
+			// If token creation was successful, fetch customer details
+			const customerResponse = await admin.graphql(
+				`
+        query($accessToken: String!) {
+          customer(customerAccessToken: $accessToken) {
+            id
+            firstName
+            lastName
+            email
+          }
+        }
+      `,
+				{
+					variables: {
+						accessToken: customerAccessTokenCreate.customerAccessToken.accessToken,
+					},
+				}
+			);
+
+			const customer = customerResponse.body.data.customer;
+
+			return json({
+				success: true,
+				userData: {
+					account_id: customer.id,
+					username: customer.email,
+					contact_name: `${customer.firstName} ${customer.lastName}`,
+					email_address: customer.email,
+				},
+			});
+		} else {
+			return json({ success: false, errors: customerAccessTokenCreate.customerUserErrors });
 		}
-
-		const customer = customers[0].node;
-
-		// Note: Shopify doesn't provide a way to verify customer passwords via API
-		// You would need to implement your own authentication system or use a third-party service
-		// For this example, we're just checking if the customer exists
-
-		return json({ customer });
 	} catch (error) {
 		console.error('Error authenticating customer:', error);
-		return json({ error: 'Authentication failed' }, { status: 500 });
+		return json({ success: false, errors: [{ message: 'Authentication failed' }] });
 	}
 };
 
