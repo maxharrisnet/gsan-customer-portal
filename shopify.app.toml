@@ -3,7 +3,7 @@
 client_id = "a603628c31a9a54199671521ca22c387"
 name = "gsan-customer-portal"
 handle = "gsan-customer-portal"
-application_url = "https://0b05-2604-3d08-4e82-a500-b5fc-227c-c477-5d58.ngrok-free.app/"
+application_url = "https://gsan-customer-portal.vercel.app/"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_customers,write_customersunauthenticated_read_customers,unauthent
 
 [auth]
 redirect_urls = [
-  "https://0b05-2604-3d08-4e82-a500-b5fc-227c-c477-5d58.ngrok-free.app/auth/callback",
-  "https://0b05-2604-3d08-4e82-a500-b5fc-227c-c477-5d58.ngrok-free.app/auth/shopify/callback",
-  "https://0b05-2604-3d08-4e82-a500-b5fc-227c-c477-5d58.ngrok-free.app/api/auth/callback"
+  "https://gsan-customer-portal.vercel.app/auth/callback",
+  "https://gsan-customer-portal.vercel.app/auth/shopify/callback",
+  "https://gsan-customer-portal.vercel.app/api/auth/callback"
 ]
 
 [webhooks]
@@ -27,7 +27,7 @@ api_version = "2024-10"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "https://2826-2604-3d08-4e82-a500-b5fc-227c-c477-5d58.ngrok-free.app/webhooks/app/uninstalled"
+  uri = "https://gsan-customer-portal.vercel.app/webhooks/app/uninstalled"
 
 [pos]
 embedded = false
