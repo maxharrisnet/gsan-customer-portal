@@ -10,7 +10,7 @@ export const loader = async ({ request }) => {
 	// const user = await getUserSession(request);
 	const user = { accountId: 1 };
 	const response = await getSonarAccoutUsageData(user.accountId);
-	const usageData = await response.json();
+	const usageData = response.json();
 	console.log('🐬 usage:', usageData);
 	const flattenedData = flattenData(usageData);
 

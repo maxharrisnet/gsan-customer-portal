@@ -87,3 +87,27 @@ a.text-black {
 .latency-red {
 	background-color: var(--phone-orange-dark);
 }
+
+.account-data {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.account-data h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.account-data p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.account-data-item {
+	display: flex;
+	justify-content: space-between;
+}

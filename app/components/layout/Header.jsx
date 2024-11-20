@@ -40,7 +40,7 @@ const Header = () => {
 								<Link to='/dashboard'>Dashboard</Link>
 							</li>
 							<li className='nav-item'>
-								<Link to={`/${userType}/reports`}>Reports</Link>
+								<Link to='/reports/starlink/usage'>Reports</Link>
 							</li>
 						</ul>
 						<div className='user-avatar'>

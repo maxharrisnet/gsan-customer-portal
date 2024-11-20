@@ -8,11 +8,12 @@ import dashboardStyles from '../styles/dashboard.css?url';
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export const loader = async ({ request }) => {
+	console.log('🏀 Dashboard loader');
 	// const user = await getUserSession(request);
-	const user = { accountId: 1 };
+	const user = { accountId: 28 };
 	const services = await fetchServicesAndModemData();
 
-	const accountResponse = await getSonarAccountData(1);
+	const accountResponse = await getSonarAccountData(user.accountId);
 	const sonarAccountData = accountResponse.customers;
 
 	const sonarGroupData = await Promise.all(
@@ -23,8 +24,8 @@ export const loader = async ({ request }) => {
 	);
 
 	const accountUsageResponse = await getSonarAccoutUsageData(user.accountId);
-	const sonarAccountUsageData = accountUsageResponse.data;
-	// console.log('🍀 sonarAccountUsageData:', sonarAccountUsageData);
+	const sonarAccountUsageData = accountUsageResponse.data.granular;
+	console.log('🍀 sonarAccountUsageData:', sonarAccountUsageData);
 
 	const inventoryItemsResponse = await getSonarInventoryItems(user.accountId);
 	const sonarInventoryItems = await inventoryItemsResponse.data;
@@ -53,14 +54,13 @@ export default function Dashboard() {
 						<div className='card-body'>
 							<h1>Welcome, {sonarAccountData.name}</h1>
 							<div className='account-data'>
-								<h3>Account Data</h3>
 								<div className='account-data-wrapper'>
 									<div className='account-data-item'>
 										<h4>Account Status</h4>
-										<p>{sonarAccountData.account_status_id}</p>
+										<p>{sonarAccountData.account_status_id === 2 ? 'Active' : 'Inactive'}</p>
 									</div>
 									<div className='account-data-item'>
-										<h4>Account Groups</h4>
+										<h4>Services</h4>
 										{sonarGroupData.map((group) => (
 											<p key={group.id}>{group.name}</p>
 										))}
