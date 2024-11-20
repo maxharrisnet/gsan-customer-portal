@@ -1,15 +1,24 @@
 import { json } from '@remix-run/node';
-import shopify from './shopify.server';
+import { shopify, authenticate } from './shopify.server';
+import { useLoaderData } from '@remix-run/react';
 
-const authenticateShopifyUser = async function (email, password, request) {
-	const { admin } = await shopify.authenticate.admin(request);
+export const loader = async ({ request }) => {
+	const { admin } = await authenticate.admin(request);
+	console.log('🐯 Admin:', admin);
+	return json({ admin });
+};
 
+export const authenticateShopifyUser = async function (email, password, request) {
 	try {
+		console.log('🟢 Authenticating Shopify customer:', email);
+		const { admin } = await authenticate.admin(request);
+		console.log('🐯 Adminnnnn:', admin);
+
 		// First, create a customer access token
 		const tokenResponse = await admin.graphql(
 			`
-      mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-        customerAccessTokenCreate(input: $input) {
+      mutation customerAccessTokenCreate {
+        customerAccessTokenCreate(input: {email: email, password: password}) {
           customerAccessToken {
             accessToken
             expiresAt
@@ -32,7 +41,8 @@ const authenticateShopifyUser = async function (email, password, request) {
 			}
 		);
 
-		const { customerAccessTokenCreate } = tokenResponse.body.data;
+		console.log('🔵 Token response:', tokenResponse);
+		const { customerAccessTokenCreate } = tokenResponse.json;
 
 		if (customerAccessTokenCreate.customerAccessToken) {
 			// If token creation was successful, fetch customer details
@@ -66,10 +76,11 @@ const authenticateShopifyUser = async function (email, password, request) {
 				},
 			});
 		} else {
+			console.error('🔴 Error creating customer access token:', customerAccessTokenCreate.customerUserErrors);
 			return json({ success: false, errors: customerAccessTokenCreate.customerUserErrors });
 		}
 	} catch (error) {
-		console.error('Error authenticating customer:', error);
+		console.error('🔴 Error authenticating customer:', error);
 		return json({ success: false, errors: [{ message: 'Authentication failed' }] });
 	}
 };

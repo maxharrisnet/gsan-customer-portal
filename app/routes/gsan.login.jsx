@@ -16,6 +16,8 @@ export async function action({ request }) {
 			console.log('🍀 GSAN Customer login success:', shopifyAuth.userData);
 			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboard');
 		} else {
+			console.log('😷 GSAN Customer login failed:', shopifyAuth.errors);
+
 			return json({ errors: shopifyAuth.errors });
 		}
 	} catch (error) {
