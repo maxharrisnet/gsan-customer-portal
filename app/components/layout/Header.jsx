@@ -31,6 +31,7 @@ const Header = () => {
 						</a>
 					)}
 				</div>
+				<Link to='/customers'>Customers</Link>
 				{currentUser && (
 					<nav className='nav'>
 						<ul className='nav-list'>

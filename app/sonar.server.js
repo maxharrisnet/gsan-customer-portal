@@ -33,3 +33,64 @@ const authenticateSonarUser = async function (username, password) {
 };
 
 export default authenticateSonarUser;
+
+export const getSonarAccounts = async function () {
+	const sonarAuth = Buffer.from(`${SONAR_API_USERNAME}:${SONAR_API_PASSWORD}`).toString('base64');
+	try {
+		const response = await axios.get(`${SONAR_API_URL}/accounts`, {
+			headers: {
+				Authorization: `Basic ${sonarAuth}`,
+			},
+			params: {
+				limit: 10,
+				page: 1,
+			},
+		});
+
+		if (response.data && response.data.data) {
+			return { success: true, customers: response.data.data };
+		} else {
+			return { success: false, error: 'Sonar customers not found' };
+		}
+	} catch (error) {
+		return { success: false, error: 'Sonar customers not found' };
+	}
+};
+
+export const getSonarAccountData = async function (account_id) {
+	const sonarAuth = Buffer.from(`${SONAR_API_USERNAME}:${SONAR_API_PASSWORD}`).toString('base64');
+	try {
+		const response = await axios.get(`${SONAR_API_URL}/accounts/${account_id}`, {
+			headers: {
+				Authorization: `Basic ${sonarAuth}`,
+			},
+		});
+
+		if (response.data && response.data.data) {
+			return { success: true, customers: response.data.data };
+		} else {
+			return { success: false, error: 'Sonar customer not found' };
+		}
+	} catch (error) {
+		return { success: false, error: 'Sonar customer not found' };
+	}
+};
+
+export const getSonarAccountGroupData = async function (group_id) {
+	const sonarAuth = Buffer.from(`${SONAR_API_USERNAME}:${SONAR_API_PASSWORD}`).toString('base64');
+	try {
+		const response = await axios.get(`${SONAR_API_URL}/system/account_groups/${group_id}`, {
+			headers: {
+				Authorization: `Basic ${sonarAuth}`,
+			},
+		});
+
+		if (response.data && response.data.data) {
+			return { success: true, data: response.data.data };
+		} else {
+			return { success: false, error: 'Sonar account group not found' };
+		}
+	} catch (error) {
+		return { success: false, error: 'Sonar account group not found' };
+	}
+};

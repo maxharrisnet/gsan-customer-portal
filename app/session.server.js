@@ -25,7 +25,8 @@ export async function createUserSession(userData, authType, redirectTo) {
 
 	session.set('user', {
 		authType,
-		userId: userData.account_id,
+		userId: userData.contact_id,
+		accountId: userData.account_id,
 		username: userData.username,
 		contactName: userData.contact_name,
 		emailAddress: userData.email_address,
@@ -42,7 +43,7 @@ export async function createUserSession(userData, authType, redirectTo) {
 export async function getUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
 	if (session.has('user')) {
-		console.log('🐶 Found User session:', session.get('user'));
+		// console.log('🐶 Found User session:', session.get('user'));
 		return session.get('user');
 	} else {
 		return null;
