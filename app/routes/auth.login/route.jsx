@@ -10,7 +10,7 @@ import { loginErrorMessage } from './error.server';
 export const links = () => [{ rel: 'stylesheet', href: polarisStyles }];
 
 export const loader = async ({ request }) => {
-	console.log('🦈🦈🦈 Auth Hell');
+	console.log('🦈🦈🦈 Entering Auth route');
 
 	const errors = loginErrorMessage(await login(request));
 
@@ -26,6 +26,8 @@ export const action = async ({ request }) => {
 };
 
 export default function Auth() {
+	console.log('🦈 Auth that!!');
+
 	const loaderData = useLoaderData();
 	const actionData = useActionData();
 	const [shop, setShop] = useState('');

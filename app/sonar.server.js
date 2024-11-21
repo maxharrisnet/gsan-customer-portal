@@ -133,3 +133,25 @@ export const getSonarInventoryItems = async function (accountId) {
 		return { success: false, error: 'Sonar inventory items not found' };
 	}
 };
+
+export const getMonitoringData = async function (account_id, inventory_item_id) {
+	// Calculate the start time and end time for the last 24 hours
+	const endTime = new Date().toISOString();
+	const startTime = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+	try {
+		const response = await axios.get(`${SONAR_API_URL}/network/monitoring/monitoring_data/accounts/${account_id}/inventory_items/${inventory_item_id}/${startTime}/${endTime}`, {
+			headers: {
+				Authorization: `Basic ${sonarAuth}`,
+			},
+		});
+
+		if (response.data && response.data.data) {
+			return { success: true, monitoringData: response.data.data };
+		} else {
+			return { success: false, error: 'Monitoring data not found' };
+		}
+	} catch (error) {
+		return { success: false, error: 'Monitoring data not found' };
+	}
+};

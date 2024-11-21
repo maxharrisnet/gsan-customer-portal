@@ -1,18 +1,23 @@
 import { json } from '@remix-run/node';
-import { shopify, authenticate } from './shopify.server';
-import { useLoaderData } from '@remix-run/react';
+import shopify from './shopify.server';
 
 export const loader = async ({ request }) => {
-	const { admin } = await authenticate.admin(request);
-	console.log('🐯 Admin:', admin);
-	return json({ admin });
+	try {
+		const { admin } = await shopify.authenticate.admin(request);
+		console.log('🐯 Admin:', admin);
+		return json({ admin });
+	} catch (error) {
+		console.error('Loader authentication error:', error);
+		return json({ error: 'Authentication failed' }, { status: 401 });
+	}
 };
 
 export const authenticateShopifyUser = async function (email, password, request) {
+	console.log('🔒 Authenticating Shopify user:', email);
 	try {
-		const { admin } = await authenticate.admin(request);
+		const { admin } = await shopify.authenticate.admin(request);
 		console.log('🐯 Admin:', admin);
-		
+
 		const response = await admin.graphql(
 			`
       query($email: String!) {
@@ -39,10 +44,11 @@ export const authenticateShopifyUser = async function (email, password, request)
 		const customer = customers[0].node;
 		return json({ success: true, userData: customer });
 	} catch (error) {
-		if (error.response && error.response.status === 302) {
-			return json({ error: 'Authentication required', redirectUrl: error.response.headers.get('Location') }, { status: 302 });
-		}
 		console.error('Error authenticating customer:', error);
+		if (error.response && error.response.status === 302) {
+			// Instead of returning a 302, we'll return a custom error
+			return json({ error: 'Authentication required', redirectUrl: error.response.headers.get('Location') }, { status: 401 });
+		}
 		return json({ error: 'Authentication failed' }, { status: 500 });
 	}
 };
