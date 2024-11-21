@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData } from '@remix-run/react';
 import { fetchServicesAndModemData } from '../compass.server';
-import { useUser } from '../context/UserContext';
 import Layout from './../components/layout/Layout';
 import Sidebar from './../components/layout/Sidebar';
 

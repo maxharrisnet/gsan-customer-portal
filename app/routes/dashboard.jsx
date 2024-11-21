@@ -4,12 +4,15 @@ import { fetchServicesAndModemData } from '../compass.server';
 import { getSonarAccountData, getSonarAccountGroupData, getSonarAccoutUsageData } from '../sonar.server';
 import { Line } from 'react-chartjs-2';
 import Layout from '../components/layout/Layout';
+import MemoryChart from '../components/charts/MemoryChart';
 import dashboardStyles from '../styles/dashboard.css?url';
+import sonarMonitoring from '../data/sonarMonitoring.json'; // Import the placeholder data
+import chartStyles from '../styles/charts.css?url';
+// export const links = () => [{ rel: 'stylesheet', href: chartStyles }];
 
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export const loader = async ({ request }) => {
-	console.log('🏀 Dashboard loader');
 	// const user = await getUserSession(request);
 	const user = { accountId: 28 };
 	const services = await fetchServicesAndModemData();
@@ -26,7 +29,9 @@ export const loader = async ({ request }) => {
 
 	const accountUsageResponse = await getSonarAccoutUsageData(user.accountId);
 	const sonarAccountUsageData = accountUsageResponse.data.granular;
-	console.log('🍀 sonarAccountUsageData:', sonarAccountUsageData);
+	// console.log('🍹 sonarAccountUsageData:', sonarAccountUsageData);
+
+	const monitoringData = sonarMonitoring.data;
 
 	// const inventoryItemsResponse = await getSonarInventoryItems(user.accountId);
 	// const sonarInventoryItems = await inventoryItemsResponse.data;
@@ -40,7 +45,7 @@ export const loader = async ({ request }) => {
 	// 	})
 	// );
 	// console.log('🍀 inventoryMonitoringData:', inventoryMonitoringData);
-	return json({ user, services, sonarAccountData, sonarGroupData });
+	return json({ user, services, sonarAccountData, sonarGroupData, sonarAccountUsageData, monitoringData });
 };
 
 export function getLatencyClass(latency) {
@@ -50,8 +55,8 @@ export function getLatencyClass(latency) {
 }
 
 export default function Dashboard() {
-	const { user, services, sonarAccountData, sonarGroupData, sonarInventoryItems, monitoringData } = useLoaderData();
-
+	const { user, services, sonarAccountData, sonarGroupData, monitoringData } = useLoaderData();
+	console.log('🍹 Monitoring Data: ', sonarMonitoring.snmp_oids);
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;
 	};
@@ -87,6 +92,7 @@ export default function Dashboard() {
 										<h4>Account Status</h4>
 										<p>{sonarAccountData.account_status_id === 2 ? 'Active' : 'Inactive'}</p>
 									</div>
+									<MemoryChart data={monitoringData.snmp} />
 								</div>
 							</div>
 						</div>

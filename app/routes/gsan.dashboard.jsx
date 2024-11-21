@@ -1,7 +1,6 @@
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { fetchServicesAndModemData } from '../compass.server';
-import { getSonarAccountData, getSonarAccountGroupData, getSonarAccoutUsageData, getSonarInventoryItems } from '../sonar.server';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
 
@@ -31,31 +30,6 @@ export default function Dashboard() {
 	return (
 		<Layout>
 			<div>
-				<div className='container'>
-					<div className='section'>
-						<div className='card-body'>
-							<h1>Welcome, {sonarAccountData.name}</h1>
-							<div className='account-data'>
-								<div className='account-data-wrapper'>
-									<div className='account-data-item'>
-										<h4>Account Status</h4>
-										<p>{sonarAccountData.account_status_id === 2 ? 'Active' : 'Inactive'}</p>
-									</div>
-									<div className='account-data-item'>
-										<h4>Services</h4>
-										{sonarGroupData.map((group) => (
-											<p key={group.id}>{group.name}</p>
-										))}
-									</div>
-									<div className='account-data-item'>
-										<h4>Account Type</h4>
-										<p>{sonarAccountData.account_type_id}</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div className='container'>
 					{services.length > 0 ? (
 						services.map((service) => (

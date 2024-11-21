@@ -94,7 +94,7 @@ export const getSonarAccountGroupData = async function (group_id) {
 
 export const getSonarAccoutUsageData = async function (accountId) {
 	const endTime = Math.floor(Date.now() / 1000); // Current time in Unix timestamp
-	const startTime = endTime - 24 * 60 * 60; // 24 hours ago in Unix timestamp
+	const startTime = endTime - 6 * 30 * 24 * 60 * 60; // 6 months ago in Unix timestamp
 
 	try {
 		const response = await axios.get(`${SONAR_API_URL}/accounts/${accountId}/granular_data_usage/${startTime}/${endTime}`, {
@@ -102,6 +102,8 @@ export const getSonarAccoutUsageData = async function (accountId) {
 				Authorization: `Basic ${sonarAuth}`,
 			},
 		});
+
+		console.log('🐬 Usage data:', response.data.data.granular);
 
 		if (response.data && response.data.data) {
 			return { success: true, data: response.data.data };

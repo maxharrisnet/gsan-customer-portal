@@ -15,7 +15,7 @@ export async function action({ request }) {
 
 		if (sonarAuth.success) {
 			console.log('👾 Creating session from switch.login.jsx');
-			return createUserSession(sonarAuth.userData, 'sonar', '/switch/dashboard');
+			return createUserSession(sonarAuth.userData, 'sonar', '/dashboard');
 		} else {
 			return json({ error: sonarAuth.error }, { status: 401 });
 		}

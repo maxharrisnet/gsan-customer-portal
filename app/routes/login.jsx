@@ -14,7 +14,8 @@ export default function Login() {
 								alt='GSAN Logo'
 							/>
 							<Link
-								to='/gsan/login'
+								// to='/gsan/login'
+								to='/gsan/dashboard'
 								className='button'
 							>
 								Login with GSAN

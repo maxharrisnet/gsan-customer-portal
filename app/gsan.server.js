@@ -1,16 +1,16 @@
 import { json } from '@remix-run/node';
 import shopify from './shopify.server';
 
-export const loader = async ({ request }) => {
-	try {
-		const { admin } = await shopify.authenticate.admin(request);
-		console.log('🐯 Admin:', admin);
-		return json({ admin });
-	} catch (error) {
-		console.error('Loader authentication error:', error);
-		return json({ error: 'Authentication failed' }, { status: 401 });
-	}
-};
+// export const loader = async ({ request }) => {
+// 	try {
+// 		const { admin } = await shopify.authenticate.admin(request);
+// 		console.log('🐯 Admin:', admin);
+// 		return json({ admin });
+// 	} catch (error) {
+// 		console.error('Loader authentication error:', error);
+// 		return json({ error: 'Authentication failed' }, { status: 401 });
+// 	}
+// };
 
 export const authenticateShopifyUser = async function (email, password, request) {
 	console.log('🔒 Authenticating Shopify user:', email);

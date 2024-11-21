@@ -7,7 +7,7 @@ const Header = () => {
 	const location = useLocation();
 	const path = location.pathname;
 	const { currentUser } = useUser();
-	const isGsanPage = path.includes('/gsan') || currentUser?.authType === 'shopify';
+	const isGsanPage = path.includes('/gsan') || path.includes('/starlink') || currentUser?.authType === 'shopify';
 	const userType = isGsanPage ? 'gsan' : 'switch';
 
 	return (
@@ -38,7 +38,7 @@ const Header = () => {
 								<Link to='/dashboard'>Dashboard</Link>
 							</li>
 							<li className='nav-item'>
-								<Link to='/reports/starlink/usage'>Reports</Link>
+								<Link to='/switch/reports/'>Reports</Link>
 							</li>
 						</ul>
 						<div className='user-avatar'>

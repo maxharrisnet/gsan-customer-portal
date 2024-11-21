@@ -34,9 +34,9 @@ export default function ModemDetails() {
 	const usagePriority = usageData.map((entry) => entry.priority);
 	const usageUnlimited = usageData.map((entry) => entry.unlimited ?? 0); // Assuming there might be an 'unlimited' property
 
-	console.log('📊 Usage Data:', usageData);
-	console.log('👆 Upload Usage: ', usageUnlimited);
-	console.log('👇 Download Usage: ', usagePriority);
+	// console.log('📊 Usage Data:', usageData);
+	// console.log('👆 Upload Usage: ', usageUnlimited);
+	// console.log('👇 Download Usage: ', usagePriority);
 
 	const uptimeLabels = uptimeData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const uptimeValues = uptimeData.map((entry) => Math.ceil((entry[1] / 86400) * 10) / 10);
@@ -49,40 +49,40 @@ export default function ModemDetails() {
 	const uptimeChartRef = useRef(null);
 
 	// Set global defaults for Chart.js
-	ChartJS.defaults.global = {
-		...ChartJS.defaults.global,
-		responsive: true,
-		maintainAspectRatio: false,
-		height: 200,
-		plugins: {
-			legend: {
-				display: false,
-				position: 'bottom',
-			},
-		},
-		elements: {
-			point: {
-				radius: 0,
-				hoverRadius: 5,
-				hoverBorderWidth: 1,
-				backgroundColor: '#3986a8',
-				borderColor: '#3986a8',
-			},
-			bar: {
-				backgroundColor: '#3986a8',
-				borderWidth: 1,
-			},
-			line: {
-				hitRadius: 15,
-				borderCapStyle: 'round',
-				borderColor: '#3986a8',
-				borderWidth: 1,
-				fill: true,
-				fillColor: '#3986a8',
-				fillTarget: 'origin',
-			},
-		},
-	};
+	// ChartJS.defaults.global = {
+	// 	...ChartJS.defaults.global,
+	// 	responsive: true,
+	// 	maintainAspectRatio: false,
+	// 	height: 200,
+	// 	plugins: {
+	// 		legend: {
+	// 			display: false,
+	// 			position: 'bottom',
+	// 		},
+	// 	},
+	// 	elements: {
+	// 		point: {
+	// 			radius: 0,
+	// 			hoverRadius: 5,
+	// 			hoverBorderWidth: 1,
+	// 			backgroundColor: '#3986a8',
+	// 			borderColor: '#3986a8',
+	// 		},
+	// 		bar: {
+	// 			backgroundColor: '#3986a8',
+	// 			borderWidth: 1,
+	// 		},
+	// 		line: {
+	// 			hitRadius: 15,
+	// 			borderCapStyle: 'round',
+	// 			borderColor: '#3986a8',
+	// 			borderWidth: 1,
+	// 			fill: true,
+	// 			fillColor: '#3986a8',
+	// 			fillTarget: 'origin',
+	// 		},
+	// 	},
+	// };
 
 	ChartJS.defaults.global.height = 200;
 	ChartJS.defaults.plugins.legend.display = false;
@@ -139,25 +139,6 @@ export default function ModemDetails() {
 			<Sidebar>
 				<div>
 					<h2>{modem.name}</h2>
-					<a
-						href='/service-status'
-						class='px-3'
-					>
-						<svg
-							xmlns='http://www.w3.org/2000/svg'
-							width='16'
-							height='16'
-							fill='black'
-							class='bi bi-arrow-left'
-							viewBox='0 0 16 16'
-							style='font-weight: bold;'
-						>
-							<path
-								fill-rule='evenodd'
-								d='M15 8a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z'
-							/>
-						</svg>
-					</a>
 				</div>
 				<p>{modem.type}</p>
 				<p>{modem.id}</p>
@@ -181,7 +162,7 @@ export default function ModemDetails() {
 						</Map>
 					</APIProvider>
 				</section>
-				<section className='section chart-wrapper'>
+				{/* <section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar
 						height='100'
@@ -202,7 +183,7 @@ export default function ModemDetails() {
 							},
 						}}
 					/>
-				</section>
+				</section> */}
 				<section className='section chart-wrapper'>
 					<h2>Signal Quality</h2>
 					<Line

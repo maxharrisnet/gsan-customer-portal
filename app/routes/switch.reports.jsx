@@ -1,26 +1,25 @@
 import { json } from '@remix-run/node';
 import { useEffect, useState } from 'react';
 import { useLoaderData } from '@remix-run/react';
-import { getUserSession } from '../session.server';
-import { getSonarAccoutUsageData } from '../sonar.server';
+import sonarUsage from '../data/sonarUsage.json'; // Import the placeholder data
 import Layout from '../components/layout/Layout';
 import Sidebar from '../components/layout/Sidebar';
 
 export const loader = async ({ request }) => {
-	// const user = await getUserSession(request);
-	const user = { accountId: 1 };
-	const response = await getSonarAccoutUsageData(user.accountId);
-	const usageData = response.json();
-	console.log('🐬 usage:', usageData);
-	const flattenedData = flattenData(usageData);
-
-	return json({ data: flattenedData });
+	try {
+		const user = { accountId: 1 };
+		// const response = await getSonarAccoutUsageData(user.accountId);
+		const flattenedData = flattenData(sonarUsage);
+		return json({ data: flattenedData });
+	} catch (error) {
+		console.error('Error fetching usage data:', error);
+		return json({ error: 'Failed to fetch usage data' }, { status: 500 });
+	}
 };
 
 function flattenData(response) {
 	const flatData = [];
 	response.data.granular.series.forEach((series) => {
-		e;
 		Object.entries(series.in).forEach(([timestamp, value]) => {
 			flatData.push({
 				data_source_identifier: series.data_source_identifier,
@@ -35,7 +34,7 @@ function flattenData(response) {
 }
 
 export default function SonarReports() {
-	const { usage } = useLoaderData();
+	const { data: usage } = useLoaderData();
 	const [WebDataRocks, setWebDataRocks] = useState(null);
 
 	useEffect(() => {

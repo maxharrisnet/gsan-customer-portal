@@ -1,5 +1,5 @@
 import { json, redirect } from '@remix-run/node';
-import { Form, useLoaderData } from '@remix-run/react';
+import { Form, useLoaderData, Link } from '@remix-run/react';
 import { login } from '../../shopify.server';
 import Layout from '../../components/layout/Layout';
 import styles from './styles.module.css';
@@ -20,7 +20,8 @@ export default function App() {
 	return (
 		<Layout>
 			<main className='content content-centered'>
-				<h1 className={styles.heading}>GSAN Customer Portal</h1>
+				<h1 className={styles.heading}>Switch Customer Portal</h1>
+				<Link to='login'>Login</Link>
 			</main>
 		</Layout>
 	);
