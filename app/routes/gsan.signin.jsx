@@ -69,7 +69,7 @@ export default function GsanLogin() {
 							/>
 							{/* <button type='submit'>Log in with GSAN</button> */}
 							<Link
-								to='/dashboard'
+								to='https://85ec-2604-3d08-4e82-a500-55c8-abf-e663-46b.ngrok-free.app/dashboard'
 								className='button'
 							>
 								Log in with GSAN

@@ -24,11 +24,11 @@
 	--color-border: #dfe3e8;
 
 	/* Original colors */
-	--wifi-green: #83c341;
-	--monitor-blue: #5baed9;
-	--phone-orange: #f16737;
-	--text-black: #333333;
-	--background-white: #ffffff;
+	--wifi-green: #4caf50; /* A more vibrant green */
+	--monitor-blue: #2196f3; /* A more vibrant blue */
+	--phone-orange: #ff9800; /* A more vibrant orange */
+	--text-black: #212121; /* A slightly darker black */
+	--background-white: #ffffff; /* Keeping the white as is */
 
 	/* Lighter colors */
 	--wifi-green-light: #a9d870;
@@ -205,4 +205,9 @@ textarea:focus,
 select:focus {
 	border-color: var(--color-primary);
 	outline: none;
+}
+
+.feather {
+	width: 16px;
+	height: 16px;
 }
