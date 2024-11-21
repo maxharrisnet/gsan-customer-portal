@@ -30,9 +30,27 @@ export default function ModemDetails() {
 	const obstructionLabels = obstructionData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const obstructionValues = obstructionData.map((entry) => entry[1] * 100);
 
-	const usageLabels = usageData.map((entry) => new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-	const usagePriority = usageData.map((entry) => entry.priority);
-	const usageUnlimited = usageData.map((entry) => entry.unlimited ?? 0); // Assuming there might be an 'unlimited' property
+	// Filter and process usage data for the last 14 days
+	const currentDate = new Date();
+	const usageDayOffset = new Date();
+	usageDayOffset.setDate(currentDate.getDate() - 14);
+
+	const weeklyUsageData = usageData.filter((entry) => {
+		const entryDate = new Date(entry.date);
+		return entryDate >= usageDayOffset && entryDate <= currentDate;
+	});
+
+	const usageLabels = [];
+	const usagePriority = [];
+	const usageUnlimited = [];
+
+	if (Array.isArray(weeklyUsageData) && weeklyUsageData.length > 0) {
+		weeklyUsageData.forEach((day) => {
+			usageLabels.push(new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+			usagePriority.push(day.priority ?? 0);
+			usageUnlimited.push(day.unlimited ?? 0);
+		});
+	}
 
 	console.log('📊 Usage Data:', usageData);
 	console.log('👆 Upload Usage: ', usageUnlimited);
@@ -153,12 +171,7 @@ export default function ModemDetails() {
 							gestureHandling={'greedy'}
 							disableDefaultUI={true}
 						>
-							<Marker
-								latitude={gpsData[0].lat}
-								longitude={gpsData[0].lon}
-								offsetLeft={-20}
-								offsetTop={-20}
-							/>
+							<Marker position={{ lat: gpsData[0].lat, lng: gpsData[0].lon }} />
 						</Map>
 					</APIProvider>
 				</section>
@@ -170,14 +183,14 @@ export default function ModemDetails() {
 						data={{
 							labels: usageLabels,
 							datasets: [
-								{ label: 'Download (GB)', data: usagePriority.map((value) => Math.ceil(value / 1000000)) },
-								{ label: 'Upload (GB)', data: usageUnlimited.map((value) => Math.ceil(value / 1000000)) },
+								{ label: 'Download (GB)', data: usagePriority },
+								{ label: 'Upload (GB)', data: usageUnlimited },
 							],
 						}}
 						options={{
 							scales: {
 								y: {
-									ticks: { callback: (value) => `${value}GB`, stepSize: 100 },
+									ticks: { callback: (value) => `${value}GB`, stepSize: 1 },
 									beginAtZero: true,
 								},
 							},

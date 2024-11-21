@@ -16,7 +16,7 @@ export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 export const loader = async ({ request }) => {
 	console.log('🏀 Dashboard loader');
 	// const user = await getUserSession(request);
-	const user = { accountId: 28 };
+	const user = { accountId: 818 };
 	const services = await fetchServicesAndModemData();
 
 	const accountResponse = await getSonarAccountData(user.accountId);
@@ -114,7 +114,7 @@ export default function Dashboard() {
 				<div className='container'>
 					<div className='section'>
 						<div className='card-body'>
-							<h1>Welcome, {sonarAccountData.name}</h1>
+							<h1>Welcome Telus</h1>
 							<div className='account-data'>
 								<div className='account-data-wrapper'>
 									<div className='account-data-item'>
