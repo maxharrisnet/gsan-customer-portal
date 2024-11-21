@@ -1,0 +1,82 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "inventory_model_id": 1,
+      "status": "lost",
+      "purchase_price": 0,
+      "condition": "new",
+      "consumed": false,
+      "consumed_at": null,
+      "fields": [
+        {
+          "field_id": 1,
+          "data": "00:00:00:00:00:DD"
+        },
+        {
+          "field_id": 2,
+          "data": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "inventory_model_id": 1,
+      "status": "functional",
+      "purchase_price": 0,
+      "condition": "new",
+      "consumed": false,
+      "consumed_at": null,
+      "fields": [
+        {
+          "field_id": 1,
+          "data": "00:00:00:00:00:0B"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "inventory_model_id": 1,
+      "status": "functional",
+      "purchase_price": 0,
+      "condition": "new",
+      "consumed": false,
+      "consumed_at": null,
+      "fields": [
+        {
+          "field_id": 1,
+          "data": "00:DD:11:AA:BB:CC"
+        },
+        {
+          "field_id": 2,
+          "data": "1"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "inventory_model_id": 1,
+      "status": "functional",
+      "purchase_price": 0,
+      "condition": "new",
+      "consumed": false,
+      "consumed_at": null,
+      "fields": [
+        {
+          "field_id": 1,
+          "data": "00:00:00:0A:BC:12"
+        },
+        {
+          "field_id": 2,
+          "data": "12345"
+        }
+      ]
+    }
+  ],
+  "paginator": {
+    "total_count": 4,
+    "total_pages": 1,
+    "current_page": 1,
+    "limit": 100
+  }
+}
