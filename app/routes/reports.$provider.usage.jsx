@@ -69,9 +69,6 @@ const Reports = () => {
 	if (!WebDataRocks) {
 		return (
 			<Layout>
-				<Sidebar>
-					<h1>Reports</h1>
-				</Sidebar>
 				<main className='content'>
 					<section className='section'>
 						<div>Loading...</div>
@@ -83,9 +80,6 @@ const Reports = () => {
 
 	return (
 		<Layout>
-			<Sidebar>
-				<h1>Reports</h1>
-			</Sidebar>
 			<main className='content'>
 				<section className='section'>
 					<WebDataRocks

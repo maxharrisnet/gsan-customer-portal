@@ -150,7 +150,6 @@ export default function ModemDetails() {
 							fill='black'
 							class='bi bi-arrow-left'
 							viewBox='0 0 16 16'
-							style='font-weight: bold;'
 						>
 							<path
 								fill-rule='evenodd'
