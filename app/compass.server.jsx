@@ -18,7 +18,7 @@ export const fetchServicesAndModemData = async () => {
 		});
 
 		const allServices = await servicesResponse.data;
-		console.log('🌽 All services:', allServices);
+		console.log('🌽 All services fetched');
 		const servicesWithModemDetails = await Promise.all(
 			allServices.map(async (service) => {
 				if (service.modems && service.modems.length > 0) {

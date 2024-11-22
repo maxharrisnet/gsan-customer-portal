@@ -6,7 +6,7 @@ import authenticateSonarUser from '../sonar.server';
 import Layout from '../components/layout/Layout';
 
 export async function action({ request }) {
-	console.log('👾 Running action from switch.login.jsx');
+	console.log('👾 Running action from switch.login');
 	const formData = await request.formData();
 	const username = formData.get('username');
 	const password = formData.get('password');
@@ -15,7 +15,7 @@ export async function action({ request }) {
 		const sonarAuth = await authenticateSonarUser(username, password);
 
 		if (sonarAuth.success) {
-			console.log('👾 Creating session from switch.login.jsx');
+			console.log('👾 Creating session from switch.login');
 			return createUserSession(sonarAuth.userData, 'sonar', '/reports/starlink/usage');
 		} else {
 			return json({ error: sonarAuth.error }, { status: 401 });
@@ -27,6 +27,7 @@ export async function action({ request }) {
 }
 
 export default function SonarLogin() {
+	console.log('👾 Rendering switch.login');
 	const actionData = useActionData();
 	return (
 		<Layout>
