@@ -15,7 +15,15 @@ export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 export const loader = async ({ request }) => {
 	// const user = await getUserSession(request);
 	// const user = { accountId: 818 };
-	const services = await fetchServicesAndModemData();
+
+	try {
+		console.log('🏈 Loading dashboard data...');
+		const services = await fetchServicesAndModemData();
+		return services;
+	} catch (error) {
+		console.error('Error loading dashboard data:', error);
+		throw new Response('Failed to load dashboard data', { status: 500 });
+	}
 
 	// const accountResponse = await getSonarAccountData(user.accountId);
 	// const sonarAccountData = accountResponse.customers;
@@ -50,6 +58,7 @@ export function getLatencyClass(latency) {
 export default function Dashboard() {
 	// const { user, services, sonarAccountData, sonarGroupData, monitoringData } = useLoaderData();
 	const { services } = useLoaderData();
+	console.log('🏈 Services:', services);
 
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;
