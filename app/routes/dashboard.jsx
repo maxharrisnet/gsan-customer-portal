@@ -15,10 +15,14 @@ export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 export const loader = async ({ request }) => {
 	// const user = await getUserSession(request);
 	// const user = { accountId: 818 };
+	// if (!user) {
+	// 	return json({ error: 'Unauthorized' }, { status: 401 });
+	// }
 
 	try {
-		console.log('🏈 Loading dashboard data...');
+		console.log('🏈 Loading dashboard Servce data...');
 		const services = await fetchServicesAndModemData();
+		console.log('🏈 Finisehd loading dashboard Servce data:', services);
 		return services;
 	} catch (error) {
 		console.error('Error loading dashboard data:', error);

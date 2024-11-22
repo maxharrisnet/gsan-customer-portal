@@ -13,9 +13,9 @@ export const links = () => [
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
 	const path = url.pathname;
-	const user = await getUserSession(request);
-
 	console.log('🏀 Page Loader: ', path);
+
+	const user = await getUserSession(request);
 
 	// If there is a user session and the path is /login, redirect to /dashboard
 	if (path.endsWith('/login') && user) {
@@ -33,7 +33,9 @@ export const loader = async ({ request }) => {
 };
 
 export default function Root() {
+	console.log('🌲 Root Component');
 	const { user } = useLoaderData();
+	console.log('🌲 Root User:', user);
 	return (
 		<html lang='en'>
 			<head>
