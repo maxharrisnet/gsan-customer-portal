@@ -4,7 +4,6 @@ import { fetchServicesAndModemData } from '../compass.server';
 // import { getSonarAccountData, getSonarAccountGroupData, getSonarAccoutUsageData, getSonarInventoryItems } from '../sonar.server';
 import Layout from '../components/layout/Layout';
 import dashboardStyles from '../styles/dashboard.css?url';
-// import MemoryChart from '../components/charts/MemoryChart';
 import sonarMonitoring from '../data/sonarMonitoring.json'; // Import the placeholder data
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
@@ -14,7 +13,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, BarElement, LineEleme
 export const links = () => [{ rel: 'stylesheet', href: dashboardStyles }];
 
 export const loader = async ({ request }) => {
-	console.log('🏀 Dashboard loader');
 	// const user = await getUserSession(request);
 	// const user = { accountId: 818 };
 	const services = await fetchServicesAndModemData();

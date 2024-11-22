@@ -3,6 +3,7 @@ import authenticateShopifyUser from '../gsan.server';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
+import { authenticate } from '../shopify.server';
 
 export async function action({ request }) {
 	const formData = await request.formData();
@@ -14,7 +15,7 @@ export async function action({ request }) {
 		console.log('🍀 GSAN Customer login:', shopifyAuth);
 		if (shopifyAuth.success) {
 			console.log('🍀 GSAN Customer login success:', shopifyAuth.userData);
-			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboard');
+			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboard?');
 		} else {
 			console.log('😷 GSAN Customer login failed:', shopifyAuth.errors);
 
@@ -26,8 +27,34 @@ export async function action({ request }) {
 	}
 }
 
+export const loader = async ({ request }) => {
+	const { admin } = await authenticate.admin(request);
+
+	const shopifyResponse = await admin.graphql(
+		`#graphql
+		query getShopifyCustomers {
+			customers (first: 10) {
+				edges {
+					node {
+						id
+						firstName
+						lastName
+						email
+					}
+				}
+			}
+		}`
+	);
+
+	const shopifyCustomersData = await shopifyResponse.json();
+	const shopifyCustomers = shopifyCustomersData.data.customers.edges;
+
+	return json({ shopifyCustomers });
+};
+
 export default function GsanLogin() {
 	const actionData = useActionData();
+	const { shopifyCustomers } = useLoaderData();
 
 	return (
 		<Layout>
@@ -67,13 +94,13 @@ export default function GsanLogin() {
 								id='shopifyPassword'
 								required
 							/>
-							{/* <button type='submit'>Log in with GSAN</button> */}
-							<Link
-								to='https://85ec-2604-3d08-4e82-a500-55c8-abf-e663-46b.ngrok-free.app/dashboard'
+							<button type='submit'>Log in with GSAN</button>
+							<a
+								href='/reports/starlink/usage'
 								className='button'
 							>
 								Log in with GSAN
-							</Link>
+							</a>
 						</div>
 					</Form>
 					{actionData?.errors &&
@@ -85,6 +112,24 @@ export default function GsanLogin() {
 								{error.message}
 							</p>
 						))}
+				</div>
+
+				<div>
+					<h1>Customers</h1>
+					<div style={{ display: 'flex', justifyContent: 'center', padding: '80px', gap: '80px' }}>
+						<div>
+							<h2>Shopify Customers</h2>
+							<ul>
+								{shopifyCustomers.map((customer) => (
+									<li key={customer.node.id}>
+										<a href={`/customers/${customer.id}`}>
+											{customer.node.firstName} {customer.node.lastName} ({customer.node.email})
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</Layout>

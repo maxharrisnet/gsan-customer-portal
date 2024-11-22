@@ -8,11 +8,11 @@ export const loader = async ({ request }) => {
 	return json({ admin });
 };
 
-export const authenticateShopifyUser = async function (email, password, request) {
+const authenticateShopifyUser = async function (email, password, request) {
 	try {
 		const { admin } = await authenticate.admin(request);
 		console.log('🐯 Admin:', admin);
-		
+
 		const response = await admin.graphql(
 			`
       query($email: String!) {
