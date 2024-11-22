@@ -15,7 +15,7 @@ export async function action({ request }) {
 
 		if (sonarAuth.success) {
 			console.log('👾 Creating session from switch.login.jsx');
-			return createUserSession(sonarAuth.userData, 'sonar', '/reports/switch/usage');
+			return createUserSession(sonarAuth.userData, 'sonar', '/dashboard');
 		} else {
 			return json({ error: sonarAuth.error }, { status: 401 });
 		}
@@ -50,6 +50,7 @@ export default function SonarLogin() {
 								name='username'
 								placeholder='Username'
 								id='sonarUsername'
+								autoComplete='username'
 								required
 							/>
 							<label
@@ -63,6 +64,7 @@ export default function SonarLogin() {
 								name='password'
 								placeholder='Password'
 								id='sonarPassword'
+								autoComplete='password'
 								required
 							/>
 							<button type='submit'>Log in with Switch</button>

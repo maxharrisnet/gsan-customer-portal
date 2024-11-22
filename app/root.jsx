@@ -51,7 +51,6 @@ export default function Root() {
 				</UserProvider>
 				<ScrollRestoration />
 				<Scripts />
-				<LiveReload />
 			</body>
 		</html>
 	);
