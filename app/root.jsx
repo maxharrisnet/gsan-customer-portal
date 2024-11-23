@@ -1,5 +1,5 @@
 import { json, redirect } from '@remix-run/node';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useRouteError } from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData, useRouteError } from '@remix-run/react';
 import { getUserSession } from './session.server';
 import { UserProvider } from './context/UserContext';
 import globalStyles from './styles/global.css?url';
@@ -28,6 +28,12 @@ export const loader = async ({ request }) => {
 	// 	console.log('🏓 Redirecting to login');
 	// 	return redirect('/login');
 	// }
+
+	console.log('🐞 Shopify API Key:', process.env.SHOPIFY_API_KEY);
+	console.log('🐞 Shopify API Secret:', process.env.SHOPIFY_API_SECRET);
+	console.log('🐞 Shopify App URL:', process.env.SHOPIFY_APP_URL);
+	console.log('🐞 Shopify Custom Domain:', process.env.SHOP_CUSTOM_DOMAIN);
+	console.log('🐞 Shopify Scopes:', process.env.SCOPES);
 
 	return json({ user });
 };
