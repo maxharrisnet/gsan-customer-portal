@@ -3,32 +3,38 @@ import authenticateShopifyUser from '../gsan.server';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
-import { authenticate } from '../shopify.server';
+import { shopify } from '../shopify.server';
 
 export async function action({ request }) {
+	console.log('🍀 GSAN Customer login action');
 	const formData = await request.formData();
 	const email = formData.get('email');
 	const password = formData.get('password');
 
 	try {
+		console.log('🍀 Starting Shopify Auth:');
 		const shopifyAuth = await authenticateShopifyUser(email, password, request);
-		console.log('🍀 GSAN Customer login:', shopifyAuth);
+		console.log('🍀 Shopify Auth:', shopifyAuth);
 		if (shopifyAuth.success) {
-			console.log('🍀 GSAN Customer login success:', shopifyAuth.userData);
-			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboard?');
+			console.log('🍀 Shopify login success:', shopifyAuth.userData);
+			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboardxxx');
 		} else {
-			console.log('😷 GSAN Customer login failed:', shopifyAuth.errors);
+			console.log('😷 Shopify login failed:', shopifyAuth.errors);
 
 			return json({ errors: shopifyAuth.errors });
 		}
 	} catch (error) {
-		console.error('🎳 GSAN Customer login error:', error);
+		console.error('🎳 Shopify login error:', error);
 		return json({ errors: [{ message: 'An error occurred during login' }] });
 	}
 }
 
 export const loader = async ({ request }) => {
-	const { admin } = await authenticate.admin(request);
+	console.log('🍀 GSAN Customer loader, authing admin');
+	console.log('🐞🐞🐞 Shopify:', shopify);
+
+	const { admin } = await shopify.authenticate.admin(request);
+	console.log('🍀 Admin:', admin);
 
 	const shopifyResponse = await admin.graphql(
 		`#graphql
@@ -46,6 +52,7 @@ export const loader = async ({ request }) => {
 		}`
 	);
 
+	console.log('Shopify Response:', shopifyResponse);
 	const shopifyCustomersData = await shopifyResponse.json();
 	const shopifyCustomers = shopifyCustomersData.data.customers.edges;
 
