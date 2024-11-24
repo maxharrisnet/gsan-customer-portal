@@ -1,9 +1,10 @@
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import axios from 'axios';
-import { shopify } from '../shopify.server';
+import shopify from '../shopify.server';
 
 export const loader = async ({ request }) => {
+	console.log('💸 Shopify: ', shopify);
 	const { admin } = await shopify.authenticate.admin(request);
 	// console.log('🐯 Admin!!!!', admin);
 
