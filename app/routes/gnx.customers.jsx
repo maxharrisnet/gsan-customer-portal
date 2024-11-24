@@ -1,33 +1,32 @@
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import axios from 'axios';
-import shopify from '../shopify.server';
+import { authenticate } from '../shopify.server';
 
 export const loader = async ({ request }) => {
-	console.log('💸 Shopify: ', shopify);
-	const { admin } = await shopify.authenticate.admin(request);
-	// console.log('🐯 Admin!!!!', admin);
+	console.log('🎏 Checking admin');
+	const { admin } = await authenticate.admin(request);
+	console.log('🎏 Admin:', admin);
+	console.log('🚀 Fetching customers...');
+	const shopifyResponse = await admin.graphql(
+		`#graphql
+		query getShopifyCustomers {
+			customers (first: 10) {
+				edges {
+					node {
+						id
+						firstName
+						lastName
+						email
+					}
+				}
+			}
+		}`
+	);
 
-	// const shopifyResponse = await admin.graphql(
-	// 	`#graphql
-	// 	query getShopifyCustomers {
-	// 		customers (first: 10) {
-	// 			edges {
-	// 				node {
-	// 					id
-	// 					firstName
-	// 					lastName
-	// 					email
-	// 				}
-	// 			}
-	// 		}
-	// 	}`
-	// );
-
-	// const shopifyCustomersData = await shopifyResponse.json();
-	// const shopifyCustomers = shopifyCustomersData.data.customers.edges;
-
-	// TODO: handle errors
+	const shopifyCustomersData = await shopifyResponse.json();
+	const shopifyCustomers = shopifyCustomersData.data.customers.edges;
+	console.log('🛍️ Shopify customers:', shopifyCustomers);
 
 	// Fetch Sonar customers
 	const sonarUsername = process.env.SONAR_API_USERNAME;
