@@ -20,9 +20,9 @@ export const loader = async ({ request }) => {
 	// }
 
 	try {
-		console.log('🏈 Loading dashboard Servce data...');
+		console.log('🏈 Loading dashboard Service data...');
 		const services = await fetchServicesAndModemData();
-		console.log('🏈 Finisehd loading dashboard Servce data:', services);
+		console.log('🏈 Finisehd loading dashboard Service data:', services);
 		return services;
 	} catch (error) {
 		console.error('Error loading dashboard data:', error);
@@ -49,7 +49,7 @@ export const loader = async ({ request }) => {
 
 	// const monitoringData = sonarMonitoring.data;
 
-	return services;
+	// return services;
 	// return json({ user, services, sonarAccountData, sonarGroupData, monitoringData });
 };
 

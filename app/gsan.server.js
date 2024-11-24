@@ -1,12 +1,12 @@
 import { json } from '@remix-run/node';
 import { shopify, authenticate } from './shopify.server';
-import { useLoaderData } from '@remix-run/react';
+// import { useLoaderData } from '@remix-run/react';
 
-export const loader = async ({ request }) => {
-	const { admin } = await authenticate.admin(request);
-	console.log('🐯 Admin:', admin);
-	return json({ admin });
-};
+// export const loader = async ({ request }) => {
+// 	const { admin } = await authenticate.admin(request);
+// 	console.log('🐯 Admin:', admin);
+// 	return json({ admin });
+// };
 
 const authenticateShopifyUser = async function (email, password, request) {
 	try {

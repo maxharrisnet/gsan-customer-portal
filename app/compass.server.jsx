@@ -6,13 +6,11 @@ export const fetchServicesAndModemData = async () => {
 	console.log('🌽 Fetching services and modem data...');
 	try {
 		const accessToken = await getCompassAccessToken();
-		console.log('🌽 Access token:', accessToken);
 		const companyId = process.env.COMPASS_COMPANY_ID;
 
 		const servicesUrl = `https://api-compass.speedcast.com/v2.0/company/${companyId}`;
 		const modemDetailsUrl = (provider, modemId) => `https://api-compass.speedcast.com/v2.0/${encodeURI(provider.toLowerCase())}/${modemId}`;
 
-		console.log('🌽 Services URL:', servicesUrl);
 		const servicesResponse = await axios.get(servicesUrl, {
 			headers: { Authorization: `Bearer ${accessToken}` },
 		});

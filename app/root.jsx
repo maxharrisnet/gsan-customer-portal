@@ -18,10 +18,10 @@ export const loader = async ({ request }) => {
 	const user = await getUserSession(request);
 
 	// If there is a user session and the path is /login, redirect to /dashboard
-	if (path.endsWith('/login') && user) {
-		console.log('🏓 Redirecting to dashboard');
-		return redirect('/dashboardzzz');
-	}
+	// if (path.endsWith('/login') && user) {
+	// 	console.log('🏓 Redirecting to dashboard');
+	// 	return redirect('/dashboard');
+	// }
 
 	// If there is no user session and the path is not /login, redirect to /login
 	// if (!path.endsWith('/login') && !user) {
@@ -29,19 +29,13 @@ export const loader = async ({ request }) => {
 	// 	return redirect('/login');
 	// }
 
-	console.log('🐞 Shopify API Key:', process.env.SHOPIFY_API_KEY);
-	console.log('🐞 Shopify API Secret:', process.env.SHOPIFY_API_SECRET);
-	console.log('🐞 Shopify App URL:', process.env.SHOPIFY_APP_URL);
-	console.log('🐞 Shopify Custom Domain:', process.env.SHOP_CUSTOM_DOMAIN);
-	console.log('🐞 Shopify Scopes:', process.env.SCOPES);
-
 	return json({ user });
 };
 
 export default function Root() {
-	console.log('🌲 Root Component');
+	// console.log('🌲 Root Component');
 	const { user } = useLoaderData();
-	console.log('🌲 Root User:', user);
+	// console.log('🌲 Root User:', user);
 	return (
 		<html lang='en'>
 			<head>

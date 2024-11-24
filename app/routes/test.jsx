@@ -3,7 +3,7 @@ import authenticateShopifyUser from '../gsan.server';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
 import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
-import { shopify } from '../shopify.server';
+import { authenticate } from '../shopify.server';
 
 export async function action({ request }) {
 	console.log('🍀 GSAN Customer login action');
@@ -31,9 +31,9 @@ export async function action({ request }) {
 
 export const loader = async ({ request }) => {
 	console.log('🍀 GSAN Customer loader, authing admin');
-	console.log('🐞🐞🐞 Shopify:', shopify);
+	// console.log('🐞🐞🐞 Shopify:', shopify);
 
-	const { admin } = await shopify.authenticate.admin(request);
+	const { admin } = await authenticate.admin(request);
 	console.log('🍀 Admin:', admin);
 
 	const shopifyResponse = await admin.graphql(
@@ -138,6 +138,19 @@ export default function GsanLogin() {
 						</div>
 					</div>
 				</div>
+			</div>
+		</Layout>
+	);
+}
+
+export function ErrorBoundary({ error }) {
+	console.error('ErrorBoundary caught an error:', error);
+	return (
+		<Layout>
+			<div className='container'>
+				<h1>Something went wrong</h1>
+				<p>{error.message}</p>
+				<Link to='/'>Go back to the homepage</Link>
 			</div>
 		</Layout>
 	);
