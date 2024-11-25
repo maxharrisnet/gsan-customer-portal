@@ -67,13 +67,7 @@ export default function GsanLogin() {
 								id='shopifyPassword'
 								required
 							/>
-							{/* <button type='submit'>Log in with GSAN</button> */}
-							<Link
-								to='/dashboard'
-								className='button'
-							>
-								Log in with GSAN
-							</Link>
+							<button type='submit'>Log in with GSAN</button>
 						</div>
 					</Form>
 					{actionData?.errors &&

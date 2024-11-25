@@ -19,7 +19,7 @@ export default function App() {
 
 	return (
 		<AppProvider
-			isEmbeddedApp
+			isEmbeddedApp={false}
 			apiKey={apiKey}
 		>
 			<NavMenu>
