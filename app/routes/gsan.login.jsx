@@ -2,7 +2,8 @@ import { json } from '@remix-run/node';
 import authenticateShopifyUser from '../gsan.server';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
-import { Form, Link, useActionData } from '@remix-run/react';
+import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
+import { authenticateCustomer } from '@shopify/customer-account-api';
 
 export async function action({ request }) {
 	const formData = await request.formData();
