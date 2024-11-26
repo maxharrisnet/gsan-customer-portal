@@ -1,6 +1,6 @@
 import Layout from '../components/layout/Layout';
-import { Link, useLoaderData } from '@remix-run/react';
-import { shopifyAccessToken } from '../auth.shopifyAccessToken';
+import { useLoaderData } from '@remix-run/react';
+import { shopifyAccessToken } from './auth.tokens';
 
 export const loader = async ({ request }) => {
 	const shopId = process.env.SHOPIFY_SHOP_ID;
