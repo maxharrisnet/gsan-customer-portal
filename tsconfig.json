@@ -1,5 +1,5 @@
 {
-  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "app/routes/auth.tokens.ts"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "app/routes/auth.tokens.js"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "strict": true,

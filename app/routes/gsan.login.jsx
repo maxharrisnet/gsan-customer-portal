@@ -1,86 +1,23 @@
-import { json } from '@remix-run/node';
-import authenticateShopifyUser from '../gsan.server';
-import { createUserSession } from '../session.server';
-import Layout from '../components/layout/Layout';
-import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
+import { redirect } from '@remix-run/node';
+import { generateState, generateNonce } from './auth.utils';
 
-export async function action({ request }) {
-	const formData = await request.formData();
-	const email = formData.get('email');
-	const password = formData.get('password');
+export const loader = async ({ request }) => {
+	const clientId = process.env.SHOPIFY_API_KEY;
+	const shopId = process.env.SHOPIFY_SHOP_NAME;
+	// const appUrl = process.env.SHOPIFY_APP_URL; // Ensure this is set to your app's base URL
+	// TODO: Test and update environment variable
+	const appUrl = 'https://c145-2604-3d08-4e82-a500-a954-8035-8b70-3c2b.ngrok-free.app';
+	const redirectUri = `${appUrl}/gsan/callback`;
+	const authorizationRequestUrl = new URL(`https://${shopId}.myshopify.com/admin/oauth/authorize`); // This works, don't touch it!
+	const state = await generateState();
+	const nonce = await generateNonce(100);
 
-	try {
-		const shopifyAuth = await authenticateShopifyUser(email, password, request);
-		console.log('🍀 GSAN Customer login:', shopifyAuth);
-		if (shopifyAuth.success) {
-			console.log('🍀 GSAN Customer login success:', shopifyAuth.userData);
-			return createUserSession(shopifyAuth.userData, 'shopify', '/dashboard');
-		} else {
-			console.log('😷 GSAN Customer login failed:', shopifyAuth.errors);
+	authorizationRequestUrl.searchParams.append('scope', 'openid email customer-account-api:full');
+	authorizationRequestUrl.searchParams.append('client_id', clientId);
+	authorizationRequestUrl.searchParams.append('response_type', 'code');
+	authorizationRequestUrl.searchParams.append('redirect_uri', redirectUri);
+	authorizationRequestUrl.searchParams.append('state', state);
+	authorizationRequestUrl.searchParams.append('nonce', nonce);
 
-			return json({ errors: shopifyAuth.errors });
-		}
-	} catch (error) {
-		console.error('🎳 GSAN Customer login error:', error);
-		return json({ errors: [{ message: 'An error occurred during login' }] });
-	}
-}
-
-export default function GsanLogin() {
-	const actionData = useActionData();
-
-	return (
-		<Layout>
-			<div className='container'>
-				<h1>GSAN Customer Portal</h1>
-				<div className='content-centered'>
-					<img
-						src='/assets/images/GSAN-logo.png'
-						alt='GSAN Logo'
-						className='login-logo'
-					/>
-					<Form method='post'>
-						<div className='form-group'>
-							<label
-								htmlFor='shopifyEmail'
-								className='sr-only'
-							>
-								Email
-							</label>
-							<input
-								type='text'
-								name='email'
-								placeholder='Email'
-								id='shopifyEmail'
-								required
-							/>
-							<label
-								htmlFor='shopifyPassword'
-								className='sr-only'
-							>
-								Password
-							</label>
-							<input
-								type='password'
-								name='password'
-								placeholder='Password'
-								id='shopifyPassword'
-								required
-							/>
-							<button type='submit'>Log in with GSAN</button>
-						</div>
-					</Form>
-					{actionData?.errors &&
-						actionData.errors.map((error, index) => (
-							<p
-								key={index}
-								style={{ color: 'red' }}
-							>
-								{error.message}
-							</p>
-						))}
-				</div>
-			</div>
-		</Layout>
-	);
-}
+	return redirect(authorizationRequestUrl.toString());
+};

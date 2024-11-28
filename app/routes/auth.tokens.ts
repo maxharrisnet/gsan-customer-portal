@@ -3,7 +3,8 @@ const credentials = await headerCredentials();
 
 export default async function shopifyAccessToken(code: string): Promise<{ access_token: string; expires_in: number; id_token: string; refresh_token: string }> {
 	const clientId = process.env.SHOPIFY_API_KEY!;
-	const shopId = process.env.SHOPIFY_SHOP_ID;
+	// const shopId = process.env.SHOPIFY_SHOP_ID;	
+	const shop = process.env.SHOPIFY_SHOP_NAME; // Example: 'my-store'
 	const body = new URLSearchParams();
 	const redirectUri = '/user';
 
@@ -13,11 +14,11 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 	body.append('code', code);
 
 	// Public Client
-	const codeVerifier = localStorage.getItem('code-verifier');
-	if (!codeVerifier) {
-		throw new Error('Code verifier not found in local storage');
-	}
-	body.append('code_verifier', codeVerifier);
+	// const codeVerifier = localStorage.getItem('code-verifier');
+	// if (!codeVerifier) {
+	// 	throw new Error('Code verifier not found in local storage');
+	// }
+	// body.append('code_verifier', codeVerifier);
 
 	const headers = {
 		'content-type': 'application/x-www-form-urlencoded',
@@ -25,7 +26,7 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 		Authorization: `Basic ${credentials}`,
 	};
 
-	const response = await fetch(`https://shopify.com/authentication/${shopId}/oauth/token`, {
+	const response = await fetch(`https://${shop}.myshopify.com/admin/oauth/access_token`, {
 		method: 'POST',
 		headers: headers,
 		body,
@@ -44,7 +45,6 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 }
 
 // Refresh Token
-
 export async function shopifyRefreshToken(refreshToken: string): Promise<{ access_token: string; expires_in: number; refresh_token: string }> {
 	const clientId = process.env.SHOPIFY_API_KEY;
 	const shopId = process.env.SHOPIFY_SHOP_ID;
