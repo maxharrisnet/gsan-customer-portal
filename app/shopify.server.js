@@ -4,13 +4,18 @@ import { PrismaSessionStorage } from '@shopify/shopify-app-session-storage-prism
 import { restResources } from '@shopify/shopify-api/rest/admin/2024-10';
 import prisma from './db.server';
 
-console.log('🎉 processing shopify server');
+// log all environment variables
+
+console.log('🔐 SHOPIFY_API_KEY:', process.env.SHOPIFY_API_KEY);
+console.log('🔐 SHOPIFY_API_SECRET:', process.env.SHOPIFY_API_SECRET);
+console.log('🔐 SHOPIFY_APP_GNX:', process.env.SHOPIFY_APP_GNX);
+
 const shopify = shopifyApp({
 	apiKey: process.env.SHOPIFY_API_KEY,
 	apiSecretKey: process.env.SHOPIFY_API_SECRET || '',
 	apiVersion: ApiVersion.October24,
 	scopes: process.env.SCOPES?.split(','),
-	appUrl: process.env.SHOPIFY_APP_URL || '',
+	appUrl: process.env.SHOPIFY_APP_GNX || '', // Testing GNX
 	authPathPrefix: '/gsan',
 	sessionStorage: new PrismaSessionStorage(prisma),
 	distribution: AppDistribution.AppStore,
@@ -22,7 +27,7 @@ const shopify = shopifyApp({
 	...(process.env.SHOP_CUSTOM_DOMAIN ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] } : {}),
 });
 
-console.log('🎉 shopify:', shopify);
+console.log('🎉 shopify auth:', shopify.authenticate.admin);
 
 export default shopify;
 export const apiVersion = ApiVersion.October24;

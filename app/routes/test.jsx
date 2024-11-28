@@ -116,7 +116,7 @@ export default function GsanLogin() {
 								key={index}
 								style={{ color: 'red' }}
 							>
-								{error.message}
+								{error}
 							</p>
 						))}
 				</div>

@@ -3,7 +3,7 @@ const credentials = await headerCredentials();
 
 export default async function shopifyAccessToken(code: string): Promise<{ access_token: string; expires_in: number; id_token: string; refresh_token: string }> {
 	const clientId = process.env.SHOPIFY_API_KEY!;
-	// const shopId = process.env.SHOPIFY_SHOP_ID;	
+	// const shopId = process.env.SHOPIFY_SHOP_ID;
 	const shop = process.env.SHOPIFY_SHOP_NAME; // Example: 'my-store'
 	const body = new URLSearchParams();
 	const redirectUri = '/user';

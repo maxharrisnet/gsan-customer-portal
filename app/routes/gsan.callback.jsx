@@ -18,13 +18,34 @@ export const loader = async ({ request }) => {
 		console.log('🪙 Token data:', tokenData);
 		// Fetch customer details using the access token
 		const shopId = process.env.SHOPIFY_SHOP_NAME;
-		const url = `https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`;
+		// const url = `https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`;
+		const url = `https://${shopId}.myshopify.com/api/2024-01/graphql.json`;
 		console.log('🌍 Fetching customer data from:', url);
+		// const customerResponse = await fetch(url, {
+		// 	headers: {
+		// 		Authorization: `Bearer ${tokenData.access_token}`,
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// });
+
 		const customerResponse = await fetch(url, {
+			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${tokenData.access_token}`,
+				'X-Shopify-Storefront-Access-Token': tokenData.access_token,
 				'Content-Type': 'application/json',
 			},
+			body: JSON.stringify({
+				query: `
+      query {
+        customer {
+          id
+          firstName
+          lastName
+          email
+        }
+      }
+    `,
+			}),
 		});
 
 		console.log('✉️ Customer response:', customerResponse);
