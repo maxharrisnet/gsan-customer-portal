@@ -5,11 +5,6 @@ import { restResources } from '@shopify/shopify-api/rest/admin/2024-10';
 import prisma from './db.server';
 
 // log all environment variables
-
-console.log('🔐 SHOPIFY_API_KEY:', process.env.SHOPIFY_API_KEY);
-console.log('🔐 SHOPIFY_API_SECRET:', process.env.SHOPIFY_API_SECRET);
-console.log('🔐 SHOPIFY_APP_GNX:', process.env.SHOPIFY_APP_GNX);
-
 const shopify = shopifyApp({
 	apiKey: process.env.SHOPIFY_API_KEY,
 	apiSecretKey: process.env.SHOPIFY_API_SECRET || '',
@@ -27,7 +22,7 @@ const shopify = shopifyApp({
 	...(process.env.SHOP_CUSTOM_DOMAIN ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] } : {}),
 });
 
-console.log('🎉 shopify auth:', shopify.authenticate.admin);
+console.log('🎉 SSSSShopify:', shopify);
 
 export default shopify;
 export const apiVersion = ApiVersion.October24;

@@ -26,11 +26,19 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 		Authorization: `Basic ${credentials}`,
 	};
 
-	const response = await fetch(`https://${shop}.myshopify.com/admin/oauth/access_token`, {
+	// const response = await fetch(`https://${shop}.myshopify.com/admin/oauth/access_token`, {
+	// 	method: 'POST',
+	// 	headers: headers,
+	// 	body,
+	// });
+
+	const response = await fetch(`https://${shop}.myshopify.com/account/login/oauth/token`, {
 		method: 'POST',
 		headers: headers,
 		body,
 	});
+
+	console.log('🎈 - Shopify Access Token Response:', response.status, response.statusText);
 
 	interface AccessTokenResponse {
 		access_token: string;

@@ -1,6 +1,7 @@
 import { redirect } from '@remix-run/node';
 import { createUserSession } from '../session.server';
 import shopifyAccessToken from './auth.tokens';
+console.log('🐪 Callback loader');
 
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
@@ -20,7 +21,7 @@ export const loader = async ({ request }) => {
 		const shopId = process.env.SHOPIFY_SHOP_NAME;
 		// const url = `https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`;
 		const url = `https://${shopId}.myshopify.com/api/2024-01/graphql.json`;
-		console.log('🌍 Fetching customer data from:', url);
+
 		// const customerResponse = await fetch(url, {
 		// 	headers: {
 		// 		Authorization: `Bearer ${tokenData.access_token}`,
