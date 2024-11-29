@@ -6,7 +6,6 @@ import { Form, Link, useActionData, useLoaderData } from '@remix-run/react';
 import { authenticate } from '../shopify.server';
 
 export async function action({ request }) {
-	// console.log('App ID:', response.app_id);
 	console.log('🍀 GSAN Customer login action');
 	const formData = await request.formData();
 	const email = formData.get('email');

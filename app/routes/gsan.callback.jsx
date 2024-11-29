@@ -1,7 +1,6 @@
 import { redirect } from '@remix-run/node';
 import { createUserSession } from '../session.server';
 import shopifyAccessToken from './auth.tokens';
-console.log('🐪 Callback loader');
 
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
@@ -9,54 +8,30 @@ export const loader = async ({ request }) => {
 	const state = url.searchParams.get('state');
 
 	if (!code) {
-		throw new Error('🐔 Authorization code is missing!');
+		throw new Error('Authorization code is missing!');
 	}
 
 	try {
 		// Exchange the authorization code for an access token
 		const tokenData = await shopifyAccessToken(code);
+		console.log('🟢 Token data', tokenData);
 
-		console.log('🪙 Token data:', tokenData);
 		// Fetch customer details using the access token
 		const shopId = process.env.SHOPIFY_SHOP_NAME;
-		// const url = `https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`;
-		const url = `https://${shopId}.myshopify.com/api/2024-01/graphql.json`;
-
-		// const customerResponse = await fetch(url, {
-		// 	headers: {
-		// 		Authorization: `Bearer ${tokenData.access_token}`,
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// });
-
-		const customerResponse = await fetch(url, {
-			method: 'POST',
+		const customerResponse = await fetch(`https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`, {
 			headers: {
-				'X-Shopify-Storefront-Access-Token': tokenData.access_token,
+				Authorization: `Bearer ${tokenData.access_token}`,
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({
-				query: `
-      query {
-        customer {
-          id
-          firstName
-          lastName
-          email
-        }
-      }
-    `,
-			}),
 		});
 
-		console.log('✉️ Customer response:', customerResponse);
-
 		if (!customerResponse.ok) {
-			throw new Error('🙈 Failed to fetch customer data.');
+			throw new Error('Failed to fetch customer data.');
 		}
 
+		console.log('🟢 Customer data:', customerResponse);
+
 		const customerData = await customerResponse.json();
-		console.log('🐋 Customer data: ', customerData);
 
 		// Extract user-specific data for session storage
 		const userData = {
@@ -67,10 +42,9 @@ export const loader = async ({ request }) => {
 		};
 
 		// Create a session
-		console.log('🍾 Creating user session with data:', userData);
 		return createUserSession(userData, 'shopify', '/dashboard');
 	} catch (error) {
-		console.error('🐪 Error in callback loader:', error);
-		throw new Error('🚩 Callback handler failed.');
+		console.error('Error in callback loader:', error);
+		throw new Error('Callback handler failed.');
 	}
 };

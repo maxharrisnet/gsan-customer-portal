@@ -38,8 +38,7 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 		body,
 	});
 
-	console.log('🎈 - Shopify Access Token Response:', response.status, response.statusText);
-
+	console.log('🎈 - Shopify Access Token Response:', response);
 	interface AccessTokenResponse {
 		access_token: string;
 		expires_in: number;

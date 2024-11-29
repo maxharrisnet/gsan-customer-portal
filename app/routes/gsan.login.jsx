@@ -10,10 +10,10 @@ export const loader = async ({ request }) => {
 	// const appUrl = process.env.SHOPIFY_APP_URL; // Ensure this is set to your app's base URL
 	const appUrl = 'https://54d5-2604-3d08-4e82-a500-3c1d-2895-c17-6664.ngrok-free.app';
 	const redirectUri = `${appUrl}/gsan/callback`;
+	console.log('🔴 Redirect URI:', redirectUri);
 
-	// const authorizationRequestUrl = new URL(`https://shopify.com/authentication/${clientId}/oauth/authorize`);
-	const authorizationRequestUrl = new URL(`https://${shopId}.myshopify.com/account/login/oauth/authorize`); // No, actually use this!!!
-	// const authorizationRequestUrl = new URL(`https://${shopId}.myshopify.com/admin/oauth/authorize`); // This works, don't touch it!
+	// const authorizationRequestUrl = new URL(`https://${shopId}.myshopify.com/account/login/oauth/authorize`); // jk
+	const authorizationRequestUrl = new URL(`https://${shopId}.myshopify.com/admin/oauth/authorize`); // This works, don't touch it!
 	const state = await generateState();
 	const nonce = await generateNonce(100);
 

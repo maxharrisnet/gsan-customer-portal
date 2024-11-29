@@ -4,14 +4,34 @@ import { PrismaSessionStorage } from '@shopify/shopify-app-session-storage-prism
 import { restResources } from '@shopify/shopify-api/rest/admin/2024-10';
 import prisma from './db.server';
 
-// log all environment variables
+console.log('🟢 Shopify server.js');
+
+// log all environment variables used in this file
+
+const envVariables = [
+	{ name: 'SHOPIFY_API_KEY', message: '🔑 Shopify API Key' },
+	{ name: 'SHOPIFY_API_SECRET', message: '🔒 Shopify API Secret' },
+	{ name: 'SCOPES', message: '📜 Scopes' },
+	{ name: 'SHOPIFY_APP_URL', message: '🌐 Shopify App URL' },
+	{ name: 'SHOP_CUSTOM_DOMAIN', message: '🏠 Shop Custom Domain' },
+];
+
+envVariables.forEach((envVar) => {
+	console.log(`${envVar.message}: ${process.env[envVar.name]}`);
+});
+
+envVariables.forEach((envVar) => {
+	console.log(`${envVar}: ${process.env[envVar]}`);
+});
+
 const shopify = shopifyApp({
 	apiKey: process.env.SHOPIFY_API_KEY,
 	apiSecretKey: process.env.SHOPIFY_API_SECRET || '',
 	apiVersion: ApiVersion.October24,
 	scopes: process.env.SCOPES?.split(','),
-	appUrl: process.env.SHOPIFY_APP_GNX || '', // Testing GNX
-	authPathPrefix: '/gsan',
+	// appUrl: process.env.SHOPIFY_APP_URL || '',
+	appUrl: 'https://54d5-2604-3d08-4e82-a500-3c1d-2895-c17-6664.ngrok-free.app',
+	authPathPrefix: '/auth',
 	sessionStorage: new PrismaSessionStorage(prisma),
 	distribution: AppDistribution.AppStore,
 	restResources,

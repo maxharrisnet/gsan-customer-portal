@@ -1,11 +1,12 @@
 import { useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import axios from 'axios';
-import { authenticate } from '../shopify.server';
+import shopify from '../shopify.server';
 
 export const loader = async ({ request }) => {
-	console.log('🔎 Checking admin session...');
-	const { admin } = await authenticate.admin(request);
+	console.log('🔎 Trying admin session...');
+	console.log('🐞 Shopify:', shopify);
+	const { admin } = await shopify.authenticate.admin(request);
 	console.log('🔐 Admin session:', admin);
 
 	const shopifyResponse = await admin.graphql(
