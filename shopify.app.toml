@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "a603628c31a9a54199671521ca22c387"
-name = "gsan-customer-portal"
-handle = "gsan-customer-portal"
+client_id = "d7984080909f698690013bb4a01a4a27"
+name = "Switch Customer Portal"
+handle = "switch-service-status"
 application_url = "https://gsan-customer-portal.vercel.app/"
 embedded = false
 

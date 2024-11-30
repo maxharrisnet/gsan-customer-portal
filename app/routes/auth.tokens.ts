@@ -5,12 +5,14 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 	const clientId = process.env.SHOPIFY_API_KEY!;
 	// const shopId = process.env.SHOPIFY_SHOP_ID;
 	const shop = process.env.SHOPIFY_SHOP_NAME; // Example: 'my-store'
+	const appUrl = 'https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app';
 	const body = new URLSearchParams();
-	const redirectUri = '/user';
+	const redirectUri = `${appUrl}/api/gsan/callback`;
 
 	body.append('grant_type', 'authorization_code');
 	body.append('client_id', clientId);
 	body.append('redirect_uri', redirectUri);
+	console.log('🍃 Redirect URI:', redirectUri);
 	body.append('code', code);
 
 	// Public Client
