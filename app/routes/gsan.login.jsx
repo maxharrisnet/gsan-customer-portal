@@ -8,7 +8,7 @@ export const loader = async ({ request }) => {
 
 	// TODO: Test and update environment variable
 	// const appUrl = process.env.SHOPIFY_APP_URL; // Ensure this is set to your app's base URL
-	const appUrl = 'https://54d5-2604-3d08-4e82-a500-3c1d-2895-c17-6664.ngrok-free.app';
+	const appUrl = 'https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app';
 	const redirectUri = `${appUrl}/gsan/callback`;
 	console.log('🔴 Redirect URI:', redirectUri);
 
