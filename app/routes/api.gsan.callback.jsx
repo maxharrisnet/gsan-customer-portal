@@ -1,7 +1,5 @@
 import { redirect } from '@remix-run/node';
 import { createUserSession } from '../session.server';
-import shopifyAccessToken from './auth.tokens';
-import { access } from 'fs';
 
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
@@ -13,18 +11,30 @@ export const loader = async ({ request }) => {
 	}
 
 	try {
-		// Exchange the authorization code for an access token
-		// const tokenData = await shopifyAccessToken(code);
-		// console.log('🟢 Token data', tokenData);
-
-		const access_token = process.env.SHOPIFY_ACCESS_TOKEN;
-
-		// Fetch customer details using the access token
-		const shopId = process.env.SHOPIFY_SHOP_NAME;
-		const customerResponse = await fetch(`https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`, {
+		// Exchange the code for an access token
+		const tokenResponse = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/admin/oauth/access_token`, {
+			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${access_token}`,
 				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				client_id: process.env.SHOPIFY_API_KEY,
+				client_secret: process.env.SHOPIFY_API_SECRET,
+				code,
+			}),
+		});
+
+		if (!tokenResponse.ok) {
+			throw new Error('Failed to exchange authorization code for access token.');
+		}
+
+		const tokenData = await tokenResponse.json();
+		const accessToken = tokenData.access_token;
+
+		// Fetch customer details
+		const customerResponse = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/admin/api/2024-01/customers.json`, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
 			},
 		});
 
@@ -32,20 +42,19 @@ export const loader = async ({ request }) => {
 			throw new Error('Failed to fetch customer data.');
 		}
 
-		console.log('🟢 Customer data:', customerResponse);
-
 		const customerData = await customerResponse.json();
 
-		// Extract user-specific data for session storage
-		const userData = {
-			account_id: customerData.id,
-			username: customerData.first_name,
-			contact_name: `${customerData.first_name} ${customerData.last_name}`,
-			email_address: customerData.email,
-		};
-
 		// Create a session
-		return createUserSession(userData, 'shopify', '/dashboard');
+		return createUserSession(
+			{
+				account_id: customerData.id,
+				username: customerData.first_name,
+				contact_name: customerData.first_name + ' ' + customerData.last_name,
+				email_address: customerData.email,
+			},
+			'shopify',
+			'/dashboard'
+		);
 	} catch (error) {
 		console.error('Error in callback loader:', error);
 		throw new Error('Callback handler failed.');
