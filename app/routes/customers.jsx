@@ -3,9 +3,9 @@ import { json } from '@remix-run/node';
 import axios from 'axios';
 import shopify from '../shopify.server';
 
-export const loader = async ({ request }) => {
-	console.log('🔎 Trying admin session...');
-	console.log('🐞 Shopify:', shopify);
+export async function loader({ request }) {
+	// console.log('🔎 Before admin session...');
+	// console.log('🐞 Shopify:', shopify);
 	const { admin } = await shopify.authenticate.admin(request);
 	console.log('🔐 Admin session:', admin);
 
@@ -53,7 +53,7 @@ export const loader = async ({ request }) => {
 		console.error('Error fetching Sonar customers:', error);
 		throw new Response('Internal Server Error! 🛸', { status: 500 });
 	}
-};
+}
 
 export default function CustomerList() {
 	const { shopifyCustomers, sonarCustomers } = useLoaderData();

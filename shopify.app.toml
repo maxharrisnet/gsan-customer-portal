@@ -3,11 +3,11 @@
 client_id = "d7984080909f698690013bb4a01a4a27"
 name = "Switch Customer Portal"
 handle = "switch-service-status"
-application_url = "https://gsan-customer-portal.vercel.app/"
+application_url = "https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app/"
 embedded = false
 
 [build]
-automatically_update_urls_on_dev = false
+automatically_update_urls_on_dev = true
 dev_store_url = "gsan-test.myshopify.com"
 include_config_on_deploy = true
 
@@ -17,10 +17,11 @@ scopes = "read_customers,write_customers,unauthenticated_read_customers,unauthen
 
 [auth]
 redirect_urls = [
-  "https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app/auth/callback",
-  "https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app/auth/shopify/callback",
-  "https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app/api/auth/callback",
-  "https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app/api/gsan/callback"
+  "https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app/auth/callback",
+  "https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app/auth/shopify/callback",
+  "https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app/api/auth/callback",
+  "https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app/api/gsan/callback"
+
 ]
 
 [webhooks]
@@ -28,7 +29,7 @@ api_version = "2024-10"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "https://5ae1-2604-3d08-4e82-a500-bdc8-b06-2c66-7359.ngrok-free.app/webhooks/app/uninstalled"
+  uri = "https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app/webhooks/app/uninstalled"
 
 [pos]
 embedded = false

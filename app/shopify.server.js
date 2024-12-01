@@ -20,17 +20,13 @@ envVariables.forEach((envVar) => {
 	console.log(`${envVar.message}: ${process.env[envVar.name]}`);
 });
 
-envVariables.forEach((envVar) => {
-	console.log(`${envVar}: ${process.env[envVar]}`);
-});
-
 const shopify = shopifyApp({
 	apiKey: process.env.SHOPIFY_API_KEY,
 	apiSecretKey: process.env.SHOPIFY_API_SECRET || '',
 	apiVersion: ApiVersion.October24,
 	scopes: process.env.SCOPES?.split(','),
-	appUrl: process.env.SHOPIFY_APP_URL || '',
-	// appUrl: '',
+	// appUrl: process.env.SHOPIFY_APP_URL || '',
+	appUrl: 'https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app',
 	authPathPrefix: '/auth',
 	sessionStorage: new PrismaSessionStorage(prisma),
 	distribution: AppDistribution.AppStore,

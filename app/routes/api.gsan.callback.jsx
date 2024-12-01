@@ -1,6 +1,7 @@
 import { redirect } from '@remix-run/node';
 import { createUserSession } from '../session.server';
 import shopifyAccessToken from './auth.tokens';
+import { access } from 'fs';
 
 export const loader = async ({ request }) => {
 	const url = new URL(request.url);
@@ -13,14 +14,16 @@ export const loader = async ({ request }) => {
 
 	try {
 		// Exchange the authorization code for an access token
-		const tokenData = await shopifyAccessToken(code);
-		console.log('🟢 Token data', tokenData);
+		// const tokenData = await shopifyAccessToken(code);
+		// console.log('🟢 Token data', tokenData);
+
+		const access_token = process.env.SHOPIFY_ACCESS_TOKEN;
 
 		// Fetch customer details using the access token
 		const shopId = process.env.SHOPIFY_SHOP_NAME;
 		const customerResponse = await fetch(`https://${shopId}.myshopify.com/admin/api/2024-01/customers.json`, {
 			headers: {
-				Authorization: `Bearer ${tokenData.access_token}`,
+				Authorization: `Bearer ${access_token}`,
 				'Content-Type': 'application/json',
 			},
 		});

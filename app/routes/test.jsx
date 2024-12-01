@@ -31,7 +31,6 @@ export async function action({ request }) {
 
 export const loader = async ({ request }) => {
 	console.log('🍀 GSAN Customer loader, authing admin');
-	console.log('🐞🐞🐞 Shopify:', shopify);
 
 	const { admin } = await authenticate.admin(request);
 	console.log('🍀 Admin:', admin);
