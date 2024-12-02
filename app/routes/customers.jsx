@@ -4,10 +4,7 @@ import axios from 'axios';
 import shopify from '../shopify.server';
 
 export async function loader({ request }) {
-	// console.log('🔎 Before admin session...');
-	// console.log('🐞 Shopify:', shopify);
 	const { admin } = await shopify.authenticate.admin(request);
-	console.log('🔐 Admin session:', admin);
 
 	const shopifyResponse = await admin.graphql(
 		`#graphql
