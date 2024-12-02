@@ -20,7 +20,7 @@ export async function createUserSession(userData, authType, redirectTo) {
 			throw new Error('🐔 User session already exists');
 		}
 
-		if (!userData || !userData.account_id || !userData.username) {
+		if (!userData) {
 			console.log('Invalid user data:', userData);
 			throw new Error(`Invalid user data`);
 		}
@@ -36,21 +36,32 @@ export async function createUserSession(userData, authType, redirectTo) {
 		}
 
 		if (authType === 'sonar') {
+			if (!userData.account_id || !userData.username) {
+				console.log('Invalid Sonar user data:', userData);
+				throw new Error(`Invalid Sonar user data`);
+			}
 			session.set('user', {
 				authType,
 				userId: userData.contact_id,
 				accountId: userData.account_id,
 				username: userData.username,
 				contactName: userData.contact_name,
-				emailAddress: userData.email_address,
 			});
-
-			if (authType === 'shopify') {
-				console.log('🎉 Shopfiy User Data:', userData);
+		} else if (authType === 'shopify') {
+			if (!userData.accessToken) {
+				console.log('Invalid Shopify user data:', userData);
+				throw new Error(`Invalid Shopify user data`);
 			}
-
-			console.log('🐣 Created User session:', session.get('user'));
+			session.set('user', {
+				authType,
+				accessToken: userData.accessToken,
+			});
+		} else {
+			console.log('Unknown auth type:', authType);
+			throw new Error(`Unknown auth type`);
 		}
+
+		console.log('🐣 Created User session:', session.get('user'));
 
 		const headers = {
 			'Set-Cookie': await sessionStorage.commitSession(session),
@@ -66,10 +77,8 @@ export async function createUserSession(userData, authType, redirectTo) {
 export async function getUserSession(request) {
 	const session = await sessionStorage.getSession(request.headers.get('Cookie'));
 	if (session.has('user')) {
-		// console.log('🐶 Found User session:', session.get('user'));
 		return session.get('user');
 	} else {
-		// console.log('🐶 User session not found');
 		return null;
 	}
 }
