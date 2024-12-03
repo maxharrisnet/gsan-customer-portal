@@ -36,6 +36,7 @@ export async function createUserSession(userData, authType, redirectTo) {
 		}
 
 		if (authType === 'sonar') {
+			// Handle Sonar user session
 			if (!userData.account_id || !userData.username) {
 				console.log('Invalid Sonar user data:', userData);
 				throw new Error(`Invalid Sonar user data`);
@@ -48,6 +49,7 @@ export async function createUserSession(userData, authType, redirectTo) {
 				contactName: userData.contact_name,
 			});
 		} else if (authType === 'shopify') {
+			// Handle Shopify user session
 			if (!userData.accessToken) {
 				console.log('Invalid Shopify user data:', userData);
 				throw new Error(`Invalid Shopify user data`);
@@ -55,6 +57,8 @@ export async function createUserSession(userData, authType, redirectTo) {
 			session.set('user', {
 				authType,
 				accessToken: userData.accessToken,
+				expiresAt: userData.expiresAt || null, // Optionally store token expiry if available
+				shopId: userData.shopId || null, // Optionally store shop ID for Shopify apps
 			});
 		} else {
 			console.log('Unknown auth type:', authType);

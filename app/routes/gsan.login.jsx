@@ -1,7 +1,7 @@
-// routes/gsan.login.jsx
 import { json, redirect } from '@remix-run/node';
 import { useActionData } from '@remix-run/react';
 import { createUserSession } from '../session.server';
+
 import Layout from '../components/layout/Layout';
 
 const customerLoginMutation = `
@@ -23,12 +23,16 @@ export const action = async ({ request }) => {
 	const formData = new URLSearchParams(await request.text());
 	const email = formData.get('email');
 	const password = formData.get('password');
+	const storeToken = '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';
+	console.log('🔵 Login:', email);
+	console.log('🔵 Shop:', process.env.SHOPIFY_SHOP_ID);
+	console.log('🔵 Accessss Token:', storeToken);
 
 	const response = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/api/2024-01/graphql.json`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-Shopify-Storefront-Access-Token': process.env.STOREFRONT_ACCESS_TOKEN,
+			'X-Shopify-Storefront-Access-Token': storeToken,
 		},
 		body: JSON.stringify({
 			query: customerLoginMutation,
@@ -40,6 +44,8 @@ export const action = async ({ request }) => {
 			},
 		}),
 	});
+
+	console.log('🟢 Login Response:', response);
 
 	const result = await response.json();
 	if (result.data.customerAccessTokenCreate.userErrors.length) {

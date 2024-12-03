@@ -3,7 +3,7 @@ import { json } from '@remix-run/node';
 import axios from 'axios';
 
 export const loader = async ({ params }) => {
-	const accessToken = process.env.SHOPIFY_ACCESS_TOKEN;
+	const accessToken = process.env.STOREFRONT_ACCESS_TOKEN;
 	const shop = process.env.SHOPIFY_SHOP;
 	const customerId = params.customerId;
 

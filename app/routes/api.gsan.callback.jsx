@@ -35,7 +35,7 @@ export const loader = async ({ request }) => {
 
 		// const { access_token: accessToken } = await tokenResponse.json();
 
-		const accessToken = process.env.SHOPIFY_ACCESS_TOKEN;
+		const accessToken = process.env.STOREFRONT_ACCESS_TOKEN;
 
 		// Fetch customer details using the Admin GraphQL API
 		const query = `
