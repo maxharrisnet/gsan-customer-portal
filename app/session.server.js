@@ -55,6 +55,8 @@ export async function createUserSession(userData, authType, redirectTo) {
 			session.set('user', {
 				authType,
 				accessToken: userData.accessToken,
+				shopId: userData.shopId || null,
+				tokenType: 'storefront', // Optional for clarity
 			});
 		} else {
 			console.log('Unknown auth type:', authType);

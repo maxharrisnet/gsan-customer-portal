@@ -15,18 +15,19 @@ const shopify = shopifyApp({
 	apiVersion: ApiVersion.October24,
 	scopes: process.env.SCOPES?.split(','),
 	appUrl: process.env.SHOPIFY_APP_URL || '',
+	// appUrl: 'https://cbd3-2604-3d08-4e82-a500-f884-c95-d7-f794.ngrok-free.app/',
 	authPathPrefix: '/auth',
 	sessionStorage: new PrismaSessionStorage(prisma),
 	distribution: AppDistribution.AppStore,
 	restResources,
 	isEmbeddedApp: false,
 	future: {
-		unstable_newEmbeddedAuthStrategy: true,
+		unstable_newEmbeddedAuthStrategy: false,
 	},
 	...(process.env.SHOP_CUSTOM_DOMAIN ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] } : {}),
 });
 
-console.log('🔌 Shopify App:', shopify);
+console.log('🔌 Shopify Auth:', shopify.authenticate.admin);
 
 export default shopify;
 export const apiVersion = ApiVersion.October24;

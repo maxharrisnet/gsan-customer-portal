@@ -2,7 +2,7 @@ import { json, redirect } from '@remix-run/node';
 import { useActionData } from '@remix-run/react';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
-import { shopifyStorefrontAccessToken } from '../api.storefrontToken';
+// import { shopifyStorefrontAccessToken } from '../api.storefrontToken.server';
 
 const customerLoginMutation = `
   mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
@@ -23,14 +23,15 @@ export const action = async ({ request }) => {
 	const formData = new URLSearchParams(await request.text());
 	const email = formData.get('email');
 	const password = formData.get('password');
-	const storefrontAccessToken = await shopifyStorefrontAccessToken(request);
-	console.log('💰 Storefront Token:', storefrontAccessToken);
+	// const storefrontAccessToken = await shopifyStorefrontAccessToken(request);
+	const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+	console.log('🔐 Storefront Access Token:', storefrontAccessToken);
 
 	const response = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/api/2024-01/graphql.json`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-Shopify-Storefront-Access-Token': shopifyStorefrontAccessToken,
+			'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
 		},
 		body: JSON.stringify({
 			query: customerLoginMutation,

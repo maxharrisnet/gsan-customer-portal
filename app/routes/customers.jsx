@@ -4,7 +4,9 @@ import axios from 'axios';
 import shopify from '../shopify.server';
 
 export async function loader({ request }) {
+	console.log('🔐 Fetching Shopify customers from app/routes/customers.jsx');
 	const { admin } = await shopify.authenticate.admin(request);
+	console.log('🔐 Admin:', admin);
 
 	const shopifyResponse = await admin.graphql(
 		`#graphql
