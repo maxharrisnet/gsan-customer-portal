@@ -5,7 +5,7 @@ const credentials = await headerCredentials();
 
 export default async function shopifyAccessToken(code: string): Promise<{ access_token: string; expires_in: number; id_token: string; refresh_token: string }> {
 	const clientId = process.env.SHOPIFY_API_KEY!;
-	const shop = process.env.SHOPIFY_SHOP_ID; // Example: 'my-store'
+	const shop = process.env.SHOPIFY_SHOP_ID;
 	const appUrl = 'https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app';
 	const body = new URLSearchParams();
 	const redirectUri = `${appUrl}/api/gsan/callback`;

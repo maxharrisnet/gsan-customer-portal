@@ -1,8 +1,8 @@
-// routes/gsan.login.jsx
 import { json, redirect } from '@remix-run/node';
 import { useActionData } from '@remix-run/react';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';
+import { shopifyStorefrontAccessToken } from '../api.storefrontToken';
 
 const customerLoginMutation = `
   mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
@@ -23,12 +23,14 @@ export const action = async ({ request }) => {
 	const formData = new URLSearchParams(await request.text());
 	const email = formData.get('email');
 	const password = formData.get('password');
+	const storefrontAccessToken = await shopifyStorefrontAccessToken(request);
+	console.log('💰 Storefront Token:', storefrontAccessToken);
 
 	const response = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/api/2024-01/graphql.json`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-Shopify-Storefront-Access-Token': process.env.STOREFRONT_ACCESS_TOKEN,
+			'X-Shopify-Storefront-Access-Token': shopifyStorefrontAccessToken,
 		},
 		body: JSON.stringify({
 			query: customerLoginMutation,
@@ -41,69 +43,54 @@ export const action = async ({ request }) => {
 		}),
 	});
 
+	console.log('🐯 Response:', response);
+
 	const result = await response.json();
+
 	if (result.data.customerAccessTokenCreate.userErrors.length) {
 		return json({ errors: result.data.customerAccessTokenCreate.userErrors }, { status: 400 });
 	}
 
-	console.log('🟢 Login Result:', result);
-
 	const customerAccessToken = result.data.customerAccessTokenCreate.customerAccessToken.accessToken;
-
 	return createUserSession({ accessToken: customerAccessToken }, 'shopify', '/customer');
 };
 
 export default function Login() {
 	const actionData = useActionData();
-
 	return (
 		<Layout>
-			<div className='container'>
-				<h1>Customer Portal Login</h1>
-				<div className='content-centered'>
-					<div className='button-wrapper login-button-wrapper'>
-						<div>
-							<img
-								src='/assets/images/GSAN-logo.png'
-								alt='GSAN Logo'
-							/>
-							<form method='post'>
-								<div>
-									<label>
-										Email:
-										<input
-											type='email'
-											name='email'
-											required
-										/>
-									</label>
-								</div>
-								<div>
-									<label>
-										Password:
-										<input
-											type='password'
-											name='password'
-											required
-										/>
-									</label>
-								</div>
-								<button type='submit'>Login</button>
-							</form>
-							{actionData?.errors && (
-								<div>
-									<h2>Errors:</h2>
-									<ul>
-										{actionData.errors.map((error) => (
-											<li key={error.field}>{error.message}</li>
-										))}
-									</ul>
-								</div>
-							)}
-						</div>
-					</div>
+			<h1>Customer Portal Login</h1>
+			<form method='post'>
+				<div>
+					<label htmlFor='email'>Email:</label>
+					<input
+						type='email'
+						id='email'
+						name='email'
+						required
+					/>
 				</div>
-			</div>
+				<div>
+					<label htmlFor='password'>Password:</label>
+					<input
+						type='password'
+						id='password'
+						name='password'
+						required
+					/>
+				</div>
+				<button type='submit'>Login</button>
+			</form>
+			{actionData?.errors && (
+				<div>
+					<h2>Errors:</h2>
+					<ul>
+						{actionData.errors.map((error, index) => (
+							<li key={index}>{error.message}</li>
+						))}
+					</ul>
+				</div>
+			)}
 		</Layout>
 	);
 }

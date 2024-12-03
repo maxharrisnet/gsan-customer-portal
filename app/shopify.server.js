@@ -4,6 +4,11 @@ import { PrismaSessionStorage } from '@shopify/shopify-app-session-storage-prism
 import { restResources } from '@shopify/shopify-api/rest/admin/2024-10';
 import prisma from './db.server';
 
+console.log('🚀 Starting server...');
+console.log('🔐 Shopify API Key:', process.env.SHOPIFY_API_KEY);
+console.log('🔑 Shopify API Secret:', process.env.SHOPIFY_API_SECRET);
+console.log('🔗 Shopify App URL:', process.env.SHOPIFY_APP_URL);
+
 const shopify = shopifyApp({
 	apiKey: process.env.SHOPIFY_API_KEY,
 	apiSecretKey: process.env.SHOPIFY_API_SECRET || '',
@@ -20,6 +25,8 @@ const shopify = shopifyApp({
 	},
 	...(process.env.SHOP_CUSTOM_DOMAIN ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] } : {}),
 });
+
+console.log('🔌 Shopify App:', shopify);
 
 export default shopify;
 export const apiVersion = ApiVersion.October24;
