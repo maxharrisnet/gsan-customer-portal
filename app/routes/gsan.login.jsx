@@ -23,7 +23,7 @@ export const action = async ({ request }) => {
 	const formData = new URLSearchParams(await request.text());
 	const email = formData.get('email');
 	const password = formData.get('password');
-	const storeToken = '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';
+	const storeToken = process.env.STOREFRONT_ACCESS_TOKEN;
 	console.log('🔵 Login:', email);
 	console.log('🔵 Shop:', process.env.SHOPIFY_SHOP_ID);
 	console.log('🔵 Accessss Token:', storeToken);
