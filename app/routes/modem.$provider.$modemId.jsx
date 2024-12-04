@@ -52,7 +52,7 @@ export default function ModemDetails() {
 		});
 	}
 
-	// console.log('📊 Usage Data:', usageData);
+	console.log('📊 Usage Data:', usageData);
 	// console.log('👆 Upload Usage: ', usageUnlimited);
 	// console.log('👇 Download Usage: ', usagePriority);
 
@@ -183,19 +183,21 @@ export default function ModemDetails() {
 				</a>
 			</Sidebar>
 			<main className='content'>
-				<section className='map-wrapper'>
-					<APIProvider apiKey={mapsAPIKey}>
-						<Map
-							style={{ width: '100%', height: '400px' }}
-							defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
-							defaultZoom={8}
-							gestureHandling={'greedy'}
-							disableDefaultUI={true}
-						>
-							<Marker position={{ lat: gpsData[0].lat, lng: gpsData[0].lon }} />
-						</Map>
-					</APIProvider>
-				</section>
+				{gpsData && gpsData.length > 0 && (
+					<section className='map-wrapper'>
+						<APIProvider apiKey={mapsAPIKey}>
+							<Map
+								style={{ width: '100%', height: '400px' }}
+								defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
+								defaultZoom={8}
+								gestureHandling={'greedy'}
+								disableDefaultUI={true}
+							>
+								<Marker position={{ lat: gpsData[0].lat, lng: gpsData[0].lon }} />
+							</Map>
+						</APIProvider>
+					</section>
+				)}
 				<section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar

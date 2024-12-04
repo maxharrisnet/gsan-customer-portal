@@ -32,7 +32,7 @@ export const loader = async ({ request }) => {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-Shopify-Storefront-Access-Token': process.env.STOREFRONT_ACCESS_TOKEN,
+			'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN,
 		},
 		body: JSON.stringify({
 			query: GetOrdersWithSpecificProducts,

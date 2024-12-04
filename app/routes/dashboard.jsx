@@ -3,8 +3,8 @@ import { useLoaderData } from '@remix-run/react';
 import { fetchServicesAndModemData } from '../compass.server';
 // import { getSonarAccountData, getSonarAccountGroupData, getSonarAccoutUsageData, getSonarInventoryItems } from '../sonar.server';
 import Layout from '../components/layout/Layout';
+import Sidebar from '../components/layout/Sidebar';
 import dashboardStyles from '../styles/dashboard.css?url';
-import sonarMonitoring from '../data/sonarMonitoring.json'; // Import the placeholder data
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
 import 'chartjs-adapter-date-fns';
@@ -124,33 +124,13 @@ export default function Dashboard() {
 
 	return (
 		<Layout>
-			<div>
+			<Sidebar>
+				<div>
+					<h2>Welcome - Telus</h2>
+				</div>
+			</Sidebar>
+			<main className='content'>
 				<div className='container'>
-					<div className='card-body dashboard-card'>
-						<h1>Welcome, Telus</h1>
-						{/* <h1>Welcome, {sonarAccountData.name}</h1> */}
-						<div className='account-data'>
-							<div className='account-data-wrapper'>
-								<div className='account-data-item'>
-									<h4>Account Status</h4>
-									<p>Active</p>
-									{/* <p>{sonarAccountData.account_status_id === 2 ? 'Active' : 'Inactive'}</p> */}
-								</div>
-								<div className='account-data-item'>
-									<h4>Services</h4>
-									<p>Starlink</p>
-									{/* {sonarGroupData.map((group) => (
-										<p key={group.id}>{group.name}</p>
-									))} */}
-								</div>
-								<div className='account-data-item'>
-									<h4>Account Type</h4>
-									{/* <p>{sonarAccountData.account_type_id}</p> */}
-								</div>
-							</div>
-						</div>
-					</div>
-
 					{services.length > 0 ? (
 						services.map((service) => (
 							<div key={service.id}>
@@ -214,7 +194,7 @@ export default function Dashboard() {
 						</div>
 					)}
 				</div>
-			</div>
+			</main>
 		</Layout>
 	);
 }

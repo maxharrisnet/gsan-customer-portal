@@ -2,7 +2,6 @@ import { headerCredentials } from './auth.utils';
 
 console.log('🟢 auth.tokens.ts');
 const credentials = await headerCredentials();
-console.log('🍃 Header Credentials:', credentials);
 
 export default async function shopifyAccessToken(code: string): Promise<{ access_token: string; expires_in: number; id_token: string; refresh_token: string }> {
 	const clientId = process.env.SHOPIFY_API_KEY!;

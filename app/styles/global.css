@@ -134,11 +134,11 @@ a:hover {
 	padding: var(--spacing-large);
 	width: 100%;
 }
+
 .login-button-wrapper {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
 }
 
 .login-button-wrapper > div {
