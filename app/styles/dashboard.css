@@ -28,11 +28,13 @@ a.text-black {
 
 .card-title {
 	font-size: var(--font-size-lg);
+	font-weight: 400;
 	margin-bottom: var(--spacing-base);
 }
 
 .card-subtitle {
 	font-size: var(--font-size-md);
+	/* color: var(--color-text-light); */
 	margin-bottom: var(--spacing-base);
 }
 
@@ -81,11 +83,11 @@ a.text-black {
 }
 
 .latency-green {
-	background-color: var(--wifi-green);
+	background-color: var(--wifi-green-light);
 }
 
 .latency-orange {
-	background-color: var(--phone-orange);
+	background-color: var(--phone-orange-light);
 }
 
 .latency-red {

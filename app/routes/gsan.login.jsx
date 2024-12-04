@@ -60,7 +60,7 @@ export default function Login() {
 	const actionData = useActionData();
 	return (
 		<Layout>
-			<h1>Customer Portal Login</h1>
+			<h1>GSAN Customer Portal</h1>
 			<form method='post'>
 				<div>
 					<label htmlFor='email'>Email:</label>

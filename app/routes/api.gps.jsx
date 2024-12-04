@@ -48,7 +48,7 @@ export const fetchGPS = async (provider, ids, accessToken) => {
 		}
 	} catch (error) {
 		if (error.response && error.response.status === 429) {
-			console.error('Error 429: Rate limit exceeded.');
+			console.error('🏇 Error 429: Rate limit exceeded.');
 			return json({ error: 'Rate limit exceeded' }, { status: 429 });
 		} else {
 			console.error('Network Error:', error.message);

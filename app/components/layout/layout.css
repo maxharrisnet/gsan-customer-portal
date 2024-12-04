@@ -83,6 +83,14 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Drop shadow */
 	border: 1px solid #e0e0e0; /* Light grey border */
 	width: 100%;
+	transition:
+		background-color 0.3s,
+		box-shadow 0.3s;
+}
+
+a > .section:hover {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: var(--color-background-light);
 }
 
 /* Header styles */
