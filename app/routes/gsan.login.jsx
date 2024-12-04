@@ -1,4 +1,4 @@
-import { json, redirect } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import { useActionData } from '@remix-run/react';
 import { createUserSession } from '../session.server';
 import Layout from '../components/layout/Layout';

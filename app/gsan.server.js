@@ -1,5 +1,5 @@
 import { json } from '@remix-run/node';
-import { shopify, authenticate } from './shopify.server';
+import { authenticate } from './shopify.server';
 // import { useLoaderData } from '@remix-run/react';
 
 // export const loader = async ({ request }) => {

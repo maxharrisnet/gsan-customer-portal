@@ -1,4 +1,3 @@
-import { redirect } from '@remix-run/node';
 import { createUserSession } from '../session.server';
 
 export const loader = async ({ request }) => {
