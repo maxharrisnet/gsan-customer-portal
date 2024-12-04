@@ -24,7 +24,6 @@ export const action = async ({ request }) => {
 	const email = formData.get('email');
 	const password = formData.get('password');
 	const storefrontAccessToken = await shopifyStorefrontAccessToken(request);
-	// const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 	const response = await fetch(`https://switch-incorporated.myshopify.com/api/2024-01/graphql.json`, {
 		method: 'POST',

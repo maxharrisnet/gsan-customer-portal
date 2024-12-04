@@ -2,7 +2,7 @@
 
 client_id = "d7984080909f698690013bb4a01a4a27"
 name = "GSAN/Switch Customer Portal"
-handle = "gsan-switch-customer-portal"
+handle = "gsan-customer-portal-2"
 application_url = "https://5e80-2604-3d08-4e82-a500-f884-c95-d7-f794.ngrok-free.app"
 embedded = false
 
