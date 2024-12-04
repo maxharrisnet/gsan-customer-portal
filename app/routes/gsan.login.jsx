@@ -60,38 +60,57 @@ export default function Login() {
 	const actionData = useActionData();
 	return (
 		<Layout>
-			<h1>GSAN Customer Portal</h1>
-			<form method='post'>
-				<div>
-					<label htmlFor='email'>Email:</label>
-					<input
-						type='email'
-						id='email'
-						name='email'
-						required
+			<div className='container'>
+				<h1>GSAN Customer Portal</h1>
+				<div className='content-centered'>
+					<img
+						src='/assets/images/GSAN-logo.png'
+						alt='GSAN Logo'
+						className='login-logo'
 					/>
+					<form method='post'>
+						<div className='form-group'>
+							<label
+								htmlFor='email'
+								className='sr-only'
+							>
+								Email
+							</label>
+							<input
+								type='email'
+								id='email'
+								name='email'
+								placeholder='Email'
+								required
+							/>
+							<label
+								htmlFor='password'
+								className='sr-only'
+							>
+								Password
+							</label>
+							<input
+								type='password'
+								id='password'
+								name='password'
+								placeholder='Password'
+								required
+							/>
+							<button type='submit'>Login</button>
+							{actionData?.errors && (
+								<div>
+									<h2>Errors:</h2>
+									<ul>
+										{actionData.errors.map((error, index) => (
+											<li key={index}>{error.message}</li>
+										))}
+									</ul>
+								</div>
+							)}
+						</div>
+					</form>
 				</div>
-				<div>
-					<label htmlFor='password'>Password:</label>
-					<input
-						type='password'
-						id='password'
-						name='password'
-						required
-					/>
-				</div>
-				<button type='submit'>Login</button>
-			</form>
-			{actionData?.errors && (
-				<div>
-					<h2>Errors:</h2>
-					<ul>
-						{actionData.errors.map((error, index) => (
-							<li key={index}>{error.message}</li>
-						))}
-					</ul>
-				</div>
-			)}
+			</div>
 		</Layout>
 	);
 }
