@@ -191,7 +191,8 @@ button:hover,
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	gap: var(--spacing-base);
 	padding: var(--spacing-base);
 }
 

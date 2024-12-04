@@ -3,8 +3,16 @@ import { createUserSession } from '../session.server';
 
 export const loader = async ({ request }) => {
 	console.log('🔥 Callback loader activated!');
+
 	const url = new URL(request.url);
 	const code = url.searchParams.get('code');
+	const shop = url.searchParams.get('shop'); // Log for debugging
+	const state = url.searchParams.get('state');
+
+	console.log('Request URL:', request.url);
+	console.log('Code:', code);
+	console.log('Shop:', shop);
+	console.log('State:', state);
 
 	if (!code) {
 		throw new Error('Authorization code is missing!');
@@ -12,7 +20,7 @@ export const loader = async ({ request }) => {
 
 	try {
 		// Exchange the authorization code for an access token
-		const tokenResponse = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/admin/oauth/access_token`, {
+		const tokenResponse = await fetch(`https://${shop}/admin/oauth/access_token`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -25,54 +33,49 @@ export const loader = async ({ request }) => {
 		});
 
 		if (!tokenResponse.ok) {
+			const errorDetails = await tokenResponse.text();
+			console.error('Token Exchange Error:', errorDetails);
 			throw new Error('Failed to exchange authorization code for access token.');
 		}
 
 		const { access_token: accessToken } = await tokenResponse.json();
 
-		// Fetch customer details using the Storefront API
+		console.log('Access Token:', accessToken);
+
+		// Use Admin API or Storefront API based on your requirements
+		// Example: Fetching customer data using Admin API
 		const query = `
       query {
-        customer {
-          id
+        shop {
+          name
           email
-          orders(first: 5) {
-            edges {
-              node {
-                id
-                totalPrice
-              }
-            }
-          }
         }
       }
     `;
 
-		const customerResponse = await fetch(`https://${process.env.SHOPIFY_SHOP_ID}.myshopify.com/api/2024-01/graphql.json`, {
+		const shopResponse = await fetch(`https://${shop}/admin/api/2024-01/graphql.json`, {
 			method: 'POST',
 			headers: {
-				'X-Shopify-Storefront-Access-Token': accessToken,
 				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
 			},
 			body: JSON.stringify({ query }),
 		});
 
-		if (!customerResponse.ok) {
-			throw new Error('Failed to fetch customer data.');
+		if (!shopResponse.ok) {
+			const errorDetails = await shopResponse.text();
+			console.error('Shop Fetch Error:', errorDetails);
+			throw new Error('Failed to fetch shop data.');
 		}
 
-		const customerData = await customerResponse.json();
-		const customer = customerData.data.customer;
+		const shopData = await shopResponse.json();
+		console.log('Shop Data:', shopData);
 
-		if (!customer) {
-			throw new Error('No customer data found.');
-		}
-
-		// Create a session
+		// Create a session and redirect to the performance page
 		return createUserSession(
 			{
-				account_id: customer.id,
-				email_address: customer.email,
+				shop: shopData.data.shop.name,
+				email: shopData.data.shop.email,
 			},
 			'shopify',
 			'/performance'

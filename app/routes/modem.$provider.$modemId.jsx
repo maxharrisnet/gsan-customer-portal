@@ -3,7 +3,7 @@ import { useLoaderData } from '@remix-run/react';
 import { loader } from './api.modem';
 import Layout from '../components/layout/Layout';
 import Sidebar from '../components/layout/Sidebar';
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+// import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
 import chartStyles from '../styles/charts.css?url';
@@ -176,25 +176,26 @@ export default function ModemDetails() {
 						></line>
 						<polyline points='12 19 5 12 12 5'></polyline>
 					</svg>
-					<p>{modem.id}</p>
+					<span>{modem.id}</span>
 					<span className='sr-only'>Back</span>
 				</a>
 			</Sidebar>
 			<main className='content'>
 				{gpsData && gpsData.length > 0 && (
-					<section className='map-wrapper'>
-						<APIProvider apiKey={mapsAPIKey}>
-							<Map
-								style={{ width: '100%', height: '400px' }}
-								defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
-								defaultZoom={8}
-								gestureHandling={'greedy'}
-								disableDefaultUI={true}
-							>
-								<Marker position={{ lat: gpsData[0].lat, lng: gpsData[0].lon }} />
-							</Map>
-						</APIProvider>
-					</section>
+					<></>
+					// <section className='map-wrapper'>
+					// 	<APIProvider apiKey={mapsAPIKey}>
+					// 		<Map
+					// 			style={{ width: '100%', height: '400px' }}
+					// 			defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
+					// 			defaultZoom={8}
+					// 			gestureHandling={'greedy'}
+					// 			disableDefaultUI={true}
+					// 		>
+					// 			<Marker position={{ lat: gpsData[0].lat, lng: gpsData[0].lon }} />
+					// 		</Map>
+					// 	</APIProvider>
+					// </section>
 				)}
 				<section className='section chart-wrapper'>
 					<h2>Usage</h2>
