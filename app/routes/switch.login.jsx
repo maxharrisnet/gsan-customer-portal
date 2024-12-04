@@ -14,7 +14,6 @@ export async function action({ request }) {
 		const sonarAuth = await authenticateSonarUser(username, password);
 
 		if (sonarAuth.success) {
-			console.log('👾 Creating session from switch.login.jsx');
 			return createUserSession(sonarAuth.userData, 'sonar', '/performance');
 		} else {
 			return json({ error: sonarAuth.error }, { status: 401 });

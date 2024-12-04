@@ -33,9 +33,7 @@ export const loader = async ({ request }) => {
 };
 
 export default function Root() {
-	// console.log('🌲 Root Component');
 	const { user } = useLoaderData();
-	// console.log('🌲 Root User:', user);
 	return (
 		<html lang='en'>
 			<head>

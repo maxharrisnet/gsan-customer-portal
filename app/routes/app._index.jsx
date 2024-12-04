@@ -67,7 +67,6 @@ export const action = async ({ request }) => {
 		}
 	);
 	const variantResponseJson = await variantResponse.json();
-	console.log(`Response data: ${responseJson}`);
 
 	return json({
 		product: responseJson.data.productCreate.product,

@@ -11,7 +11,6 @@ import { shopify, authenticate } from './shopify.server';
 const authenticateShopifyUser = async function (email, password, request) {
 	try {
 		const { admin } = await authenticate.admin(request);
-		console.log('🐯 Admin:', admin);
 
 		const response = await admin.graphql(
 			`

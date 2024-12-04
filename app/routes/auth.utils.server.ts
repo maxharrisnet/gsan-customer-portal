@@ -38,7 +38,6 @@ export function decodeJwt(token: string) {
 
 // Authorization Header
 export async function headerCredentials(): Promise<string> {
-	console.log('🥬 Header creds');
 	const clientId = process.env.SHOPIFY_API_KEY;
 	const clientSecret = process.env.SHOPIFY_API_SECRET;
 	const credentials = btoa(`${clientId}:${clientSecret}`);

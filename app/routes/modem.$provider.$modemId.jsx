@@ -51,11 +51,6 @@ export default function ModemDetails() {
 			usageUnlimited.push(day.unlimited ?? 0);
 		});
 	}
-
-	// console.log('📊 Usage Data:', usageData);
-	// console.log('👆 Upload Usage: ', usageUnlimited);
-	// console.log('👇 Download Usage: ', usagePriority);
-
 	const uptimeLabels = uptimeData.map((entry) => new Date(entry[0] * 1000).toLocaleTimeString());
 	const uptimeValues = uptimeData.map((entry) => Math.ceil((entry[1] / 86400) * 10) / 10);
 

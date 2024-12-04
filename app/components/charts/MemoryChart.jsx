@@ -3,7 +3,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, BarElement,
 ChartJS.register(CategoryScale, LinearScale, PointElement, BarElement, LineElement, Title, Tooltip, Legend);
 
 const MemoryChart = ({ data }) => {
-	// console.log('🍹 Memory Chart Data:', data['17']);
 	const options = {
 		responsive: true,
 		scales: {

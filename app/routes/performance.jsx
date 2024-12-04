@@ -62,7 +62,6 @@ export function getLatencyClass(latency) {
 export default function Dashboard() {
 	// const { user, services, sonarAccountData, sonarGroupData, monitoringData } = useLoaderData();
 	const { services } = useLoaderData();
-	console.log('🏈 Services:', services);
 
 	const showLatency = (modem) => {
 		return modem.details.data.latency && modem.details.data.latency.data.length > 0 ? true : false;

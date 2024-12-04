@@ -21,7 +21,6 @@ const shopify = shopifyApp({
 	...(process.env.SHOP_CUSTOM_DOMAIN ? { customShopDomains: [process.env.SHOP_CUSTOM_DOMAIN] } : {}),
 });
 
-console.log('🔌 Shopify Auth:', shopify.authenticate.admin);
 
 export default shopify;
 export const apiVersion = ApiVersion.October24;

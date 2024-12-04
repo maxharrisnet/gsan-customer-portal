@@ -3,7 +3,7 @@ import { authenticate } from '../shopify.server';
 export async function shopifyStorefrontAccessToken(request) {
 	console.log('🔐 Creating storefront access token from api.storefrontToken.js');
 	const { admin } = await authenticate.admin(request);
-	console.log('🔐 Admin:', admin);
+	console.log('🔐 Admin:');
 
 	const storefrontTokenResponse = await admin.graphql(
 		`#graphql

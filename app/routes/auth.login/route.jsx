@@ -10,8 +10,6 @@ import { loginErrorMessage } from './error.server';
 export const links = () => [{ rel: 'stylesheet', href: polarisStyles }];
 
 export const loader = async ({ request }) => {
-	console.log('🦈🦈🦈 Auth Route');
-
 	const errors = loginErrorMessage(await login(request));
 
 	return json({ errors, polarisTranslations });
