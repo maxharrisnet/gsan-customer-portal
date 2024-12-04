@@ -2,6 +2,7 @@ import { redirect } from '@remix-run/node';
 import { createUserSession } from '../session.server';
 
 export const loader = async ({ request }) => {
+	console.log('🔥 Callback loader activated!');
 	const url = new URL(request.url);
 	const code = url.searchParams.get('code');
 

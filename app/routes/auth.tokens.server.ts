@@ -8,12 +8,11 @@ export default async function shopifyAccessToken(code: string): Promise<{ access
 	const shop = process.env.SHOPIFY_SHOP_ID;
 	const appUrl = 'https://565f-2604-3d08-4e82-a500-4cc3-afca-b09c-e2be.ngrok-free.app';
 	const body = new URLSearchParams();
-	const redirectUri = `${appUrl}/api/gsan/callback`;
+	const redirectUri = `${appUrl}/auth/callback`;
 
 	body.append('grant_type', 'authorization_code');
 	body.append('client_id', clientId);
 	body.append('redirect_uri', redirectUri);
-	console.log('🍃 Redirect URI:', redirectUri);
 	body.append('code', code);
 
 	const headers = {

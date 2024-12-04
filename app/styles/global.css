@@ -186,6 +186,19 @@ button:hover,
 	text-decoration: none;
 }
 
+.bar-button {
+	border-radius: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-base);
+}
+
+.bar-button:hover {
+	background-color: var(--color-background-light);
+}
+
 .form-group {
 	display: flex;
 	flex-flow: column;

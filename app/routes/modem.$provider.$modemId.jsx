@@ -52,7 +52,7 @@ export default function ModemDetails() {
 		});
 	}
 
-	console.log('📊 Usage Data:', usageData);
+	// console.log('📊 Usage Data:', usageData);
 	// console.log('👆 Upload Usage: ', usageUnlimited);
 	// console.log('👇 Download Usage: ', usagePriority);
 
@@ -159,8 +159,10 @@ export default function ModemDetails() {
 					<h2>{modem.name}</h2>
 				</div>
 				<p className='capitalize'>{modem.type}</p>
-				<p>{modem.id}</p>
-				<a href='/dashboard'>
+				<a
+					className='bar-button'
+					href='/dashboard'
+				>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 24 24'
@@ -179,7 +181,8 @@ export default function ModemDetails() {
 						></line>
 						<polyline points='12 19 5 12 12 5'></polyline>
 					</svg>
-					Back
+					<p>{modem.id}</p>
+					<span className='sr-only'>Back</span>
 				</a>
 			</Sidebar>
 			<main className='content'>

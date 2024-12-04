@@ -4,18 +4,12 @@ import { PrismaSessionStorage } from '@shopify/shopify-app-session-storage-prism
 import { restResources } from '@shopify/shopify-api/rest/admin/2024-10';
 import prisma from './db.server';
 
-console.log('🚀 Starting server...');
-console.log('🔐 Shopify API Key:', process.env.SHOPIFY_API_KEY);
-console.log('🔑 Shopify API Secret:', process.env.SHOPIFY_API_SECRET);
-console.log('🔗 Shopify App URL:', process.env.SHOPIFY_APP_URL);
-
 const shopify = shopifyApp({
 	apiKey: process.env.SHOPIFY_API_KEY,
 	apiSecretKey: process.env.SHOPIFY_API_SECRET || '',
 	apiVersion: ApiVersion.October24,
 	scopes: process.env.SCOPES?.split(','),
 	appUrl: process.env.SHOPIFY_APP_URL || '',
-	// appUrl: 'https://cbd3-2604-3d08-4e82-a500-f884-c95-d7-f794.ngrok-free.app/',
 	authPathPrefix: '/auth',
 	sessionStorage: new PrismaSessionStorage(prisma),
 	distribution: AppDistribution.AppStore,

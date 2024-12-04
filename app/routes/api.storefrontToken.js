@@ -1,4 +1,4 @@
-import { authenticate } from './shopify.server';
+import { authenticate } from '../shopify.server';
 
 export async function shopifyStorefrontAccessToken(request) {
 	console.log('🔐 Creating storefront access token from api.storefrontToken.js');
