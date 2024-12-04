@@ -160,7 +160,7 @@ export default function ModemDetails() {
 				</div>
 				<p className='capitalize'>{modem.type}</p>
 				<p>{modem.id}</p>
-				<a href='/dashboard'>
+				<a href='/performance'>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 24 24'
@@ -183,21 +183,6 @@ export default function ModemDetails() {
 				</a>
 			</Sidebar>
 			<main className='content'>
-				{gpsData && gpsData.length > 0 && (
-					<section className='map-wrapper'>
-						<APIProvider apiKey={mapsAPIKey}>
-							<Map
-								style={{ width: '100%', height: '400px' }}
-								defaultCenter={{ lat: gpsData[0].lat, lng: gpsData[0].lon }}
-								defaultZoom={8}
-								gestureHandling={'greedy'}
-								disableDefaultUI={true}
-							>
-								<Marker position={{ lat: gpsData[0].lat, lng: gpsData[0].lon }} />
-							</Map>
-						</APIProvider>
-					</section>
-				)}
 				<section className='section chart-wrapper'>
 					<h2>Usage</h2>
 					<Bar

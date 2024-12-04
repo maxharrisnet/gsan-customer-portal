@@ -46,7 +46,7 @@ a.text-black {
 	flex-flow: column;
 	align-items: center;
 	justify-content: center;
-	flex: 1;
+	flex: 1 0;
 }
 
 .dashboard-card {
@@ -58,7 +58,7 @@ a.text-black {
 }
 
 .card-body .data-wrapper {
-	width: 60%;
+	flex-basis: 60%;
 }
 
 .latency-bar {
@@ -68,7 +68,7 @@ a.text-black {
 	border-radius: var(--border-radius);
 	overflow: hidden;
 	width: 100%;
-	height: 50px;
+	height: 60px;
 }
 
 .empty-data-bar {

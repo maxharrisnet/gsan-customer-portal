@@ -37,7 +37,7 @@ const Header = () => {
 				<nav className='nav'>
 					<ul className='nav-list'>
 						<li className='nav-item'>
-							<Link to='/dashboard'>Dashboard</Link>
+							<Link to='/performance'>Performance</Link>
 						</li>
 						<li className='nav-item'>
 							<Link to='/reports/starlink/usage'>Reports</Link>
@@ -52,7 +52,7 @@ const Header = () => {
 						/>
 						<Form
 							method='post'
-							action='/logout'
+							action='/auth/logout'
 						>
 							<button
 								className='logout-button'

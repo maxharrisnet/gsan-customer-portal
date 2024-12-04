@@ -1,4 +1,4 @@
-import { headerCredentials } from './auth.utils';
+import { headerCredentials } from './auth.utils.server';
 
 console.log('🟢 auth.tokens.ts');
 const credentials = await headerCredentials();

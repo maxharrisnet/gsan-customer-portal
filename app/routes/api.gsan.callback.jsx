@@ -74,7 +74,7 @@ export const loader = async ({ request }) => {
 				email_address: customer.email,
 			},
 			'shopify',
-			'/dashboard'
+			'/performance'
 		);
 	} catch (error) {
 		console.error('Error in callback loader:', error);
